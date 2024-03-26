@@ -1,4 +1,4 @@
-# COMP4945-Set-Project
+# Client/Server Set Project
 
 <p align="center">
   <img src="https://github.com/COMP4945/SetG-Project/assets/77172769/22c9adee-82d8-46fe-8c90-724435a7bb08" alt="cst cs v4-3" width="400px"">
