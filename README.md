@@ -22,3 +22,14 @@ The goal is to create a dynamic software solution that seamlessly integrates car
  - Develops customer relation management features, adheres to full stack development practices, and follows the same sprint cycle and bug-fixing timeline as Teams 1 and 2.
 ### 🧪 QA Team
  - Tests non-functional requirements, conducts black box testing, and implements security solutions.
+
+| Role Title                    | Member1          | Member2          | Member3          | Member4          | Product Manager |
+|-------------------------------|------------------|------------------|------------------|------------------|-----------------|
+| Project Lead                  | Ean              | Ean              | Ean              | Ean              | PM: Tejinder    |
+| Product Management            | Laurie           | Kelly            | Yongwon          | Bryant           | PM: Ean         |
+| Framework Team                | Bardia           | Chris            | Hyuk             |                  | PM: Kelly       |
+| Dev Team 1                    | Simrat G         | Xinyang          | Gursidh          | Rav              | PM: Yongwon     |
+| Dev Team 2                    | Troy             | David            | Cassidy          | Gurtej           | PM: Laurie      |
+| Dev Team 3                    | Jaskaran         | Pavanpreet       | Adam             |                  | PM: Bryant      |
+| QA                            | Will             | Kavin            | Simrat K         | Noor             | PM: Kelly       |
+
