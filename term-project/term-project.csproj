@@ -7,14 +7,4 @@
     <RootNamespace>term_project</RootNamespace>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="Views\Care\" />
-    <Folder Include="Views\HR\" />
-    <Folder Include="Views\CRM\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="supabase-csharp" Version="0.16.1" />
-  </ItemGroup>
-
 </Project>

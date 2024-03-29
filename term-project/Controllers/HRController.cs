@@ -2,11 +2,16 @@
 
 namespace term_project.Controllers
 {
-    public class HRController : Controller
+  public class HRController : Controller
+  {
+    public IActionResult Index()
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
+      return View();
     }
+
+    public IActionResult HRLanding()
+    {
+      return View("~/Views/HRView/HRLanding.cshtml");
+    }
+  }
 }

@@ -2,11 +2,16 @@
 
 namespace term_project.Controllers
 {
-    public class CRMController : Controller
+  public class CRMController : Controller
+  {
+    public IActionResult Index()
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
+      return View();
     }
+
+    public IActionResult CRMLanding()
+    {
+      return View("~/Views/CRMView/CRMLanding.cshtml");
+    }
+  }
 }
