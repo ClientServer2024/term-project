@@ -2,11 +2,16 @@
 
 namespace term_project.Controllers
 {
-    public class CareController : Controller
+  public class CareController : Controller
+  {
+    public IActionResult Index()
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
+      return View();
     }
+
+    public IActionResult CareLanding()
+    {
+      return View("~/Views/CareView/CareLanding.cshtml");
+    }
+  }
 }

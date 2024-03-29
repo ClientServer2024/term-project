@@ -7,10 +7,4 @@
     <RootNamespace>term_project</RootNamespace>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="Views\Care\" />
-    <Folder Include="Views\HR\" />
-    <Folder Include="Views\CRM\" />
-  </ItemGroup>
-
 </Project>
