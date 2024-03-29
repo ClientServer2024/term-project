@@ -1,6 +1,28 @@
-﻿namespace term_project.Models.CareModels
+﻿using Postgrest.Attributes;
+using Postgrest.Models;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace term_project.Models.CRMModels
 {
-    public class OccupancyHistory
-    {
-    }
+  [Table("OCCUPANCY_HISTORY")]
+  public class OccupancyHistory : BaseModel
+  {
+    [PrimaryKey("occupancy_history_id")]
+    public Guid OccupancyHistoryId { get; set; }
+
+    [Column("asset_id")]
+    public Guid AssetId { get; set; }
+
+    [Column("renter_id")]
+    public Guid RenterId { get; set; }
+
+    [Column("start_date")]
+    public DateTime StartDate { get; set; }
+
+    [Column("end_date")]
+    public DateTime EndDate { get; set; }
+
+    [Column("vehicle_associated")]
+    public string VehicleAssociated { get; set; }
+  }
 }

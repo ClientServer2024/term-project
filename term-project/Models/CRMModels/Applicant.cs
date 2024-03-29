@@ -1,6 +1,34 @@
-﻿namespace term_project.Models.CareModels
+﻿using Postgrest.Attributes;
+using Postgrest.Models;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace term_project.Models.CRMModels
 {
-    public class Applicant
-    {
-    }
+  [Table("APPLICANT")]
+  public class Applicant : BaseModel
+  {
+    [PrimaryKey("applicant_id")]
+    public Guid ApplicantId { get; set; }
+
+    [Column("first_name")]
+    public string FirstName { get; set; }
+
+    [Column("last_name")]
+    public string LastName { get; set; }
+
+    [Column("current_employer")]
+    public string CurrentEmployer { get; set; }
+
+    [Column("income")]
+    public float Income { get; set; }
+
+    [Column("reference_info")]
+    public string ReferenceInfo { get; set; }
+
+    [Column("sharing_people_info")]
+    public string SharingPeopleInfo { get; set; }
+
+    [Column("status")]
+    public string Status { get; set; }
+  }
 }

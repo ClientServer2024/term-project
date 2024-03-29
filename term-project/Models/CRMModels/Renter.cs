@@ -1,6 +1,25 @@
-﻿namespace term_project.Models.CareModels
+﻿using Postgrest.Attributes;
+using Postgrest.Models;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace term_project.Models.CRMModels
 {
-    public class Renter
-    {
-    }
+  [Table("RENTER")]
+  public class Renter : BaseModel
+  {
+    [PrimaryKey("renter_id")]
+    public Guid RenterId { get; set; }
+
+    [Column("applicant_id")]
+    public Guid ApplicantId { get; set; }
+
+    [Column("emergency_contacts")]
+    public string EmergencyContacts { get; set; }
+
+    [Column("family_doctor")]
+    public string FamilyDoctor { get; set; }
+
+    [Column("status")]
+    public string Status { get; set; }
+  }
 }
