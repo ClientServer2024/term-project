@@ -4,13 +4,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace term_project.Models.CRMModels
 {
-  [Table("ASSET_SERVICE_MAPPING")]
-  public class AssetServiceMapping : BaseModel
-  {
-    [PrimaryKey("asset_service_id")]
-    public Guid AssetServiceId { get; set; }
+    [Table("ASSET_SERVICE_MAPPING")]
+    public class AssetServiceMapping : BaseModel
+    {
+        [PrimaryKey("asset_service_id", false)]
+        public Guid AssetServiceId { get; set; }
 
-    [Column("asset_id")]
-    public Guid AssetId { get; set; }
-  }
+        [Column("asset_id")]
+        public Guid AssetId { get; set; }
+    }
 }
