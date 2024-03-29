@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "WrtNkJg5tX5ymNOKbk6t8Lz2AREpmUgeCz9Doe48VSruoAJSlvFaZWnBfUxvs74uJ01K1a5sDZulphtEgytPPA==",
+  "dgSpecHash": "O2PGHmZuTO5YvtRG3nKN3Le1cER0eAGG0K6IcavftJ5JUIZaP668P/hGpaf7TAK/7QpdTmmA4WIZYD0CZQZz6Q==",
   "success": true,
   "projectFilePath": "C:\\Users\\bardi\\Documents\\CST_Sem4\\4945 DSA\\term-project\\term-project\\term-project.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\bardi\\.nuget\\packages\\dotenv.net\\3.1.3\\dotenv.net.3.1.3.nupkg.sha512",
     "C:\\Users\\bardi\\.nuget\\packages\\functions-csharp\\1.3.2\\functions-csharp.1.3.2.nupkg.sha512",
     "C:\\Users\\bardi\\.nuget\\packages\\gotrue-csharp\\4.2.6\\gotrue-csharp.4.2.6.nupkg.sha512",
     "C:\\Users\\bardi\\.nuget\\packages\\microsoft.identitymodel.abstractions\\7.0.3\\microsoft.identitymodel.abstractions.7.0.3.nupkg.sha512",

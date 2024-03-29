@@ -1,6 +1,5 @@
 ﻿using Postgrest.Attributes;
 using Postgrest.Models;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace term_project.Models.CRMModels
 {
@@ -14,7 +13,7 @@ namespace term_project.Models.CRMModels
         public Guid AssetId { get; set; }
 
         [Column("amount")]
-        public double Amount { get; set; }
+        public double? Amount { get; set; }
 
         [Column("start_date")]
         public DateTime StartDate { get; set; }

@@ -1,6 +1,5 @@
 ﻿using Postgrest.Attributes;
 using Postgrest.Models;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace term_project.Models.CRMModels
 {
@@ -14,6 +13,6 @@ namespace term_project.Models.CRMModels
         public string Name { get; set; }
 
         [Column("rate")]
-        public float Rate { get; set; }
+        public float? Rate { get; set; }
     }
 }

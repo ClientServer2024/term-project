@@ -1,6 +1,5 @@
 ﻿using Postgrest.Attributes;
 using Postgrest.Models;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace term_project.Models.CRMModels
 {
@@ -20,6 +19,6 @@ namespace term_project.Models.CRMModels
         public Guid RentHistoryId { get; set; }
 
         [Column("application_count")]
-        public long ApplicationCount { get; set; }
+        public long? ApplicationCount { get; set; }
     }
 }
