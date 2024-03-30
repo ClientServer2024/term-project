@@ -1,6 +1,5 @@
 ﻿using Postgrest.Attributes;
 using Postgrest.Models;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace term_project.Models.CRMModels
 {

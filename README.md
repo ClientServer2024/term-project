@@ -13,7 +13,7 @@ The goal is to create a dynamic software solution that seamlessly integrates car
 | Role Title                    | Member1          | Member2          | Member3          | Member4          | Product Manager |
 |-------------------------------|------------------|------------------|------------------|------------------|-----------------|
 | Project Lead                  | Gathrean         |                  |                  |                  | PM: Tejinder    |
-| Product Management            | Laurie           | Kelly            | Yongwon          | Bryant           | PM: Ean         |
+| Product Management            | Laurie           | Kelly            | Yongwon          | Bryant           | PM: Gathrean    |
 | Framework Team                | Bardia           | Taehyung         | Hyuk             |                  | PM: Kelly       |
 | Dev Team 1                    | Simrat G         | Xinyang          | Gursidh          | Rav              | PM: Yongwon     |
 | Dev Team 2                    | Troy             | David            | Cassidy          | Gurtej           | PM: Laurie      |

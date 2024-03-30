@@ -9,6 +9,12 @@ namespace term_project.Models.CareModels
         [PrimaryKey("employee_id", false)]
         public Guid EmployeeId { get; set; }
 
+        [Column("email")]
+        public string Email { get; set; }
+
+        [Column("password")]
+        public string Password { get; set; }
+
         [Column("first_name")]
         public string FirstName { get; set; }
 
@@ -28,9 +34,9 @@ namespace term_project.Models.CareModels
         public string EmploymentType { get; set; }
 
         [Column("salary_rate")]
-        public float SalaryRate { get; set; }
+        public float? SalaryRate { get; set; }
 
         [Column("manager_id")]
-        public long ManagerId { get; set; }
+        public long? ManagerId { get; set; }
     }
 }

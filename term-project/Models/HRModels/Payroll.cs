@@ -19,15 +19,15 @@ namespace term_project.Models.CareModels
         public DateTime PayPeriodEnd { get; set; }
 
         [Column("gross_pay")]
-        public float GrossPay { get; set; }
+        public float? GrossPay { get; set; }
 
         [Column("deductions")]
-        public float Deductions { get; set; }
+        public float? Deductions { get; set; }
 
         [Column("net_pay")]
-        public float NetPay { get; set; }
+        public float? NetPay { get; set; }
 
         [Column("tax_rate")]
-        public float TaxRate { get; set; }
+        public float? TaxRate { get; set; }
     }
 }
