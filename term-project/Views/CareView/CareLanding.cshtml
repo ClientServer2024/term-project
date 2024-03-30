@@ -1,7 +1,54 @@
 ﻿@{
-    ViewData["Title"] = "Care";
+    ViewData["Title"] = "Care Landing";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Care Landing</h1>
-</div>
+<h1>Welcome to the Care Landing Page</h1>
+
+
+{
+    <label for="serviceId">Select Service:</label>
+    <select id="serviceId" name="serviceId">
+        @foreach (var service in ViewBag.Services)
+        {
+            <option value="@service.ServiceId">@service.ServiceName</option>
+        }
+    </select>
+    <br>
+
+    <label for="employeeId">Select Employee:</label>
+    <select id="employeeId" name="employeeId">
+        <!-- Populated dynamically based on the selected service -->
+    </select>
+    <br>
+
+    <button type="submit">Register Service</button>
+}
+
+@section scripts {
+    <script>
+        $(function () {
+            console.log("Document ready. JavaScript function is executing."); // Log message
+            $('#serviceId').change(function () {
+                var serviceId = $(this).val();
+                console.log(serviceId);
+                $.ajax({
+                    url: '/Care/GetAvailableEmployees',
+                    type: 'GET',
+                    data: { serviceId: serviceId },
+                    success: function (employeeNames) {
+                        var employeeDropdown = $('#employeeId');
+                        employeeDropdown.empty();
+                        // Append each employee name to the dropdown
+                        $.each(employeeNames, function (i, employeeName) {
+                            employeeDropdown.append($('<option></option>').val(employeeName).text(employeeName));
+                        });
+                    },
+                    error: function (xhr, status, error) {
+                        console.log(xhr.responseText);
+                    }
+                });
+            });
+        });
+    </script>
+}
+
