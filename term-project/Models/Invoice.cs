@@ -35,5 +35,8 @@ namespace term_project.Models.CareModels
 
         [Column("asset_id")]
         public Guid AssetId { get; set; }
-    }
+
+        [Column("rent_history_id")]
+       public Guid RentHistoryId { get; set; }
+  }
 }
