@@ -1,27 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\bardi\\Documents\\CST_Sem4\\4945 DSA\\term-project\\term-project\\term-project.csproj": {}
+    "/Users/ravdeepaulakh/RiderProjects/term-project/term-project/term-project.csproj": {}
   },
   "projects": {
-    "C:\\Users\\bardi\\Documents\\CST_Sem4\\4945 DSA\\term-project\\term-project\\term-project.csproj": {
+    "/Users/ravdeepaulakh/RiderProjects/term-project/term-project/term-project.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\bardi\\Documents\\CST_Sem4\\4945 DSA\\term-project\\term-project\\term-project.csproj",
+        "projectUniqueName": "/Users/ravdeepaulakh/RiderProjects/term-project/term-project/term-project.csproj",
         "projectName": "term-project",
-        "projectPath": "C:\\Users\\bardi\\Documents\\CST_Sem4\\4945 DSA\\term-project\\term-project\\term-project.csproj",
-        "packagesPath": "C:\\Users\\bardi\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\bardi\\Documents\\CST_Sem4\\4945 DSA\\term-project\\term-project\\obj\\",
+        "projectPath": "/Users/ravdeepaulakh/RiderProjects/term-project/term-project/term-project.csproj",
+        "packagesPath": "/Users/ravdeepaulakh/.nuget/packages/",
+        "outputPath": "/Users/ravdeepaulakh/RiderProjects/term-project/term-project/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\bardi\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/Users/ravdeepaulakh/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -68,7 +66,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.203/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

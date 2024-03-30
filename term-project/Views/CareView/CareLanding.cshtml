@@ -1,7 +1,19 @@
 ﻿@{
-    ViewData["Title"] = "Care";
+    ViewData["Title"] = "Care Landing";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Care Landing</h1>
-</div>
+<h1>Welcome to the Care Landing Page</h1>
+
+
+<button id="redirectButton">Go to Employee Selection</button> <!-- Add a button -->
+
+
+@section scripts {
+    <script>
+        $(function () {
+            $('#redirectButton').click(function () {
+                window.location.href = '/Care/EmployeeSelection'; // Redirect to another page
+            });
+        });
+    </script>
+}
