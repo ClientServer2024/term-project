@@ -1,0 +1,89 @@
+@{
+    ViewData["Title"] = "Care Landing";
+}
+
+<h1>Welcome to the Register Services Page!</h1>
+
+<label for="customerName">Customer Name:</label>
+<input type="text" id="customerName" name="customerName">
+<br>
+
+<label for="serviceId">Select Service:</label>
+<select id="serviceId" name="serviceId">
+    @foreach (var service in ViewBag.Services)
+    {
+        <option value="@service.ServiceId">@service.ServiceName</option>
+    }
+</select>
+<br>
+
+<label for="employeeId">Select Employee:</label>
+<select id="employeeId" name="employeeId">
+    <!-- Populated dynamically based on the selected service -->
+</select>
+<br>
+
+<button id="registerServiceBtn" type="button">Register Service</button>
+<button id="viewRegisteredServicesBtn" type="button">View Registered Services</button>
+
+@section scripts {
+    <script>
+        $(function () {
+            console.log("Document ready. JavaScript function is executing."); // Log message
+            $('#serviceId').change(function () {
+                var serviceId = $(this).val();
+                console.log(serviceId);
+                $.ajax({
+                    url: '/Care/GetAvailableEmployees',
+                    type: 'GET',
+                    data: { serviceId: serviceId },
+                    success: function (employeeData) {
+                        var employeeDropdown = $('#employeeId');
+                        employeeDropdown.empty();
+                        // Append each employee to the dropdown
+                        $.each(employeeData, function (i, employee) {
+                            // Append each employee name to the dropdown
+                            employeeDropdown.append($('<option></option>').val(employee.ServiceScheduleId).text(employee.EmployeeName));
+                        });
+                    },
+                    error: function (xhr, status, error) {
+                        console.log(xhr.responseText);
+                    }
+                });
+            });
+        });
+         $(function () {
+                    $('#registerServiceBtn').click(function () {
+                        var serviceScheduleEmployeeId = $('#employeeId').val();
+                        var customerName = $('#customerName').val();
+        
+                        // Perform validation if needed
+        
+                        // Call the RegisterService endpoint
+                        $.ajax({
+                            url: '/Care/RegisterService',
+                            type: 'POST',
+                            data: {
+                                serviceScheduleEmployeeId: serviceScheduleEmployeeId,
+                                customerName: customerName
+                            },
+                            success: function (response) {
+                                // Handle success response
+                                alert(response); // Show success message
+                            },
+                            error: function (xhr, status, error) {
+                                // Handle error response
+                                console.log(xhr.responseText);
+                                alert('Failed to register service. Please try again.');
+                            }
+                        });
+                    });
+                });
+         $(function () {
+                     $('#viewRegisteredServicesBtn').click(function () {
+                         window.location.href = '/Care/RegisteredServicesView';
+                     });
+                 });
+    </script>
+}
+

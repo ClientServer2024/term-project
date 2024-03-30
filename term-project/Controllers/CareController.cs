@@ -3,7 +3,9 @@ using System;
 using System.Linq;
 using term_project.Models.CareModels;
 using dotenv.net;
+using Newtonsoft.Json;
 using Supabase;
+using Guid = System.Guid;
 
 namespace term_project.Controllers
 {
@@ -60,8 +62,8 @@ namespace term_project.Controllers
                     Console.WriteLine("No Services");
                 }
 
-                // Pass services data to the view
-                ViewBag.Services = services;
+                // Store the services data in TempData
+                TempData["Services"] = JsonConvert.SerializeObject(services);
 
                 return View("~/Views/CareView/CareLanding.cshtml");
             }
@@ -126,19 +128,198 @@ namespace term_project.Controllers
                 }
                 
                 var employeeNames = new List<string>(); // List to store employee names
+                
+                var serviceScheduleId = new List<ServiceScheduleEmployee>();
+
+                foreach (var employee in employeeResponseList)
+                {
+                    var serviceScheduleResponseId = await _supabase
+                        .From<ServiceScheduleEmployee>()
+                        .Select("*")
+                        .Where(s => s.EmployeeId == employee.EmployeeId)
+                        .Get();
+                    
+                    serviceScheduleId.AddRange(serviceScheduleResponseId.Models);
+                }
         
                 foreach (var employee in employeeResponseList)
                 {
                     employeeNames.Add(employee.FirstName); // Add each employee name to the list
                 }
                 
-                return Json(employeeNames);
+                var serviceScheduleIdStrings = new List<Guid>(); 
+                
+                foreach (var serviceResponseId in serviceScheduleId)
+                {
+                    serviceScheduleIdStrings.Add(serviceResponseId.ServiceScheduleEmployeeId);
+                }
+                
+                // Combine the service schedule IDs and employee names into a list of anonymous objects
+                var combinedData = new List<object>();
+
+                for (int i = 0; i < Math.Min(serviceScheduleIdStrings.Count, employeeNames.Count); i++)
+                {
+                    combinedData.Add(new
+                    {
+                        ServiceScheduleId = serviceScheduleIdStrings[i],
+                        EmployeeName = employeeNames[i]
+                    });
+                }
+
+                // Serialize the combined data to JSON format
+                var jsonOutput = JsonConvert.SerializeObject(combinedData);
+
+                return Content(jsonOutput, "application/json");
+
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
         }
+        
+        public IActionResult EmployeeSelection()
+        {
+            // Retrieve the services data JSON string from TempData
+            var servicesJson = TempData["Services"] as string;
 
+            // Deserialize the JSON string back to a list of Service objects
+            var services = JsonConvert.DeserializeObject<List<Service>>(servicesJson);
+
+            // Pass the services data to the view
+            ViewBag.Services = services;
+
+            // This action method will render the Employee Selection page
+            return View("~/Views/CareView/EmployeeSelection.cshtml");
+        }
+        
+        [HttpPost]
+        public async Task<IActionResult> RegisterService(Guid serviceScheduleEmployeeId, string customerName)
+        {
+            try
+            {
+                // Logic to register the service by updating the SERVICE_REGISTER table
+                // You can use Supabase or any other ORM to perform the database operation
+        
+                // For example, using Supabase
+                var insertResponse = await _supabase
+                    .From<ServiceRegister>()
+                    .Insert(new ServiceRegister
+                    {
+                        ServiceScheduleEmployeeId = serviceScheduleEmployeeId,
+                        CustomerName = customerName
+                    });
+
+                // Service successfully registered
+                return Ok("Service registered successfully!");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        
+        [HttpPost]
+        public async Task<IActionResult> RegisteredServices()
+        {
+            var response = await _supabase
+                .From<ServiceRegister>()
+                .Get();
+
+            var customerNames = new List<String>();
+
+            foreach (var registerService in response.Models)
+            {
+                customerNames.Add(registerService.CustomerName);
+            }
+
+            var serviceScheduleResponseEmployeeList = new List<ServiceScheduleEmployee>();
+            
+            foreach (var service in response.Models)
+            {
+                var serviceResponse = await _supabase
+                    .From<ServiceScheduleEmployee>()
+                    .Select("*")
+                    .Where(s => s.ServiceScheduleEmployeeId == service.ServiceScheduleEmployeeId)
+                    .Get();
+                
+                serviceScheduleResponseEmployeeList.AddRange(serviceResponse.Models);
+            }
+            
+            var serviceScheduleResponseList = new List<ServiceSchedule>();
+            
+            foreach (var service in serviceScheduleResponseEmployeeList)
+            {
+                var serviceResponse = await _supabase
+                    .From<ServiceSchedule>()
+                    .Select("*")
+                    .Where(s => s.ServiceScheduleId == service.ServiceScheduleId)
+                    .Get();
+                
+                serviceScheduleResponseList.AddRange(serviceResponse.Models);
+            }
+
+            var scheduleTimes = new List<DateTimeOffset>();
+            foreach (var service in serviceScheduleResponseList)
+            {
+                scheduleTimes.Add(service.Schedule);
+            }
+
+            var serviceResponseList = new List<Service>();
+            foreach (var service in serviceScheduleResponseList)
+            {
+                var serviceResponse = await _supabase
+                    .From<Service>()
+                    .Select("*")
+                    .Where(s => s.ServiceId == service.ServiceId)
+                    .Get();
+                
+                serviceResponseList.AddRange(serviceResponse.Models);
+            }
+
+            var serviceNames = new List<String>();
+            foreach (var service in serviceResponseList)
+            {
+                serviceNames.Add(service.ServiceName);
+            }
+
+            var employeeResponseList = new List<Employee>();
+            foreach (var service in serviceScheduleResponseEmployeeList)
+            {
+                var serviceResponse = await _supabase
+                    .From<Employee>()
+                    .Select("*")
+                    .Where(s => s.EmployeeId == service.EmployeeId)
+                    .Get();
+                
+                employeeResponseList.AddRange(serviceResponse.Models);
+            }
+
+            var employeeNames = new List<String>();
+            foreach (var employee in employeeResponseList)
+            {
+                employeeNames.Add(employee.FirstName);
+            }
+            
+            // Create an anonymous object containing the required data
+            var jsonData = new
+            {
+                EmployeeNames = employeeNames,
+                CustomerNames = customerNames,
+                ServiceNames = serviceNames,
+                ServiceScheduleTimes = scheduleTimes
+            };
+            
+            Console.WriteLine("ABOUT TO RETURN JSON");
+
+            return Json(jsonData);
+
+        }
+        
+        public IActionResult RegisteredServicesView()
+        {
+            return View("~/Views/CareView/RegisteredServices.cshtml");
+        }
+        
     }
 }

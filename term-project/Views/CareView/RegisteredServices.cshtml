@@ -1,0 +1,57 @@
+@{
+    ViewData["Title"] = "Registered Services";
+}
+
+<h1>Registered Services</h1>
+
+<table id="registeredServicesTable" class="table">
+    <thead>
+        <tr>
+            <th>Service</th>
+            <th>Customer Name</th>
+            <th>Employee Name</th>
+            <th>Schedule Time</th>
+            <!-- Add more columns if needed -->
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+
+@section scripts {
+    <script>
+        $(function () {
+            // Function to fetch and populate registered services
+            function fetchRegisteredServices() {
+                $.ajax({
+                    url: '/Care/RegisteredServices',
+                    type: 'POST', // Send a POST request
+                    success: function (data) {
+                        var tableBody = $('#registeredServicesTable tbody');
+                        tableBody.empty(); // Clear existing table rows
+                        console.log(data);
+                        // Assuming all arrays have the same length
+                        for (var i = 0; i < data.employeeNames.length; i++) {
+                            var row = $('<tr></tr>');
+                            row.append('<td>' + data.serviceNames[i] + '</td>');
+                            row.append('<td>' + data.customerNames[i] + '</td>');
+                            row.append('<td>' + data.employeeNames[i] + '</td>');
+                            row.append('<td>' + data.serviceScheduleTimes[i] + '</td>'); // Assuming ServiceScheduleTimes is the correct array for IDs
+                            // Add more columns if needed
+                            tableBody.append(row);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.log(xhr.responseText);
+                    }
+                });
+            }
+            
+            // Call the function to fetch and populate registered services
+            fetchRegisteredServices();
+        });
+    </script>
+}
+
+
+
