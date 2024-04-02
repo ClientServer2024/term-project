@@ -317,8 +317,11 @@ namespace term_project.Controllers
             return View("~/Views/CareView/RegisteredServices.cshtml");
         }
 
-        public IActionResult CreateServiceView()
+        public async Task<IActionResult> CreateServiceView()
         {
+            var qualifications = await _supabase.From<Qualification>().Select("*").Get();
+            ViewBag.Qualifications = qualifications.Models;
+            
             return View("~/Views/CareView/CreateService.cshtml");
         }
 
