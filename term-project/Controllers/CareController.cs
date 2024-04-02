@@ -325,9 +325,6 @@ namespace term_project.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateService(string serviceName, float serviceRate)
         {
-            Console.WriteLine("HERE");
-            Console.WriteLine(serviceName);
-            Console.WriteLine(serviceRate);
             try
             {
                 await _supabase.From<Service>().Insert(new Service
