@@ -6,6 +6,7 @@
 
 
 <button id="redirectButton">Go to Employee Selection</button> <!-- Add a button -->
+<button id="createServicePageButton">Go to Create Service Page</button> <!-- Add a button -->
 
 
 @section scripts {
@@ -13,6 +14,9 @@
         $(function () {
             $('#redirectButton').click(function () {
                 window.location.href = '/Care/EmployeeSelection'; // Redirect to another page
+            });
+            $('#createServicePageButton').click(function () {
+                window.location.href = '/Care/CreateServiceView'; // Redirect to another page
             });
         });
     </script>
