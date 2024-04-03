@@ -11,8 +11,8 @@ namespace term_project.Models.CareModels
 
         [Column("service_schedule_employee_id")]
         public Guid ServiceScheduleEmployeeId  { get; set; }
-
-        [Column("customer_name")]
-        public string CustomerName { get; set; }
+        
+        [Column("renter_id")]
+        public Guid RenterId { get; set; }
     }
 }

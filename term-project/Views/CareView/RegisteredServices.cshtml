@@ -37,6 +37,7 @@
                             row.append('<td>' + data.customerNames[i] + '</td>');
                             row.append('<td>' + data.employeeNames[i] + '</td>');
                             row.append('<td>' + data.serviceScheduleTimes[i] + '</td>'); // Assuming ServiceScheduleTimes is the correct array for IDs
+                            row.append('<td><button class="deleteServiceBtn" data-service-register-id="' + data.serviceRegisterIds[i] + '">Delete</button></td>'); // Add delete button with ServiceRegisterId
                             // Add more columns if needed
                             tableBody.append(row);
                         }
@@ -49,7 +50,29 @@
             
             // Call the function to fetch and populate registered services
             fetchRegisteredServices();
+        
+            // Function to handle delete button click
+            $(document).on('click', '.deleteServiceBtn', function() {
+                var serviceRegisterId = $(this).data('service-register-id');
+                if (confirm("Are you sure you want to delete this service?")) {
+                    $.ajax({
+                        url: '/Care/DeleteService',
+                        type: 'POST',
+                        data: { serviceRegisterId: serviceRegisterId }, // Send ServiceRegisterId to the backend
+                        success: function(response) {
+                            // Refresh the table after deletion
+                            fetchRegisteredServices();
+                            alert('Service deleted successfully.');
+                        },
+                        error: function(xhr, status, error) {
+                            console.log(xhr.responseText);
+                            alert('Failed to delete service. Please try again.');
+                        }
+                    });
+                }
+            });
         });
+
     </script>
 }
 

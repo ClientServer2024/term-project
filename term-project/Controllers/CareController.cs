@@ -5,6 +5,7 @@ using term_project.Models.CareModels;
 using dotenv.net;
 using Newtonsoft.Json;
 using Supabase;
+using term_project.Models.CRMModels;
 using Guid = System.Guid;
 
 namespace term_project.Controllers
@@ -71,6 +72,54 @@ namespace term_project.Controllers
             {
                 return BadRequest(ex.Message);
             }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllApplicants()
+        {
+            Console.Write("REACHING INSIDE THE APPLICANT METHOD");
+
+            var applicantResponse = await _supabase
+                .From<Applicant>()
+                .Select("*")
+                .Get();
+
+            var applicantResponseList = applicantResponse.Models;
+
+            var applicantNames = new List<String>();
+            
+            foreach (var applicant in applicantResponseList)
+            {
+                applicantNames.Add(applicant.FirstName);
+            }
+
+            var renterId = new List<Guid>();
+
+            var renterResponseList = new List<Renter>();
+
+            foreach (var renter in applicantResponseList)
+            {
+                var renterResponse = await _supabase
+                    .From<Renter>()
+                    .Select("*")
+                    .Where(r => r.ApplicantId == renter.ApplicantId)
+                    .Get();
+                
+                renterResponseList.AddRange(renterResponse.Models);
+            }
+
+            foreach (var renter in renterResponseList)
+            {
+                renterId.Add(renter.RenterId);
+            }
+
+            var JsonData = new
+            {
+                applicantNames = applicantNames,
+                renterIds = renterId
+            };
+
+            return Json(JsonData);
         }
 
         [HttpGet]
@@ -183,6 +232,13 @@ namespace term_project.Controllers
             // Retrieve the services data JSON string from TempData
             var servicesJson = TempData["Services"] as string;
 
+            if (string.IsNullOrEmpty(servicesJson))
+            {
+                // Handle the case where servicesJson is null or empty
+                // You can return an error message or redirect the user to fetch services again
+                return RedirectToAction("CareLanding");
+            }
+
             // Deserialize the JSON string back to a list of Service objects
             var services = JsonConvert.DeserializeObject<List<Service>>(servicesJson);
 
@@ -192,22 +248,24 @@ namespace term_project.Controllers
             // This action method will render the Employee Selection page
             return View("~/Views/CareView/EmployeeSelection.cshtml");
         }
+
         
         [HttpPost]
-        public async Task<IActionResult> RegisterService(Guid serviceScheduleEmployeeId, string customerName)
+        public async Task<IActionResult> RegisterService(Guid serviceScheduleEmployeeId, Guid renterId)
         {
             try
             {
                 // Logic to register the service by updating the SERVICE_REGISTER table
                 // You can use Supabase or any other ORM to perform the database operation
         
+                Console.WriteLine("RENTER ID VALUE: " + renterId);
                 // For example, using Supabase
                 var insertResponse = await _supabase
                     .From<ServiceRegister>()
                     .Insert(new ServiceRegister
                     {
                         ServiceScheduleEmployeeId = serviceScheduleEmployeeId,
-                        CustomerName = customerName
+                        RenterId= renterId
                     });
 
                 // Service successfully registered
@@ -218,6 +276,7 @@ namespace term_project.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
         
         [HttpPost]
         public async Task<IActionResult> RegisteredServices()
@@ -228,9 +287,35 @@ namespace term_project.Controllers
 
             var customerNames = new List<String>();
 
-            foreach (var registerService in response.Models)
+            var renterResponseList = new List<Renter>();
+
+            foreach(var customer in response.Models)
             {
-                customerNames.Add(registerService.CustomerName);
+                var customerResponse = await _supabase
+                    .From<Renter>()
+                    .Select("*")
+                    .Where(c => c.RenterId == customer.RenterId)
+                    .Get();
+                
+                renterResponseList.AddRange(customerResponse.Models);
+            }
+
+            var ApplicantResponseList = new List<Applicant>();
+
+            foreach (var renter in renterResponseList)
+            {
+                var renterResponse = await _supabase
+                    .From<Applicant>()
+                    .Select("*")
+                    .Where(r => r.ApplicantId == renter.ApplicantId)
+                    .Get();
+                
+                ApplicantResponseList.AddRange(renterResponse.Models);
+            }
+
+            foreach (var applicant in ApplicantResponseList)
+            {
+                customerNames.Add(applicant.FirstName);
             }
 
             var serviceScheduleResponseEmployeeList = new List<ServiceScheduleEmployee>();
@@ -301,13 +386,22 @@ namespace term_project.Controllers
                 employeeNames.Add(employee.FirstName);
             }
             
+            var serviceRegisterIds = new List<Guid>(); // New list to store ServiceRegisterIds
+
+            foreach (var serviceRegister in response.Models)
+            {
+
+                serviceRegisterIds.Add(serviceRegister.ServiceRegisterId); // Add ServiceRegisterId to the list
+            }
+            
             // Create an anonymous object containing the required data
             var jsonData = new
             {
                 EmployeeNames = employeeNames,
                 CustomerNames = customerNames,
                 ServiceNames = serviceNames,
-                ServiceScheduleTimes = scheduleTimes
+                ServiceScheduleTimes = scheduleTimes,
+                ServiceRegisterIds = serviceRegisterIds
             };
             
             Console.WriteLine("ABOUT TO RETURN JSON");
@@ -320,6 +414,27 @@ namespace term_project.Controllers
         {
             return View("~/Views/CareView/RegisteredServices.cshtml");
         }
+        
+        [HttpPost]
+        public async Task<IActionResult> DeleteService(Guid serviceRegisterId)
+        {
+            try
+            {
+                // Logic to delete the service from the database using the provided ServiceRegisterId
+                // Example using Supabase
+                 await _supabase
+                    .From<ServiceRegister>()
+                    .Where(d => d.ServiceRegisterId == serviceRegisterId)
+                    .Delete();
+
+                 return Ok("Worked");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         
     }
 }
