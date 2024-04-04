@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Linq;
 using term_project.Models.CareModels;
 using dotenv.net;
 using Newtonsoft.Json;
@@ -355,8 +353,6 @@ namespace term_project.Controllers
         [HttpPost]
         public async Task<IActionResult> AddQualificationToService(Guid serviceId, Guid qualificationId)
         {
-            Console.WriteLine(serviceId);
-            Console.WriteLine(qualificationId);
             try
             {
                 await _supabase.From<ServiceQualification>().Insert(new ServiceQualification
