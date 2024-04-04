@@ -14,5 +14,11 @@ namespace term_project.Models.CareModels
         
         [Column("renter_id")]
         public Guid RenterId { get; set; }
+        
+        [Column("status")]
+        public string Status { get; set; }
+        
+        [Column("invoice_id")]
+        public Guid InvoiceId { get; set; }
     }
 }

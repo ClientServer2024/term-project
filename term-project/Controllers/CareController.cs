@@ -265,7 +265,9 @@ namespace term_project.Controllers
                     .Insert(new ServiceRegister
                     {
                         ServiceScheduleEmployeeId = serviceScheduleEmployeeId,
-                        RenterId= renterId
+                        RenterId= renterId,
+                        Status= "CREATED",
+                        InvoiceId = Guid.NewGuid()
                     });
 
                 // Service successfully registered
@@ -393,6 +395,12 @@ namespace term_project.Controllers
 
                 serviceRegisterIds.Add(serviceRegister.ServiceRegisterId); // Add ServiceRegisterId to the list
             }
+
+            var serviceInvoiceStatus = new List<string>();
+            foreach (var status in response.Models)
+            {
+                serviceInvoiceStatus.Add(status.Status);
+            }
             
             // Create an anonymous object containing the required data
             var jsonData = new
@@ -401,7 +409,8 @@ namespace term_project.Controllers
                 CustomerNames = customerNames,
                 ServiceNames = serviceNames,
                 ServiceScheduleTimes = scheduleTimes,
-                ServiceRegisterIds = serviceRegisterIds
+                ServiceRegisterIds = serviceRegisterIds,
+                InvoiceStatus = serviceInvoiceStatus
             };
             
             Console.WriteLine("ABOUT TO RETURN JSON");
@@ -434,6 +443,28 @@ namespace term_project.Controllers
                 return BadRequest(ex.Message);
             }
         }
+        
+        [HttpPost]
+        public async Task<IActionResult> UpdateInvoiceStatus(Guid serviceRegisterId, string newStatus)
+        {
+            // Retrieve the ServiceRegister record based on the serviceRegisterId
+            var serviceRegister = await _supabase
+                .From<ServiceRegister>()
+                .Select("*")
+                .Where(s => s.ServiceRegisterId == serviceRegisterId)
+                .Single();
+
+            // Update the invoice status
+            serviceRegister.Status = newStatus;
+
+            // Save the changes to the database
+            var updateResponse = await _supabase
+                .From<ServiceRegister>()
+                .Update(serviceRegister);
+
+            return Ok("Success");
+        }
+
 
         
     }
