@@ -317,11 +317,8 @@ namespace term_project.Controllers
             return View("~/Views/CareView/RegisteredServices.cshtml");
         }
 
-        public async Task<IActionResult> CreateServiceView()
+        public IActionResult CreateServiceView()
         {
-            var qualifications = await _supabase.From<Qualification>().Select("*").Get();
-            ViewBag.Qualifications = qualifications.Models;
-            
             return View("~/Views/CareView/CreateService.cshtml");
         }
 
@@ -337,6 +334,38 @@ namespace term_project.Controllers
                 });
 
                 return Ok("Service created successfully");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        public async Task<IActionResult> AddQualificationToServiceView()
+        {
+            var services = await _supabase.From<Service>().Select("*").Get();
+            ViewBag.Services = services.Models;
+
+            var qualifications = await _supabase.From<Qualification>().Select("*").Get();
+            ViewBag.Qualifications = qualifications.Models;
+            
+            return View("~/Views/CareView/AddQualificationToServiceView.cshtml");
+        }
+        
+        [HttpPost]
+        public async Task<IActionResult> AddQualificationToService(Guid serviceId, Guid qualificationId)
+        {
+            Console.WriteLine(serviceId);
+            Console.WriteLine(qualificationId);
+            try
+            {
+                await _supabase.From<ServiceQualification>().Insert(new ServiceQualification
+                {
+                    ServiceId = serviceId,
+                    QualificationId = qualificationId
+                });
+
+                return Ok("Qualification added successfully");
             }
             catch (Exception ex)
             {

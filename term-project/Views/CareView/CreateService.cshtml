@@ -10,22 +10,12 @@
 <label for="serviceRate">Service Rate:</label>
 <input type="number" id="serviceRate" name="serviceRate">
 <br/>
-<label for="qualificationId">Select Qualification:</label>
-<select id="qualificationId" name="qualificationId">
-    @foreach (var qualification in ViewBag.Qualifications)
-    {
-        <option value="@qualification.QualificationId">@qualification.QualificationName</option>
-    }
-</select>
-<br/>
 <button id="createServiceBtn" type="button">Create Service</button>
 
 @section scripts {
     <script>
         $(function () {
             console.log("Document ready. JavaScript function is executing."); // Log message
-            let qualifications = @ViewBag.Qualifications
-            console.log(qualifications)
             
             $("#createServiceBtn").click(function () {
                var serviceName = $("#serviceName").val()
