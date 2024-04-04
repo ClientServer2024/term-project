@@ -38,13 +38,13 @@
                             row.append('<td>' + data.customerNames[i] + '</td>');
                             row.append('<td>' + data.employeeNames[i] + '</td>');
                             row.append('<td>' + data.serviceScheduleTimes[i] + '</td>'); // Assuming ServiceScheduleTimes is the correct array for IDs
-                            var dropdownHtml = '<select class="invoiceStatusSelect" data-service-register-id="' + data.serviceRegisterIds[i] + '"';
-                            dropdownHtml += (data.invoiceStatus[i] === 'SENT' ? ' disabled' : '') + '>';
-                            dropdownHtml += '<option value="CREATED"' + (data.invoiceStatus[i] === 'CREATED' ? ' selected' : '') + '>CREATED</option>';
-                            dropdownHtml += '<option value="IN PROGRESS"' + (data.invoiceStatus[i] === 'IN PROGRESS' ? ' selected' : '') + '>IN PROGRESS</option>';
-                            dropdownHtml += '<option value="SENT"' + (data.invoiceStatus[i] === 'SENT' ? ' selected' : '') + '>SENT</option></select>';
-                            row.append('<td>' + dropdownHtml + '</td>'); // Add dropdown with invoice status options
-                            row.append('<td><button class="deleteServiceBtn" data-service-register-id="' + data.serviceRegisterIds[i] + '">Delete</button></td>'); // Add delete button with ServiceRegisterId
+                            row.append('<td>' + data.invoiceStatus[i] + '</td>'); // Display invoice status
+                            // Add delete button with ServiceRegisterId
+                            if (data.invoiceStatus[i] !== 'Sent') {
+                                row.append('<td><button class="deleteServiceBtn" data-service-register-id="' + data.serviceRegisterIds[i] + '">Delete</button></td>');
+                            } else {
+                                row.append('<td><button class="deleteServiceBtn" data-service-register-id="' + data.serviceRegisterIds[i] + '" disabled>Delete</button></td>');
+                            }
                             // Add more columns if needed
                             tableBody.append(row);
                         }
@@ -77,30 +77,6 @@
                         }
                     });
                 }
-            });
-
-            // Function to handle change in invoice status
-            $(document).on('change', '.invoiceStatusSelect', function() {
-                var serviceRegisterId = $(this).data('service-register-id');
-                var newStatus = $(this).val();
-                $.ajax({
-                    url: '/Care/UpdateInvoiceStatus',
-                    type: 'POST',
-                    data: { serviceRegisterId: serviceRegisterId, newStatus: newStatus }, // Send ServiceRegisterId and newStatus to the backend
-                    success: function(response) {
-                        alert('Invoice status updated successfully.');
-                        // Disable dropdown if status is SENT
-                        if (newStatus === 'SENT') {
-                            $(this).prop('disabled', true);
-                        }
-                        
-                        location.reload();
-                    },
-                    error: function(xhr, status, error) {
-                        console.log(xhr.responseText);
-                        alert('Failed to update invoice status. Please try again.');
-                    }
-                });
             });
         });
     </script>

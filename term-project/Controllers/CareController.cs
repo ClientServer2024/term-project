@@ -266,7 +266,7 @@ namespace term_project.Controllers
                     {
                         ServiceScheduleEmployeeId = serviceScheduleEmployeeId,
                         RenterId= renterId,
-                        Status= "CREATED",
+                        Status= "Not Sent",
                         InvoiceId = Guid.NewGuid()
                     });
 
@@ -443,29 +443,6 @@ namespace term_project.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        
-        [HttpPost]
-        public async Task<IActionResult> UpdateInvoiceStatus(Guid serviceRegisterId, string newStatus)
-        {
-            // Retrieve the ServiceRegister record based on the serviceRegisterId
-            var serviceRegister = await _supabase
-                .From<ServiceRegister>()
-                .Select("*")
-                .Where(s => s.ServiceRegisterId == serviceRegisterId)
-                .Single();
-
-            // Update the invoice status
-            serviceRegister.Status = newStatus;
-
-            // Save the changes to the database
-            var updateResponse = await _supabase
-                .From<ServiceRegister>()
-                .Update(serviceRegister);
-
-            return Ok("Success");
-        }
-
-
         
     }
 }
