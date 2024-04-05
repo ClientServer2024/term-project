@@ -1,0 +1,54 @@
+@{
+    ViewData["Title"] = "Add Qualification To Service";
+}
+
+<h1>Welcome to the Add Qualification To Service Page!</h1>
+
+<label for="serviceId">Select Service:</label>
+<select id="serviceId" name="serviceId">
+    @foreach (var service in ViewBag.Services)
+    {
+        <option value="@service.ServiceId">@service.ServiceName</option>
+    }
+</select>
+<br>
+<label for="qualificationId">Select Qualification:</label>
+<select id="qualificationId" name="qualificationId">
+    @foreach (var qualification in ViewBag.Qualifications)
+    {
+        <option value="@qualification.QualificationId">@qualification.QualificationName</option>
+    }
+</select>
+<br/>
+<button id="addBtn" type="button">Add Qualification</button>
+
+@section scripts {
+    <script>
+        $(function () {
+            console.log("Document ready. JavaScript function is executing."); // Log message
+
+            $("#addBtn").click(function () {
+               var serviceId = $("#serviceId").val()
+               var qualificationId = $("#qualificationId").val()
+               //
+               $.ajax({
+                url: '/Care/AddQualificationToService/',
+                type: 'POST',
+                data: {
+                    serviceId: serviceId,
+                    qualificationId: qualificationId 
+                },
+               success: function (response) {
+                // Handle success response
+                alert(response); // Show success message
+               },
+               error: function (xhr, status, error) {
+                // Handle error response
+                console.log(xhr.responseText);
+                alert('Failed to register service. Please try again.');
+               }
+               })
+            })
+        });
+    </script>
+}

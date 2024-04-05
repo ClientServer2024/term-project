@@ -6,6 +6,14 @@
 
 
 <button id="redirectButton">Go to Employee Selection</button> <!-- Add a button -->
+<br/>
+<button id="createServicePageButton">Go to Create Service Page</button> <!-- Add a button -->
+<br/>
+<button id="addQualificationToServicePageButton">Go to Add Qualification To Service Page</button> <!-- Add a button -->
+<br/>
+<button id="qualifyEmployeePageButton">Go to Qualify Employee Page</button> <!-- Add a button -->
+<br/>
+<button id="allServicesPageButton">View all services</button> <!-- Add a button -->
 
 
 @section scripts {
@@ -13,6 +21,18 @@
         $(function () {
             $('#redirectButton').click(function () {
                 window.location.href = '/Care/EmployeeSelection'; // Redirect to another page
+            });
+            $('#createServicePageButton').click(function () {
+                window.location.href = '/Care/CreateServiceView'; // Redirect to another page
+            });
+            $('#addQualificationToServicePageButton').click(function () {
+                window.location.href = '/Care/AddQualificationToServiceView'; // Redirect to another page
+            });
+            $('#qualifyEmployeePageButton').click(function () {
+                window.location.href = '/Care/QualifyEmployeeView'; // Redirect to another page
+            });
+            $('#allServicesPageButton').click(function () {
+                window.location.href = '/Care/ServicesView'; // Redirect to another page
             });
         });
     </script>

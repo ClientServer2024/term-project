@@ -1,6 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Linq;
+﻿using System.Reflection;
+using Microsoft.AspNetCore.Mvc;
 using term_project.Models.CareModels;
 using dotenv.net;
 using Newtonsoft.Json;
@@ -52,7 +51,7 @@ namespace term_project.Controllers
 
                 // Extract the services data
                 var services = servicesResponse.Models;
-                
+
                 if (services != null && services.Any())
                 {
                     var firstEmployee = services.First();
@@ -125,11 +124,9 @@ namespace term_project.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAvailableEmployees(Guid serviceId)
         {
-            
             Console.WriteLine("REACHING EMPLOYEE METHOD");
             try
             {
-                
                 Console.WriteLine("SERVICE ID: " + serviceId);
                 // Fetch available employees for the selected service from the database
                 var serviceResponse = await _supabase
@@ -139,7 +136,7 @@ namespace term_project.Controllers
                     .Get();
 
                 var service = serviceResponse.Models;
-                
+
                 if (service != null && service.Any())
                 {
                     var firstEmployee = service.First();
@@ -149,9 +146,9 @@ namespace term_project.Controllers
                 {
                     Console.WriteLine("No Services");
                 }
-                
+
                 var serviceScheduleResponseList = new List<ServiceScheduleEmployee>();
-                
+
                 foreach (var serviceSchedule in service)
                 {
                     var serviceScheduleResponse = await _supabase
@@ -159,12 +156,12 @@ namespace term_project.Controllers
                         .Select("*")
                         .Where(s => s.ServiceScheduleId == serviceSchedule.ServiceScheduleId)
                         .Get();
-                    
+
                     serviceScheduleResponseList.AddRange(serviceScheduleResponse.Models);
                 }
 
                 var employeeResponseList = new List<Employee>();
-                
+
                 foreach (var employee in serviceScheduleResponseList)
                 {
                     var employeeResponse = await _supabase
@@ -172,12 +169,12 @@ namespace term_project.Controllers
                         .Select("*")
                         .Where(s => s.EmployeeId == employee.EmployeeId)
                         .Get();
-                    
+
                     employeeResponseList.AddRange(employeeResponse.Models);
                 }
-                
+
                 var employeeNames = new List<string>(); // List to store employee names
-                
+
                 var serviceScheduleId = new List<ServiceScheduleEmployee>();
 
                 foreach (var employee in employeeResponseList)
@@ -187,22 +184,22 @@ namespace term_project.Controllers
                         .Select("*")
                         .Where(s => s.EmployeeId == employee.EmployeeId)
                         .Get();
-                    
+
                     serviceScheduleId.AddRange(serviceScheduleResponseId.Models);
                 }
-        
+
                 foreach (var employee in employeeResponseList)
                 {
                     employeeNames.Add(employee.FirstName); // Add each employee name to the list
                 }
-                
-                var serviceScheduleIdStrings = new List<Guid>(); 
-                
+
+                var serviceScheduleIdStrings = new List<Guid>();
+
                 foreach (var serviceResponseId in serviceScheduleId)
                 {
                     serviceScheduleIdStrings.Add(serviceResponseId.ServiceScheduleEmployeeId);
                 }
-                
+
                 // Combine the service schedule IDs and employee names into a list of anonymous objects
                 var combinedData = new List<object>();
 
@@ -219,14 +216,13 @@ namespace term_project.Controllers
                 var jsonOutput = JsonConvert.SerializeObject(combinedData);
 
                 return Content(jsonOutput, "application/json");
-
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
         }
-        
+
         public IActionResult EmployeeSelection()
         {
             // Retrieve the services data JSON string from TempData
@@ -249,7 +245,6 @@ namespace term_project.Controllers
             return View("~/Views/CareView/EmployeeSelection.cshtml");
         }
 
-        
         [HttpPost]
         public async Task<IActionResult> RegisterService(Guid serviceScheduleEmployeeId, Guid renterId)
         {
@@ -257,7 +252,6 @@ namespace term_project.Controllers
             {
                 // Logic to register the service by updating the SERVICE_REGISTER table
                 // You can use Supabase or any other ORM to perform the database operation
-        
                 Console.WriteLine("RENTER ID VALUE: " + renterId);
                 // For example, using Supabase
                 var insertResponse = await _supabase
@@ -279,7 +273,6 @@ namespace term_project.Controllers
             }
         }
 
-        
         [HttpPost]
         public async Task<IActionResult> RegisteredServices()
         {
@@ -321,7 +314,7 @@ namespace term_project.Controllers
             }
 
             var serviceScheduleResponseEmployeeList = new List<ServiceScheduleEmployee>();
-            
+
             foreach (var service in response.Models)
             {
                 var serviceResponse = await _supabase
@@ -329,12 +322,12 @@ namespace term_project.Controllers
                     .Select("*")
                     .Where(s => s.ServiceScheduleEmployeeId == service.ServiceScheduleEmployeeId)
                     .Get();
-                
+
                 serviceScheduleResponseEmployeeList.AddRange(serviceResponse.Models);
             }
-            
+
             var serviceScheduleResponseList = new List<ServiceSchedule>();
-            
+
             foreach (var service in serviceScheduleResponseEmployeeList)
             {
                 var serviceResponse = await _supabase
@@ -342,7 +335,7 @@ namespace term_project.Controllers
                     .Select("*")
                     .Where(s => s.ServiceScheduleId == service.ServiceScheduleId)
                     .Get();
-                
+
                 serviceScheduleResponseList.AddRange(serviceResponse.Models);
             }
 
@@ -360,7 +353,7 @@ namespace term_project.Controllers
                     .Select("*")
                     .Where(s => s.ServiceId == service.ServiceId)
                     .Get();
-                
+
                 serviceResponseList.AddRange(serviceResponse.Models);
             }
 
@@ -378,7 +371,7 @@ namespace term_project.Controllers
                     .Select("*")
                     .Where(s => s.EmployeeId == service.EmployeeId)
                     .Get();
-                
+
                 employeeResponseList.AddRange(serviceResponse.Models);
             }
 
@@ -412,18 +405,101 @@ namespace term_project.Controllers
                 ServiceRegisterIds = serviceRegisterIds,
                 InvoiceStatus = serviceInvoiceStatus
             };
-            
+
             Console.WriteLine("ABOUT TO RETURN JSON");
 
             return Json(jsonData);
-
         }
-        
+
         public IActionResult RegisteredServicesView()
         {
             return View("~/Views/CareView/RegisteredServices.cshtml");
         }
-        
+
+        public IActionResult CreateServiceView()
+        {
+            return View("~/Views/CareView/CreateService.cshtml");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateService(string serviceName, float serviceRate)
+        {
+            try
+            {
+                await _supabase.From<Service>().Insert(new Service
+                {
+                    ServiceName = serviceName,
+                    Rate = serviceRate
+                });
+
+                return Ok("Service created successfully");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        public async Task<IActionResult> AddQualificationToServiceView()
+        {
+            var services = await _supabase.From<Service>().Select("*").Get();
+            ViewBag.Services = services.Models;
+
+            var qualifications = await _supabase.From<Qualification>().Select("*").Get();
+            ViewBag.Qualifications = qualifications.Models;
+
+            return View("~/Views/CareView/AddQualificationToServiceView.cshtml");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddQualificationToService(Guid serviceId, Guid qualificationId)
+        {
+            try
+            {
+                await _supabase.From<ServiceQualification>().Insert(new ServiceQualification
+                {
+                    ServiceId = serviceId,
+                    QualificationId = qualificationId
+                });
+
+                return Ok("Qualification added successfully");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        public async Task<IActionResult> QualifyEmployeeView()
+        {
+            var employees = await _supabase.From<Employee>().Select("*").Get();
+            ViewBag.Employees = employees.Models;
+
+            var qualifications = await _supabase.From<Qualification>().Select("*").Get();
+            ViewBag.Qualifications = qualifications.Models;
+
+            return View("~/Views/CareView/QualifyEmployeeView.cshtml");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> QualifyEmployee(Guid employeeId, Guid qualificationId)
+        {
+            try
+            {
+                await _supabase.From<EmployeeQualification>().Insert(new EmployeeQualification
+                {
+                    EmployeeId = employeeId,
+                    QualificationId = qualificationId
+                });
+
+                return Ok("Employee Qualification added successfully");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         [HttpPost]
         public async Task<IActionResult> DeleteService(Guid serviceRegisterId)
         {
@@ -443,6 +519,41 @@ namespace term_project.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        
+
+        public async Task<IActionResult> ServicesView()
+        {
+            var services = await _supabase.From<Service>().Select("*, SERVICE_QUALIFICATION(*, QUALIFICATION(*))").Get();
+            var ret = new List<object>();
+
+            foreach (var service in services.Models)
+            {
+                var serv_quals = await _supabase.From<ServiceQualification>().Select("*")
+                    .Where(qualification => qualification.ServiceId == service.ServiceId).Get();
+                var Qualifications = new List<object>();
+
+                foreach (var s_qual in serv_quals.Models)
+                {
+                    var qual = await _supabase.From<Qualification>().Select("*").Where(qualification =>
+                        qualification.QualificationId == s_qual.QualificationId).Get();
+                    Qualifications.Add(new
+                    {
+                       qual.Model?.QualificationId,
+                       qual.Model?.QualificationName
+                    });
+                }
+                
+                ret.Add(new
+                {
+                    service.ServiceId,
+                    service.ServiceName,
+                    service.Rate,
+                    Qualifications
+                });
+            }
+
+            ViewBag.Services = ret;
+            
+            return View("~/Views/CareView/ServicesView.cshtml");
+        }
     }
 }
