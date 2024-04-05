@@ -5,7 +5,9 @@
 <h1>Welcome to the Register Services Page!</h1>
 
 <label for="customerName">Customer Name:</label>
-<input type="text" id="customerName" name="customerName">
+<select id="customerName" name="customerName">
+    <!-- Populated dynamically based on the available applicants -->
+</select>
 <br>
 
 <label for="serviceId">Select Service:</label>
@@ -30,6 +32,25 @@
     <script>
         $(function () {
             console.log("Document ready. JavaScript function is executing."); // Log message
+            
+            // Fetch applicant names and populate the customer name dropdown
+            $.ajax({
+                url: '/Care/GetAllApplicants',
+                type: 'GET',
+                success: function (data) {
+                    var customerDropdown = $('#customerName');
+                    customerDropdown.empty();
+                    // Append each applicant name to the dropdown
+                    $.each(data.applicantNames, function (i, name) {
+                        // Append each applicant name and its corresponding renter ID as data attribute to the dropdown
+                        customerDropdown.append($('<option></option>').val(data.renterIds[i]).text(name).data('renter-id', data.renterIds[i]));
+                    });
+                },
+                error: function (xhr, status, error) {
+                    console.log(xhr.responseText);
+                }
+            });
+            
             $('#serviceId').change(function () {
                 var serviceId = $(this).val();
                 console.log(serviceId);
@@ -51,39 +72,36 @@
                     }
                 });
             });
-        });
-         $(function () {
-                    $('#registerServiceBtn').click(function () {
-                        var serviceScheduleEmployeeId = $('#employeeId').val();
-                        var customerName = $('#customerName').val();
-        
-                        // Perform validation if needed
-        
-                        // Call the RegisterService endpoint
-                        $.ajax({
-                            url: '/Care/RegisterService',
-                            type: 'POST',
-                            data: {
-                                serviceScheduleEmployeeId: serviceScheduleEmployeeId,
-                                customerName: customerName
-                            },
-                            success: function (response) {
-                                // Handle success response
-                                alert(response); // Show success message
-                            },
-                            error: function (xhr, status, error) {
-                                // Handle error response
-                                console.log(xhr.responseText);
-                                alert('Failed to register service. Please try again.');
-                            }
-                        });
-                    });
+            
+            $('#registerServiceBtn').click(function () {
+                var serviceScheduleEmployeeId = $('#employeeId').val();
+                var renterId = $('#customerName option:selected').val() // Get the selected renter ID
+    
+                // Perform validation if needed
+    
+                // Call the RegisterService endpoint
+                $.ajax({
+                    url: '/Care/RegisterService',
+                    type: 'POST',
+                    data: {
+                        serviceScheduleEmployeeId: serviceScheduleEmployeeId,
+                        renterId: renterId // Pass the renter ID to the backend
+                    },
+                    success: function (response) {
+                        // Handle success response
+                        alert(response); // Show success message
+                    },
+                    error: function (xhr, status, error) {
+                        // Handle error response
+                        console.log(xhr.responseText);
+                        alert('Failed to register service. Please try again.');
+                    }
                 });
-         $(function () {
-                     $('#viewRegisteredServicesBtn').click(function () {
-                         window.location.href = '/Care/RegisteredServicesView';
-                     });
-                 });
+            });
+            
+            $('#viewRegisteredServicesBtn').click(function () {
+                window.location.href = '/Care/RegisteredServicesView';
+            });
+        });
     </script>
 }
-
