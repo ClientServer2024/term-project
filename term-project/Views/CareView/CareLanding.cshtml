@@ -15,8 +15,13 @@
 <br/>
 <button id="allServicesPageButton">View all services</button> <!-- Add a button -->
 
+<div id="chartContainer">
+    
+    <canvas id="myChart"></canvas><!-- Add a bar chart -->
+</div> 
 
 @section scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         $(function () {
             $('#redirectButton').click(function () {
@@ -34,6 +39,40 @@
             $('#allServicesPageButton').click(function () {
                 window.location.href = '/Care/ServicesView'; // Redirect to another page
             });
+            
+            // Function to render the chart
+            function renderChart(chartData) {
+                var ctx = document.getElementById('myChart').getContext('2d');
+                var myChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: chartData,
+                    options: {
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: "Service Revenue Over the Last 12 Months",
+                                font: {size: 18}
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: {
+                                    callback: function (value) {
+                                        return '$' + value;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+            
+            // Call the API to get chart data and render the chart
+            $.get('/Care/GetServiceRevenue', function (data) {
+                renderChart(data);
+            });
         });
     </script>
 }
+
