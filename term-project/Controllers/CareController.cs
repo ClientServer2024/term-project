@@ -258,6 +258,25 @@ namespace term_project.Controllers
                 // You can use Supabase or any other ORM to perform the database operation
         
                 Console.WriteLine("RENTER ID VALUE: " + renterId);
+
+                var serviceScheduleId = await _supabase
+                    .From<ServiceScheduleEmployee>()
+                    .Select("*")
+                    .Where(s => s.ServiceScheduleEmployeeId == serviceScheduleEmployeeId)
+                    .Single();
+
+                var serviceIdTable = await _supabase
+                    .From<ServiceSchedule>()
+                    .Select("*")
+                    .Where(s => s.ServiceScheduleId == serviceScheduleId.ServiceScheduleId)
+                    .Single();
+
+                var serviceId = await _supabase
+                    .From<Service>()
+                    .Select("*")
+                    .Where(s => s.ServiceId == serviceIdTable.ServiceId)
+                    .Single();
+                
                 // For example, using Supabase
                 var insertResponse = await _supabase
                     .From<ServiceRegister>()
@@ -266,7 +285,8 @@ namespace term_project.Controllers
                         ServiceScheduleEmployeeId = serviceScheduleEmployeeId,
                         RenterId= renterId,
                         Status= "Not Sent",
-                        InvoiceId = Guid.NewGuid()
+                        InvoiceId = Guid.NewGuid(),
+                        ServiceId = serviceId.ServiceId
                     });
 
                 // Service successfully registered

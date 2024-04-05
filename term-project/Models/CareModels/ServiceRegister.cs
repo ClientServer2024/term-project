@@ -20,5 +20,11 @@ namespace term_project.Models.CareModels
         
         [Column("invoice_id")]
         public Guid InvoiceId { get; set; }
+        
+        [Column("service_id")]
+        public Guid ServiceId { get; set; }
+        
+        [Column("invoice_date")]
+        public DateTimeOffset InvoiceDate { get; set; }
     }
 }
