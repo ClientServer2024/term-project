@@ -14,6 +14,7 @@ namespace term_project.Controllers
     public class CareController : Controller
     {
         private readonly Supabase.Client _supabase;
+        private const double TAX = 0.12;
 
         public CareController()
         {
@@ -684,6 +685,113 @@ namespace term_project.Controllers
             
             return View("~/Views/CareView/ServicesView.cshtml");
         }
+        
+        public IActionResult RegisteredInvoicesView()
+        {
+            return View("~/Views/CareView/RegisteredInvoices.cshtml");
+
+        } 
+        [HttpPost]
+    public async Task<IActionResult> RegisteredInvoices()
+    {
+        
+        // initialize a list for each column
+        var invoiceIDs = new List<Guid>();
+        var dates = new List<DateTimeOffset>();
+        var customerEmails = new List<String>();
+        var serviceNames = new List<String>();
+        var serviceCharges = new List<float?>();
+        var taxCharges = new List<double?>();
+        var totalAmounts = new List<double?>();
+    
+        // will be used to get customer names and emails
+        var renters = new List<Renter>();
+        var applicants = new List<Applicant>();
+        
+        // will be used to get service names
+        var serviceIDs = new List<Service>();
+        
+        // grab all the invoices that have been sent
+        var response = await _supabase
+            .From<ServiceRegister>()
+            .Select("*")
+            .Where(s => s.Status == "sent" || s.Status == "SENT")
+            .Get();
+
+
+        
+        // grab all the fields we need from invoice table
+        foreach (var invoice in response.Models)
+        {
+            invoiceIDs.Add(invoice.InvoiceId);
+            dates.Add(invoice.InvoiceDate);
+    
+            var renter = await _supabase
+                .From<Renter>()
+                .Select("*")
+                .Where(r => r.RenterId == invoice.RenterId)
+                .Get();
+            renters.AddRange(renter.Models);
+    
+            var serviceSchedule = await _supabase
+                .From<Service>()
+                .Select("*")
+                .Where(s => s.ServiceId == invoice.ServiceId)
+                .Get();
+            serviceIDs.AddRange(serviceSchedule.Models);
+        }
+    
+        // now grab each applicant from renterIDs
+        foreach (var renter in renters)
+        {
+            var applicant = await _supabase
+                .From<Applicant>()
+                .Select("*")
+                .Where(a => a.ApplicantId == renter.ApplicantId)
+                .Get();
+            
+            applicants.AddRange(applicant.Models);
+        }
+        
+        // now grab each customers email
+        foreach (var applicant in applicants)
+        {
+            var email = applicant.Email;
+            customerEmails.Add(email);
+        }
+        
+        
+        // now grab each service name and rate
+        foreach (var serviceID in serviceIDs)
+        {
+            var serviceName = serviceID.ServiceName;
+            serviceNames.Add(serviceName);
+            var serviceCharge = serviceID.Rate;
+            serviceCharges.Add(serviceCharge);
+            // calculate tax and total amount here
+            var thisTaxCharge = serviceCharge * TAX;
+            taxCharges.Add(thisTaxCharge);
+            var thisTotalAmount = serviceCharge + thisTaxCharge;
+            totalAmounts.Add(thisTotalAmount);
+        }
+        
+        // Create an anonymous object containing the required data
+        var jsonData = new
+        {
+            InvoiceIDs = invoiceIDs,
+            Dates = dates,
+            CustomerEmails = customerEmails,
+            ServiceNames = serviceNames,
+            ServiceCharges = serviceCharges,
+            TaxCharges = taxCharges,
+            TotalAmounts = totalAmounts
+        };
+        
+        Console.WriteLine("ABOUT TO RETURN INVOICE JSON");
+    
+        return Json(jsonData);
+        
+    }
     }
 }
 

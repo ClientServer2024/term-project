@@ -6,18 +6,19 @@
 
 <table id="registeredServicesTable" class="table">
     <thead>
-        <tr>
-            <th>Service</th>
-            <th>Customer Name</th>
-            <th>Employee Name</th>
-            <th>Schedule Time</th>
-            <th>Invoice Status</th>
-            <!-- Add more columns if needed -->
-        </tr>
+    <tr>
+        <th>Service</th>
+        <th>Customer Name</th>
+        <th>Employee Name</th>
+        <th>Schedule Time</th>
+        <th>Invoice Status</th>
+        <!-- Add more columns if needed -->
+    </tr>
     </thead>
     <tbody>
     </tbody>
 </table>
+<button id="SeeAllInvoices">See Invoices History</button> 
 
 @section scripts {
     <script>
@@ -40,10 +41,12 @@
                             row.append('<td>' + data.serviceScheduleTimes[i] + '</td>'); // Assuming ServiceScheduleTimes is the correct array for IDs
                             row.append('<td>' + data.invoiceStatus[i] + '</td>'); // Display invoice status
                             // Add delete button with ServiceRegisterId
-                            if (data.invoiceStatus[i] !== 'Sent') {
+                            if (data.invoiceStatus[i].toLocaleUpperCase() !== 'SENT') {
                                 row.append('<td><button class="deleteServiceBtn" data-service-register-id="' + data.serviceRegisterIds[i] + '">Delete</button></td>');
+                                row.append('<td><button class="sendInvoiceButton" type="button" data-customer-name="' + data.customerNames[i] + '">Send Invoice</button></td>');
                             } else {
                                 row.append('<td><button class="deleteServiceBtn" data-service-register-id="' + data.serviceRegisterIds[i] + '" disabled>Delete</button></td>');
+                                row.append('<td><button class="sendInvoiceButton" type="button" data-customer-name="' + data.customerNames[i] + '" disabled>Send Invoice</button></td>');
                             }
                             // Add more columns if needed
                             tableBody.append(row);
@@ -78,6 +81,13 @@
                     });
                 }
             });
+            
+            $(function () {
+                 $('#SeeAllInvoices').click(function () {
+                         window.location.href = '/Care/RegisteredInvoicesView'; // Redirect to another page
+                 });
+            });
+            
         });
     </script>
 }
