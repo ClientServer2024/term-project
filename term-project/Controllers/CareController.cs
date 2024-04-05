@@ -36,8 +36,7 @@ namespace term_project.Controllers
         {
             return View();
         }
-
-        // GET: Care/CareLanding
+        
         // GET: Care/CareLanding
         public async Task<IActionResult> CareLanding()
         {
@@ -444,5 +443,106 @@ namespace term_project.Controllers
             }
         }
         
+        [HttpGet]
+        public async Task<IActionResult> GetServiceRevenue()
+        {   
+            try
+            {
+                // fetch service register data where status is "sent"
+                var serviceRegisterResponse = await _supabase
+                    .From<ServiceRegister>()
+                    .Select(sr => new object[] { sr.InvoiceDate, sr.ServiceId })
+                    .Where(sr => sr.Status == "sent")
+                    .Get();
+
+                var serviceRegisterList = serviceRegisterResponse.Models;
+
+                // fetch service rates
+                var serviceIds = serviceRegisterList.Select(sr => sr.ServiceId).ToList();
+                var serviceRates = new Dictionary<Guid, float>();
+                foreach (var serviceId in serviceIds)
+                {
+                    var serviceResponse = await _supabase
+                        .From<Service>()
+                        .Select(s => new object[] { s.ServiceId, s.Rate! })
+                        .Where(s=>s.ServiceId == serviceId)
+                        .Get();
+                    var serviceModel = serviceResponse.Models.FirstOrDefault();
+                    if (serviceModel != null)
+                    {
+                        serviceRates[serviceId] = serviceModel.Rate ?? 0;
+                    }
+                }
+        
+                // calculate revenue for each invoice and group by month
+                var revenueByMonth = new Dictionary<string, float>();
+                foreach (var serviceRegister in serviceRegisterList)
+                {
+                    var invoiceDate = serviceRegister.InvoiceDate.UtcDateTime;
+                    var monthYear = invoiceDate.ToString("MMM yyyy");
+                    var serviceId = serviceRegister.ServiceId;
+
+                    if (serviceRates.TryGetValue(serviceId, out var rate)) 
+                    {
+                        var revenue = rate;
+
+                        if (revenueByMonth.TryGetValue(monthYear, out var existingRevenue)) 
+                        {
+                            revenueByMonth[monthYear] = existingRevenue + revenue;
+                        }
+                        else 
+                        {
+                            revenueByMonth.Add(monthYear, revenue);
+                        }
+                    }
+                }
+
+                // Prepare data for Chart.js
+                var chartData = PrepareChartData(revenueByMonth);
+                var jsonData = JsonConvert.SerializeObject(chartData);
+
+                return Content(jsonData, "application/json");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        // prepare data for Chart.js
+        private object PrepareChartData(Dictionary<string, float> revenueByMonth)
+        {
+            var currentDate = DateTime.UtcNow;
+            var labels = new List<string>();
+            var data = new List<float>();
+
+            // iterate over the past 12 months
+            for (var i = 0; i < 12; i++)
+            {
+                var monthYear = currentDate.AddMonths(-i).ToString("MMM yyyy");
+                if (revenueByMonth.TryGetValue(monthYear, out var revenue))
+                {
+                    labels.Insert(0, monthYear); 
+                    data.Insert(0, revenueByMonth[monthYear]);
+                }
+                else
+                {
+                    labels.Insert(0, monthYear);
+                    data.Insert(0, 0); 
+                }
+            }
+            return new
+            {
+                labels,
+                datasets = new[]
+                {
+                    new
+                    {
+                        label = "Revenue",
+                        data
+                    }
+                }
+            };
+        }
     }
 }
