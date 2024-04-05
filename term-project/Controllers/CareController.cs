@@ -774,7 +774,7 @@ namespace term_project.Controllers
             var thisTotalAmount = serviceCharge + thisTaxCharge;
             totalAmounts.Add(thisTotalAmount);
         }
-        
+         
         // Create an anonymous object containing the required data
         var jsonData = new
         {
