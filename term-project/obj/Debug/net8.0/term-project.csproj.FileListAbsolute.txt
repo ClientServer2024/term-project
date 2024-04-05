@@ -1,81 +1,131 @@
-C:\Users\Bryant\Desktop\term-project\term-project\bin\Debug\net8.0\appsettings.Development.json
-C:\Users\Bryant\Desktop\term-project\term-project\bin\Debug\net8.0\appsettings.json
-C:\Users\Bryant\Desktop\term-project\term-project\bin\Debug\net8.0\term-project.staticwebassets.runtime.json
-C:\Users\Bryant\Desktop\term-project\term-project\bin\Debug\net8.0\term-project.exe
-C:\Users\Bryant\Desktop\term-project\term-project\bin\Debug\net8.0\term-project.deps.json
-C:\Users\Bryant\Desktop\term-project\term-project\bin\Debug\net8.0\term-project.runtimeconfig.json
-C:\Users\Bryant\Desktop\term-project\term-project\bin\Debug\net8.0\term-project.dll
-C:\Users\Bryant\Desktop\term-project\term-project\bin\Debug\net8.0\term-project.pdb
-C:\Users\Bryant\Desktop\term-project\term-project\obj\Debug\net8.0\term-project.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\Bryant\Desktop\term-project\term-project\obj\Debug\net8.0\term-project.AssemblyInfoInputs.cache
-C:\Users\Bryant\Desktop\term-project\term-project\obj\Debug\net8.0\term-project.AssemblyInfo.cs
-C:\Users\Bryant\Desktop\term-project\term-project\obj\Debug\net8.0\term-project.csproj.CoreCompileInputs.cache
-C:\Users\Bryant\Desktop\term-project\term-project\obj\Debug\net8.0\term-project.MvcApplicationPartsAssemblyInfo.cache
-C:\Users\Bryant\Desktop\term-project\term-project\obj\Debug\net8.0\term-project.RazorAssemblyInfo.cache
-C:\Users\Bryant\Desktop\term-project\term-project\obj\Debug\net8.0\term-project.RazorAssemblyInfo.cs
-C:\Users\Bryant\Desktop\term-project\term-project\obj\Debug\net8.0\term-project.sourcelink.json
-C:\Users\Bryant\Desktop\term-project\term-project\obj\Debug\net8.0\staticwebassets.build.json
-C:\Users\Bryant\Desktop\term-project\term-project\obj\Debug\net8.0\staticwebassets.development.json
-C:\Users\Bryant\Desktop\term-project\term-project\obj\Debug\net8.0\staticwebassets\msbuild.term-project.Microsoft.AspNetCore.StaticWebAssets.props
-C:\Users\Bryant\Desktop\term-project\term-project\obj\Debug\net8.0\staticwebassets\msbuild.build.term-project.props
-C:\Users\Bryant\Desktop\term-project\term-project\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.term-project.props
-C:\Users\Bryant\Desktop\term-project\term-project\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.term-project.props
-C:\Users\Bryant\Desktop\term-project\term-project\obj\Debug\net8.0\staticwebassets.pack.json
-C:\Users\Bryant\Desktop\term-project\term-project\obj\Debug\net8.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
-C:\Users\Bryant\Desktop\term-project\term-project\obj\Debug\net8.0\scopedcss\bundle\term-project.styles.css
-C:\Users\Bryant\Desktop\term-project\term-project\obj\Debug\net8.0\scopedcss\projectbundle\term-project.bundle.scp.css
-C:\Users\Bryant\Desktop\term-project\term-project\obj\Debug\net8.0\term-project.dll
-C:\Users\Bryant\Desktop\term-project\term-project\obj\Debug\net8.0\refint\term-project.dll
-C:\Users\Bryant\Desktop\term-project\term-project\obj\Debug\net8.0\term-project.pdb
-C:\Users\Bryant\Desktop\term-project\term-project\obj\Debug\net8.0\term-project.genruntimeconfig.cache
-C:\Users\Bryant\Desktop\term-project\term-project\obj\Debug\net8.0\ref\term-project.dll
-C:\Users\bardi\Documents\CST_Sem4\4945 DSA\term-project\term-project\bin\Debug\net8.0\appsettings.Development.json
-C:\Users\bardi\Documents\CST_Sem4\4945 DSA\term-project\term-project\bin\Debug\net8.0\appsettings.json
-C:\Users\bardi\Documents\CST_Sem4\4945 DSA\term-project\term-project\bin\Debug\net8.0\term-project.staticwebassets.runtime.json
-C:\Users\bardi\Documents\CST_Sem4\4945 DSA\term-project\term-project\bin\Debug\net8.0\term-project.exe
-C:\Users\bardi\Documents\CST_Sem4\4945 DSA\term-project\term-project\bin\Debug\net8.0\term-project.deps.json
-C:\Users\bardi\Documents\CST_Sem4\4945 DSA\term-project\term-project\bin\Debug\net8.0\term-project.runtimeconfig.json
-C:\Users\bardi\Documents\CST_Sem4\4945 DSA\term-project\term-project\bin\Debug\net8.0\term-project.dll
-C:\Users\bardi\Documents\CST_Sem4\4945 DSA\term-project\term-project\bin\Debug\net8.0\term-project.pdb
-C:\Users\bardi\Documents\CST_Sem4\4945 DSA\term-project\term-project\bin\Debug\net8.0\Supabase.Functions.dll
-C:\Users\bardi\Documents\CST_Sem4\4945 DSA\term-project\term-project\bin\Debug\net8.0\Supabase.Gotrue.dll
-C:\Users\bardi\Documents\CST_Sem4\4945 DSA\term-project\term-project\bin\Debug\net8.0\Microsoft.IdentityModel.Abstractions.dll
-C:\Users\bardi\Documents\CST_Sem4\4945 DSA\term-project\term-project\bin\Debug\net8.0\Microsoft.IdentityModel.JsonWebTokens.dll
-C:\Users\bardi\Documents\CST_Sem4\4945 DSA\term-project\term-project\bin\Debug\net8.0\Microsoft.IdentityModel.Logging.dll
-C:\Users\bardi\Documents\CST_Sem4\4945 DSA\term-project\term-project\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
-C:\Users\bardi\Documents\CST_Sem4\4945 DSA\term-project\term-project\bin\Debug\net8.0\MimeMapping.dll
-C:\Users\bardi\Documents\CST_Sem4\4945 DSA\term-project\term-project\bin\Debug\net8.0\Newtonsoft.Json.dll
-C:\Users\bardi\Documents\CST_Sem4\4945 DSA\term-project\term-project\bin\Debug\net8.0\Supabase.Postgrest.dll
-C:\Users\bardi\Documents\CST_Sem4\4945 DSA\term-project\term-project\bin\Debug\net8.0\Supabase.Realtime.dll
-C:\Users\bardi\Documents\CST_Sem4\4945 DSA\term-project\term-project\bin\Debug\net8.0\Supabase.Core.dll
-C:\Users\bardi\Documents\CST_Sem4\4945 DSA\term-project\term-project\bin\Debug\net8.0\Supabase.dll
-C:\Users\bardi\Documents\CST_Sem4\4945 DSA\term-project\term-project\bin\Debug\net8.0\Supabase.Storage.dll
-C:\Users\bardi\Documents\CST_Sem4\4945 DSA\term-project\term-project\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
-C:\Users\bardi\Documents\CST_Sem4\4945 DSA\term-project\term-project\bin\Debug\net8.0\System.Reactive.dll
-C:\Users\bardi\Documents\CST_Sem4\4945 DSA\term-project\term-project\bin\Debug\net8.0\Websocket.Client.dll
-C:\Users\bardi\Documents\CST_Sem4\4945 DSA\term-project\term-project\obj\Debug\net8.0\term-project.csproj.AssemblyReference.cache
-C:\Users\bardi\Documents\CST_Sem4\4945 DSA\term-project\term-project\obj\Debug\net8.0\term-project.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\bardi\Documents\CST_Sem4\4945 DSA\term-project\term-project\obj\Debug\net8.0\term-project.AssemblyInfoInputs.cache
-C:\Users\bardi\Documents\CST_Sem4\4945 DSA\term-project\term-project\obj\Debug\net8.0\term-project.AssemblyInfo.cs
-C:\Users\bardi\Documents\CST_Sem4\4945 DSA\term-project\term-project\obj\Debug\net8.0\term-project.csproj.CoreCompileInputs.cache
-C:\Users\bardi\Documents\CST_Sem4\4945 DSA\term-project\term-project\obj\Debug\net8.0\term-project.MvcApplicationPartsAssemblyInfo.cache
-C:\Users\bardi\Documents\CST_Sem4\4945 DSA\term-project\term-project\obj\Debug\net8.0\term-project.RazorAssemblyInfo.cache
-C:\Users\bardi\Documents\CST_Sem4\4945 DSA\term-project\term-project\obj\Debug\net8.0\term-project.RazorAssemblyInfo.cs
-C:\Users\bardi\Documents\CST_Sem4\4945 DSA\term-project\term-project\obj\Debug\net8.0\term-project.sourcelink.json
-C:\Users\bardi\Documents\CST_Sem4\4945 DSA\term-project\term-project\obj\Debug\net8.0\staticwebassets.build.json
-C:\Users\bardi\Documents\CST_Sem4\4945 DSA\term-project\term-project\obj\Debug\net8.0\staticwebassets.development.json
-C:\Users\bardi\Documents\CST_Sem4\4945 DSA\term-project\term-project\obj\Debug\net8.0\staticwebassets\msbuild.term-project.Microsoft.AspNetCore.StaticWebAssets.props
-C:\Users\bardi\Documents\CST_Sem4\4945 DSA\term-project\term-project\obj\Debug\net8.0\staticwebassets\msbuild.build.term-project.props
-C:\Users\bardi\Documents\CST_Sem4\4945 DSA\term-project\term-project\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.term-project.props
-C:\Users\bardi\Documents\CST_Sem4\4945 DSA\term-project\term-project\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.term-project.props
-C:\Users\bardi\Documents\CST_Sem4\4945 DSA\term-project\term-project\obj\Debug\net8.0\staticwebassets.pack.json
-C:\Users\bardi\Documents\CST_Sem4\4945 DSA\term-project\term-project\obj\Debug\net8.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
-C:\Users\bardi\Documents\CST_Sem4\4945 DSA\term-project\term-project\obj\Debug\net8.0\scopedcss\bundle\term-project.styles.css
-C:\Users\bardi\Documents\CST_Sem4\4945 DSA\term-project\term-project\obj\Debug\net8.0\scopedcss\projectbundle\term-project.bundle.scp.css
-C:\Users\bardi\Documents\CST_Sem4\4945 DSA\term-project\term-project\obj\Debug\net8.0\term-project.csproj.CopyComplete
-C:\Users\bardi\Documents\CST_Sem4\4945 DSA\term-project\term-project\obj\Debug\net8.0\term-project.dll
-C:\Users\bardi\Documents\CST_Sem4\4945 DSA\term-project\term-project\obj\Debug\net8.0\refint\term-project.dll
-C:\Users\bardi\Documents\CST_Sem4\4945 DSA\term-project\term-project\obj\Debug\net8.0\term-project.pdb
-C:\Users\bardi\Documents\CST_Sem4\4945 DSA\term-project\term-project\obj\Debug\net8.0\term-project.genruntimeconfig.cache
-C:\Users\bardi\Documents\CST_Sem4\4945 DSA\term-project\term-project\obj\Debug\net8.0\ref\term-project.dll
-C:\Users\bardi\Documents\CST_Sem4\4945 DSA\term-project\term-project\bin\Debug\net8.0\dotenv.net.dll
+C:/Users/Bryant/Desktop/term-project/term-project/bin/Debug/net8.0/appsettings.Development.json
+C:/Users/Bryant/Desktop/term-project/term-project/bin/Debug/net8.0/appsettings.json
+C:/Users/Bryant/Desktop/term-project/term-project/bin/Debug/net8.0/term-project.staticwebassets.runtime.json
+C:/Users/Bryant/Desktop/term-project/term-project/bin/Debug/net8.0/term-project.exe
+C:/Users/Bryant/Desktop/term-project/term-project/bin/Debug/net8.0/term-project.deps.json
+C:/Users/Bryant/Desktop/term-project/term-project/bin/Debug/net8.0/term-project.runtimeconfig.json
+C:/Users/Bryant/Desktop/term-project/term-project/bin/Debug/net8.0/term-project.dll
+C:/Users/Bryant/Desktop/term-project/term-project/bin/Debug/net8.0/term-project.pdb
+C:/Users/Bryant/Desktop/term-project/term-project/obj/Debug/net8.0/term-project.GeneratedMSBuildEditorConfig.editorconfig
+C:/Users/Bryant/Desktop/term-project/term-project/obj/Debug/net8.0/term-project.AssemblyInfoInputs.cache
+C:/Users/Bryant/Desktop/term-project/term-project/obj/Debug/net8.0/term-project.AssemblyInfo.cs
+C:/Users/Bryant/Desktop/term-project/term-project/obj/Debug/net8.0/term-project.csproj.CoreCompileInputs.cache
+C:/Users/Bryant/Desktop/term-project/term-project/obj/Debug/net8.0/term-project.MvcApplicationPartsAssemblyInfo.cache
+C:/Users/Bryant/Desktop/term-project/term-project/obj/Debug/net8.0/term-project.RazorAssemblyInfo.cache
+C:/Users/Bryant/Desktop/term-project/term-project/obj/Debug/net8.0/term-project.RazorAssemblyInfo.cs
+C:/Users/Bryant/Desktop/term-project/term-project/obj/Debug/net8.0/term-project.sourcelink.json
+C:/Users/Bryant/Desktop/term-project/term-project/obj/Debug/net8.0/staticwebassets.build.json
+C:/Users/Bryant/Desktop/term-project/term-project/obj/Debug/net8.0/staticwebassets.development.json
+C:/Users/Bryant/Desktop/term-project/term-project/obj/Debug/net8.0/staticwebassets/msbuild.term-project.Microsoft.AspNetCore.StaticWebAssets.props
+C:/Users/Bryant/Desktop/term-project/term-project/obj/Debug/net8.0/staticwebassets/msbuild.build.term-project.props
+C:/Users/Bryant/Desktop/term-project/term-project/obj/Debug/net8.0/staticwebassets/msbuild.buildMultiTargeting.term-project.props
+C:/Users/Bryant/Desktop/term-project/term-project/obj/Debug/net8.0/staticwebassets/msbuild.buildTransitive.term-project.props
+C:/Users/Bryant/Desktop/term-project/term-project/obj/Debug/net8.0/staticwebassets.pack.json
+C:/Users/Bryant/Desktop/term-project/term-project/obj/Debug/net8.0/scopedcss/Views/Shared/_Layout.cshtml.rz.scp.css
+C:/Users/Bryant/Desktop/term-project/term-project/obj/Debug/net8.0/scopedcss/bundle/term-project.styles.css
+C:/Users/Bryant/Desktop/term-project/term-project/obj/Debug/net8.0/scopedcss/projectbundle/term-project.bundle.scp.css
+C:/Users/Bryant/Desktop/term-project/term-project/obj/Debug/net8.0/term-project.dll
+C:/Users/Bryant/Desktop/term-project/term-project/obj/Debug/net8.0/refint/term-project.dll
+C:/Users/Bryant/Desktop/term-project/term-project/obj/Debug/net8.0/term-project.pdb
+C:/Users/Bryant/Desktop/term-project/term-project/obj/Debug/net8.0/term-project.genruntimeconfig.cache
+C:/Users/Bryant/Desktop/term-project/term-project/obj/Debug/net8.0/ref/term-project.dll
+C:/Users/bardi/Documents/CST_Sem4/4945 DSA/term-project/term-project/bin/Debug/net8.0/appsettings.Development.json
+C:/Users/bardi/Documents/CST_Sem4/4945 DSA/term-project/term-project/bin/Debug/net8.0/appsettings.json
+C:/Users/bardi/Documents/CST_Sem4/4945 DSA/term-project/term-project/bin/Debug/net8.0/term-project.staticwebassets.runtime.json
+C:/Users/bardi/Documents/CST_Sem4/4945 DSA/term-project/term-project/bin/Debug/net8.0/term-project.exe
+C:/Users/bardi/Documents/CST_Sem4/4945 DSA/term-project/term-project/bin/Debug/net8.0/term-project.deps.json
+C:/Users/bardi/Documents/CST_Sem4/4945 DSA/term-project/term-project/bin/Debug/net8.0/term-project.runtimeconfig.json
+C:/Users/bardi/Documents/CST_Sem4/4945 DSA/term-project/term-project/bin/Debug/net8.0/term-project.dll
+C:/Users/bardi/Documents/CST_Sem4/4945 DSA/term-project/term-project/bin/Debug/net8.0/term-project.pdb
+C:/Users/bardi/Documents/CST_Sem4/4945 DSA/term-project/term-project/bin/Debug/net8.0/Supabase.Functions.dll
+C:/Users/bardi/Documents/CST_Sem4/4945 DSA/term-project/term-project/bin/Debug/net8.0/Supabase.Gotrue.dll
+C:/Users/bardi/Documents/CST_Sem4/4945 DSA/term-project/term-project/bin/Debug/net8.0/Microsoft.IdentityModel.Abstractions.dll
+C:/Users/bardi/Documents/CST_Sem4/4945 DSA/term-project/term-project/bin/Debug/net8.0/Microsoft.IdentityModel.JsonWebTokens.dll
+C:/Users/bardi/Documents/CST_Sem4/4945 DSA/term-project/term-project/bin/Debug/net8.0/Microsoft.IdentityModel.Logging.dll
+C:/Users/bardi/Documents/CST_Sem4/4945 DSA/term-project/term-project/bin/Debug/net8.0/Microsoft.IdentityModel.Tokens.dll
+C:/Users/bardi/Documents/CST_Sem4/4945 DSA/term-project/term-project/bin/Debug/net8.0/MimeMapping.dll
+C:/Users/bardi/Documents/CST_Sem4/4945 DSA/term-project/term-project/bin/Debug/net8.0/Newtonsoft.Json.dll
+C:/Users/bardi/Documents/CST_Sem4/4945 DSA/term-project/term-project/bin/Debug/net8.0/Supabase.Postgrest.dll
+C:/Users/bardi/Documents/CST_Sem4/4945 DSA/term-project/term-project/bin/Debug/net8.0/Supabase.Realtime.dll
+C:/Users/bardi/Documents/CST_Sem4/4945 DSA/term-project/term-project/bin/Debug/net8.0/Supabase.Core.dll
+C:/Users/bardi/Documents/CST_Sem4/4945 DSA/term-project/term-project/bin/Debug/net8.0/Supabase.dll
+C:/Users/bardi/Documents/CST_Sem4/4945 DSA/term-project/term-project/bin/Debug/net8.0/Supabase.Storage.dll
+C:/Users/bardi/Documents/CST_Sem4/4945 DSA/term-project/term-project/bin/Debug/net8.0/System.IdentityModel.Tokens.Jwt.dll
+C:/Users/bardi/Documents/CST_Sem4/4945 DSA/term-project/term-project/bin/Debug/net8.0/System.Reactive.dll
+C:/Users/bardi/Documents/CST_Sem4/4945 DSA/term-project/term-project/bin/Debug/net8.0/Websocket.Client.dll
+C:/Users/bardi/Documents/CST_Sem4/4945 DSA/term-project/term-project/obj/Debug/net8.0/term-project.csproj.AssemblyReference.cache
+C:/Users/bardi/Documents/CST_Sem4/4945 DSA/term-project/term-project/obj/Debug/net8.0/term-project.GeneratedMSBuildEditorConfig.editorconfig
+C:/Users/bardi/Documents/CST_Sem4/4945 DSA/term-project/term-project/obj/Debug/net8.0/term-project.AssemblyInfoInputs.cache
+C:/Users/bardi/Documents/CST_Sem4/4945 DSA/term-project/term-project/obj/Debug/net8.0/term-project.AssemblyInfo.cs
+C:/Users/bardi/Documents/CST_Sem4/4945 DSA/term-project/term-project/obj/Debug/net8.0/term-project.csproj.CoreCompileInputs.cache
+C:/Users/bardi/Documents/CST_Sem4/4945 DSA/term-project/term-project/obj/Debug/net8.0/term-project.MvcApplicationPartsAssemblyInfo.cache
+C:/Users/bardi/Documents/CST_Sem4/4945 DSA/term-project/term-project/obj/Debug/net8.0/term-project.RazorAssemblyInfo.cache
+C:/Users/bardi/Documents/CST_Sem4/4945 DSA/term-project/term-project/obj/Debug/net8.0/term-project.RazorAssemblyInfo.cs
+C:/Users/bardi/Documents/CST_Sem4/4945 DSA/term-project/term-project/obj/Debug/net8.0/term-project.sourcelink.json
+C:/Users/bardi/Documents/CST_Sem4/4945 DSA/term-project/term-project/obj/Debug/net8.0/staticwebassets.build.json
+C:/Users/bardi/Documents/CST_Sem4/4945 DSA/term-project/term-project/obj/Debug/net8.0/staticwebassets.development.json
+C:/Users/bardi/Documents/CST_Sem4/4945 DSA/term-project/term-project/obj/Debug/net8.0/staticwebassets/msbuild.term-project.Microsoft.AspNetCore.StaticWebAssets.props
+C:/Users/bardi/Documents/CST_Sem4/4945 DSA/term-project/term-project/obj/Debug/net8.0/staticwebassets/msbuild.build.term-project.props
+C:/Users/bardi/Documents/CST_Sem4/4945 DSA/term-project/term-project/obj/Debug/net8.0/staticwebassets/msbuild.buildMultiTargeting.term-project.props
+C:/Users/bardi/Documents/CST_Sem4/4945 DSA/term-project/term-project/obj/Debug/net8.0/staticwebassets/msbuild.buildTransitive.term-project.props
+C:/Users/bardi/Documents/CST_Sem4/4945 DSA/term-project/term-project/obj/Debug/net8.0/staticwebassets.pack.json
+C:/Users/bardi/Documents/CST_Sem4/4945 DSA/term-project/term-project/obj/Debug/net8.0/scopedcss/Views/Shared/_Layout.cshtml.rz.scp.css
+C:/Users/bardi/Documents/CST_Sem4/4945 DSA/term-project/term-project/obj/Debug/net8.0/scopedcss/bundle/term-project.styles.css
+C:/Users/bardi/Documents/CST_Sem4/4945 DSA/term-project/term-project/obj/Debug/net8.0/scopedcss/projectbundle/term-project.bundle.scp.css
+C:/Users/bardi/Documents/CST_Sem4/4945 DSA/term-project/term-project/obj/Debug/net8.0/term-project.csproj.CopyComplete
+C:/Users/bardi/Documents/CST_Sem4/4945 DSA/term-project/term-project/obj/Debug/net8.0/term-project.dll
+C:/Users/bardi/Documents/CST_Sem4/4945 DSA/term-project/term-project/obj/Debug/net8.0/refint/term-project.dll
+C:/Users/bardi/Documents/CST_Sem4/4945 DSA/term-project/term-project/obj/Debug/net8.0/term-project.pdb
+C:/Users/bardi/Documents/CST_Sem4/4945 DSA/term-project/term-project/obj/Debug/net8.0/term-project.genruntimeconfig.cache
+C:/Users/bardi/Documents/CST_Sem4/4945 DSA/term-project/term-project/obj/Debug/net8.0/ref/term-project.dll
+C:/Users/bardi/Documents/CST_Sem4/4945 DSA/term-project/term-project/bin/Debug/net8.0/dotenv.net.dll
+/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/bin/Debug/net8.0/appsettings.Development.json
+/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/bin/Debug/net8.0/appsettings.json
+/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/bin/Debug/net8.0/term-project.staticwebassets.runtime.json
+/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/bin/Debug/net8.0/term-project
+/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/bin/Debug/net8.0/term-project.deps.json
+/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/bin/Debug/net8.0/term-project.runtimeconfig.json
+/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/bin/Debug/net8.0/term-project.dll
+/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/bin/Debug/net8.0/term-project.pdb
+/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/bin/Debug/net8.0/dotenv.net.dll
+/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/bin/Debug/net8.0/Supabase.Functions.dll
+/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/bin/Debug/net8.0/Supabase.Gotrue.dll
+/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/bin/Debug/net8.0/Microsoft.IdentityModel.Abstractions.dll
+/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/bin/Debug/net8.0/Microsoft.IdentityModel.JsonWebTokens.dll
+/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/bin/Debug/net8.0/Microsoft.IdentityModel.Logging.dll
+/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/bin/Debug/net8.0/Microsoft.IdentityModel.Tokens.dll
+/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/bin/Debug/net8.0/MimeMapping.dll
+/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/bin/Debug/net8.0/Newtonsoft.Json.dll
+/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/bin/Debug/net8.0/Supabase.Postgrest.dll
+/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/bin/Debug/net8.0/Supabase.Realtime.dll
+/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/bin/Debug/net8.0/Supabase.Core.dll
+/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/bin/Debug/net8.0/Supabase.dll
+/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/bin/Debug/net8.0/Supabase.Storage.dll
+/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/bin/Debug/net8.0/System.IdentityModel.Tokens.Jwt.dll
+/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/bin/Debug/net8.0/System.Reactive.dll
+/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/bin/Debug/net8.0/Websocket.Client.dll
+/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/obj/Debug/net8.0/term-project.csproj.AssemblyReference.cache
+/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/obj/Debug/net8.0/term-project.GeneratedMSBuildEditorConfig.editorconfig
+/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/obj/Debug/net8.0/term-project.AssemblyInfoInputs.cache
+/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/obj/Debug/net8.0/term-project.AssemblyInfo.cs
+/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/obj/Debug/net8.0/term-project.csproj.CoreCompileInputs.cache
+/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/obj/Debug/net8.0/term-project.MvcApplicationPartsAssemblyInfo.cache
+/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/obj/Debug/net8.0/term-project.RazorAssemblyInfo.cache
+/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/obj/Debug/net8.0/term-project.RazorAssemblyInfo.cs
+/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/obj/Debug/net8.0/term-project.sourcelink.json
+/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/obj/Debug/net8.0/staticwebassets.build.json
+/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/obj/Debug/net8.0/staticwebassets.development.json
+/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/obj/Debug/net8.0/staticwebassets/msbuild.term-project.Microsoft.AspNetCore.StaticWebAssets.props
+/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/obj/Debug/net8.0/staticwebassets/msbuild.build.term-project.props
+/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/obj/Debug/net8.0/staticwebassets/msbuild.buildMultiTargeting.term-project.props
+/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/obj/Debug/net8.0/staticwebassets/msbuild.buildTransitive.term-project.props
+/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/obj/Debug/net8.0/staticwebassets.pack.json
+/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/obj/Debug/net8.0/scopedcss/Views/Shared/_Layout.cshtml.rz.scp.css
+/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/obj/Debug/net8.0/scopedcss/bundle/term-project.styles.css
+/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/obj/Debug/net8.0/scopedcss/projectbundle/term-project.bundle.scp.css
+/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/obj/Debug/net8.0/term-project.csproj.CopyComplete
+/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/obj/Debug/net8.0/term-project.dll
+/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/obj/Debug/net8.0/refint/term-project.dll
+/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/obj/Debug/net8.0/term-project.pdb
+/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/obj/Debug/net8.0/term-project.genruntimeconfig.cache
+/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/obj/Debug/net8.0/ref/term-project.dll
