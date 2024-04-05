@@ -653,19 +653,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\trist\\.nuget\\packages\\": {}
+    "C:\\Users\\cassi\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\trist\\OneDrive\\Desktop\\Stuff\\Homework\\CST_Term_4\\CS\\term-project\\term-project\\term-project.csproj",
+      "projectUniqueName": "C:\\Users\\cassi\\Source\\Repos\\term-project\\term-project\\term-project.csproj",
       "projectName": "term-project",
-      "projectPath": "C:\\Users\\trist\\OneDrive\\Desktop\\Stuff\\Homework\\CST_Term_4\\CS\\term-project\\term-project\\term-project.csproj",
-      "packagesPath": "C:\\Users\\trist\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\trist\\OneDrive\\Desktop\\Stuff\\Homework\\CST_Term_4\\CS\\term-project\\term-project\\obj\\",
+      "projectPath": "C:\\Users\\cassi\\Source\\Repos\\term-project\\term-project\\term-project.csproj",
+      "packagesPath": "C:\\Users\\cassi\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\cassi\\Source\\Repos\\term-project\\term-project\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\trist\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\cassi\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -719,8 +719,16 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.203/PortableRuntimeIdentifierGraph.json"
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problem reading the cache file C:\\Users\\cassi\\Source\\Repos\\term-project\\term-project\\obj\\project.nuget.cache : After parsing a value an unexpected character was encountered: \". Path 'expectedPackageFiles[17]', line 26, position 4."
+    }
+  ]
 }

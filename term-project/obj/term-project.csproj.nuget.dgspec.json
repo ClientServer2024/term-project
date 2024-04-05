@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\trist\\OneDrive\\Desktop\\Stuff\\Homework\\CST_Term_4\\CS\\term-project\\term-project\\term-project.csproj": {}
+    "C:\\Users\\cassi\\Source\\Repos\\term-project\\term-project\\term-project.csproj": {}
   },
   "projects": {
-    "C:\\Users\\trist\\OneDrive\\Desktop\\Stuff\\Homework\\CST_Term_4\\CS\\term-project\\term-project\\term-project.csproj": {
+    "C:\\Users\\cassi\\Source\\Repos\\term-project\\term-project\\term-project.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\trist\\OneDrive\\Desktop\\Stuff\\Homework\\CST_Term_4\\CS\\term-project\\term-project\\term-project.csproj",
+        "projectUniqueName": "C:\\Users\\cassi\\Source\\Repos\\term-project\\term-project\\term-project.csproj",
         "projectName": "term-project",
-        "projectPath": "C:\\Users\\trist\\OneDrive\\Desktop\\Stuff\\Homework\\CST_Term_4\\CS\\term-project\\term-project\\term-project.csproj",
-        "packagesPath": "C:\\Users\\trist\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\trist\\OneDrive\\Desktop\\Stuff\\Homework\\CST_Term_4\\CS\\term-project\\term-project\\obj\\",
+        "projectPath": "C:\\Users\\cassi\\Source\\Repos\\term-project\\term-project\\term-project.csproj",
+        "packagesPath": "C:\\Users\\cassi\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\cassi\\Source\\Repos\\term-project\\term-project\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\trist\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\cassi\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -68,7 +68,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.203/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

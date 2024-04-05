@@ -9,55 +9,51 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = term_project
 build_property.RootNamespace = term_project
-build_property.ProjectDir = C:\Users\trist\OneDrive\Desktop\Stuff\Homework\CST_Term_4\CS\term-project\term-project\
+build_property.ProjectDir = C:\Users\cassi\Source\Repos\term-project\term-project\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\trist\OneDrive\Desktop\Stuff\Homework\CST_Term_4\CS\term-project\term-project
+build_property.MSBuildProjectDirectory = C:\Users\cassi\Source\Repos\term-project\term-project
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/trist/OneDrive/Desktop/Stuff/Homework/CST_Term_4/CS/term-project/term-project/Views/CareView/CareLanding.cshtml]
+[C:/Users/cassi/Source/Repos/term-project/term-project/Views/CareView/CareLanding.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FyZVZpZXdcQ2FyZUxhbmRpbmcuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/trist/OneDrive/Desktop/Stuff/Homework/CST_Term_4/CS/term-project/term-project/Views/CRMView/CRMLanding.cshtml]
+[C:/Users/cassi/Source/Repos/term-project/term-project/Views/CRMView/CRMLanding.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ1JNVmlld1xDUk1MYW5kaW5nLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/trist/OneDrive/Desktop/Stuff/Homework/CST_Term_4/CS/term-project/term-project/Views/Home/Index.cshtml]
+[C:/Users/cassi/Source/Repos/term-project/term-project/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/trist/OneDrive/Desktop/Stuff/Homework/CST_Term_4/CS/term-project/term-project/Views/Home/Privacy.cshtml]
+[C:/Users/cassi/Source/Repos/term-project/term-project/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/trist/OneDrive/Desktop/Stuff/Homework/CST_Term_4/CS/term-project/term-project/Views/HRView/HRLanding.cshtml]
+[C:/Users/cassi/Source/Repos/term-project/term-project/Views/HRView/HRLanding.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSFJWaWV3XEhSTGFuZGluZy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/trist/OneDrive/Desktop/Stuff/Homework/CST_Term_4/CS/term-project/term-project/Views/HRView/HRManageEmployees.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSFJWaWV3XEhSTWFuYWdlRW1wbG95ZWVzLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/trist/OneDrive/Desktop/Stuff/Homework/CST_Term_4/CS/term-project/term-project/Views/Shared/Error.cshtml]
+[C:/Users/cassi/Source/Repos/term-project/term-project/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/trist/OneDrive/Desktop/Stuff/Homework/CST_Term_4/CS/term-project/term-project/Views/Shared/_ValidationScriptsPartial.cshtml]
+[C:/Users/cassi/Source/Repos/term-project/term-project/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/trist/OneDrive/Desktop/Stuff/Homework/CST_Term_4/CS/term-project/term-project/Views/_ViewImports.cshtml]
+[C:/Users/cassi/Source/Repos/term-project/term-project/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/trist/OneDrive/Desktop/Stuff/Homework/CST_Term_4/CS/term-project/term-project/Views/_ViewStart.cshtml]
+[C:/Users/cassi/Source/Repos/term-project/term-project/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/trist/OneDrive/Desktop/Stuff/Homework/CST_Term_4/CS/term-project/term-project/Views/Shared/_Layout.cshtml]
+[C:/Users/cassi/Source/Repos/term-project/term-project/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-78aq479fxd
