@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Reflection;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
 using term_project.Models.CareModels;
@@ -51,7 +52,7 @@ namespace term_project.Controllers
 
                 // Extract the services data
                 var services = servicesResponse.Models;
-                
+
                 if (services != null && services.Any())
                 {
                     var firstEmployee = services.First();
@@ -435,14 +436,97 @@ namespace term_project.Controllers
             Console.WriteLine("ABOUT TO RETURN JSON");
 
             return Json(jsonData);
-
         }
         
         public IActionResult RegisteredServicesView()
         {
             return View("~/Views/CareView/RegisteredServices.cshtml");
         }
-        
+
+        public IActionResult CreateServiceView()
+        {
+            return View("~/Views/CareView/CreateService.cshtml");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateService(string serviceName, float serviceRate)
+        {
+            try
+            {
+                await _supabase.From<Service>().Insert(new Service
+                {
+                    ServiceName = serviceName,
+                    Rate = serviceRate
+                });
+
+                return Ok("Service created successfully");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        public async Task<IActionResult> AddQualificationToServiceView()
+        {
+            var services = await _supabase.From<Service>().Select("*").Get();
+            ViewBag.Services = services.Models;
+
+            var qualifications = await _supabase.From<Qualification>().Select("*").Get();
+            ViewBag.Qualifications = qualifications.Models;
+
+            return View("~/Views/CareView/AddQualificationToServiceView.cshtml");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddQualificationToService(Guid serviceId, Guid qualificationId)
+        {
+            try
+            {
+                await _supabase.From<ServiceQualification>().Insert(new ServiceQualification
+                {
+                    ServiceId = serviceId,
+                    QualificationId = qualificationId
+                });
+
+                return Ok("Qualification added successfully");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        public async Task<IActionResult> QualifyEmployeeView()
+        {
+            var employees = await _supabase.From<Employee>().Select("*").Get();
+            ViewBag.Employees = employees.Models;
+
+            var qualifications = await _supabase.From<Qualification>().Select("*").Get();
+            ViewBag.Qualifications = qualifications.Models;
+
+            return View("~/Views/CareView/QualifyEmployeeView.cshtml");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> QualifyEmployee(Guid employeeId, Guid qualificationId)
+        {
+            try
+            {
+                await _supabase.From<EmployeeQualification>().Insert(new EmployeeQualification
+                {
+                    EmployeeId = employeeId,
+                    QualificationId = qualificationId
+                });
+
+                return Ok("Employee Qualification added successfully");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         [HttpPost]
         public async Task<IActionResult> DeleteService(Guid serviceRegisterId)
         {
@@ -564,5 +648,42 @@ namespace term_project.Controllers
                 }
             };
         }
+        
+        public async Task<IActionResult> ServicesView()
+        {
+            var services = await _supabase.From<Service>().Select("*, SERVICE_QUALIFICATION(*, QUALIFICATION(*))").Get();
+            var ret = new List<object>();
+
+            foreach (var service in services.Models)
+            {
+                var serv_quals = await _supabase.From<ServiceQualification>().Select("*")
+                    .Where(qualification => qualification.ServiceId == service.ServiceId).Get();
+                var Qualifications = new List<object>();
+
+                foreach (var s_qual in serv_quals.Models)
+                {
+                    var qual = await _supabase.From<Qualification>().Select("*").Where(qualification =>
+                        qualification.QualificationId == s_qual.QualificationId).Get();
+                    Qualifications.Add(new
+                    {
+                        qual.Model?.QualificationId,
+                        qual.Model?.QualificationName
+                    });
+                }
+                
+                ret.Add(new
+                {
+                    service.ServiceId,
+                    service.ServiceName,
+                    service.Rate,
+                    Qualifications
+                });
+            }
+            
+            ViewBag.Services = ret;
+            
+            return View("~/Views/CareView/ServicesView.cshtml");
+        }
     }
 }
+

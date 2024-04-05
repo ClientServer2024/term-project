@@ -1,0 +1,31 @@
+@{
+    ViewData["Title"] = "Services";
+}
+
+<h1>Services</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Service</th>
+            <th>Rate</th>
+            <th>Qualifications</th>
+            <!-- Add more columns if needed -->
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var service in ViewBag.Services)
+    {
+        <tr>
+            <td>@service.ServiceName</td>
+            <td>@service.Rate</td>
+            <td>
+            @foreach (var qual in service.Qualifications)
+            {
+                <span>@qual.QualificationName </span>
+            }
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
