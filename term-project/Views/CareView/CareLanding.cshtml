@@ -10,6 +10,10 @@
 <button id="createServicePageButton">Go to Create Service Page</button> <!-- Add a button -->
 <br/>
 <button id="addQualificationToServicePageButton">Go to Add Qualification To Service Page</button> <!-- Add a button -->
+<br/>
+<button id="qualifyEmployeePageButton">Go to Qualify Employee Page</button> <!-- Add a button -->
+<br/>
+<button id="allServicesPageButton">View all services</button> <!-- Add a button -->
 
 
 @section scripts {
@@ -23,6 +27,12 @@
             });
             $('#addQualificationToServicePageButton').click(function () {
                 window.location.href = '/Care/AddQualificationToServiceView'; // Redirect to another page
+            });
+            $('#qualifyEmployeePageButton').click(function () {
+                window.location.href = '/Care/QualifyEmployeeView'; // Redirect to another page
+            });
+            $('#allServicesPageButton').click(function () {
+                window.location.href = '/Care/ServicesView'; // Redirect to another page
             });
         });
     </script>
