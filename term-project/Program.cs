@@ -2,6 +2,7 @@
 using term_project.Models.CareModels;
 
 using dotenv.net;
+using term_project.Models.CRMModels;
 
 // Inside the appropriate method
 DotEnv.Load();
@@ -38,7 +39,10 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 // Adjust this part according to how you instantiate your Supabase client
-await InitializeSupabase(supabaseUrl, supabaseKey);
+if (supabaseUrl != null && supabaseKey != null)
+{
+    await InitializeSupabase(supabaseUrl, supabaseKey);
+}
 
 app.Run();
 
@@ -58,6 +62,9 @@ async Task InitializeSupabase(string url, string key)
     await InsertEmployee(supabase, logger);
 
     await GetFirstUserEmail(supabase, logger);  
+
+    await InsertRenter(supabase, logger);
+    System.Console.WriteLine("renter addded");
 
 }
 
@@ -115,5 +122,30 @@ async Task GetFirstUserEmail(Supabase.Client supabase, ILogger logger)
     catch (Exception ex)
     {
         logger.LogError($"An error occurred while fetching the email: {ex.Message}");
+    }
+}
+
+async Task InsertRenter(Supabase.Client supabase, ILogger logger)
+{
+    try
+    {
+        // Create a new renter object
+        var newRenter = new Renter
+        {
+            RenterId = Guid.NewGuid(), // Assuming RenterId is a GUID primary key
+            ApplicantId = Guid.NewGuid(), // Example ApplicantId, adjust accordingly
+            EmergencyContacts = "Emergency contact information", // Example emergency contacts
+            FamilyDoctor = "Dr. Smith", // Example family doctor
+            Status = "Active" // Example status
+        };
+
+        // Perform the insert operation
+        var response = await supabase.From<Renter>().Insert(newRenter);
+
+        logger.LogInformation("New renter inserted successfully.");
+    }
+    catch (Exception ex)
+    {
+        logger.LogError($"An exception occurred while inserting the renter: {ex.Message}");
     }
 }

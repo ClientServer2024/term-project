@@ -1,0 +1,43 @@
+@{
+    ViewData["Title"] = "CRM list of Renters";
+}
+
+<div class="text-center">
+    <h1 class="display-4">CRM list of Renters Page</h1>
+ <h2>Applicants:</h2>
+<ul id="applicantList">
+    <!-- Populated dynamically based on the available applicants -->
+</ul>
+
+<button id="viewApplicantsBtn" type="button">View Applicants</button>
+
+@section scripts {
+    <script>
+        $(function () {
+            console.log("Document ready. JavaScript function is executing."); // Log message
+            
+            // Fetch applicant names and populate the applicant list
+            $.ajax({
+                url: '/CRM/GetAllApplicants',
+                type: 'GET',
+                success: function (data) {
+                    var applicantList = $('#applicantList');
+                    applicantList.empty();
+                    // Append each applicant name to the list
+                    $.each(data.applicantNames, function (i, name) {
+                        // Append each applicant name to the list as a list item
+                        applicantList.append($('<li></li>').text(name));
+                    });
+                },
+                error: function (xhr, status, error) {
+                    console.log(xhr.responseText);
+                }
+            });
+            
+            $('#viewApplicantsBtn').click(function () {
+                window.location.href = '/Care/RegisteredServicesView';
+            });
+        });
+    </script>
+}
+</div>

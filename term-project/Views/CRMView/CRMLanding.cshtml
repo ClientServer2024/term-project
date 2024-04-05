@@ -4,4 +4,18 @@
 
 <div class="text-center">
   <h1 class="display-4">CRM Landing</h1>
+
+
+<button id="redirectButton">Go to Renters Section</button> <!-- Add a button -->
+
+
+@section scripts {
+    <script>
+        $(function () {
+            $('#redirectButton').click(function () {
+                window.location.href = 'window.location.href = /CRM/CRM_renters'/CRMView/Renters/CRM_renters'; // Redirect to another page
+            });
+        });
+    </script>
+}
 </div>
