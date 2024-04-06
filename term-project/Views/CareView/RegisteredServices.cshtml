@@ -43,10 +43,14 @@
                             // Add delete button with ServiceRegisterId
                             if (data.invoiceStatus[i].toLocaleUpperCase() !== 'SENT') {
                                 row.append('<td><button class="deleteServiceBtn" data-service-register-id="' + data.serviceRegisterIds[i] + '">Delete</button></td>');
-                                row.append('<td><button class="sendInvoiceButton" type="button" data-customer-name="' + data.customerNames[i] + '">Send Invoice</button></td>');
+                                row.append('<td>' +'<button class="sendInvoiceButton" type="button" ' +
+                                'data-service-register-id="' + data.serviceRegisterIds[i] + '" ' +
+                                'data-service-id="' + data.serviceIDs[i] + '" ' +
+                                'data-customer-email="' + data.customerEmails[i] + '">Send Invoice</button>' +
+                                '</td>');
                             } else {
                                 row.append('<td><button class="deleteServiceBtn" data-service-register-id="' + data.serviceRegisterIds[i] + '" disabled>Delete</button></td>');
-                                row.append('<td><button class="sendInvoiceButton" type="button" data-customer-name="' + data.customerNames[i] + '" disabled>Send Invoice</button></td>');
+                                row.append('<td><button class="sendInvoiceButton" type="button" disabled>Send Invoice</button></td>');
                             }
                             // Add more columns if needed
                             tableBody.append(row);
@@ -86,6 +90,30 @@
                  $('#SeeAllInvoices').click(function () {
                          window.location.href = '/Care/RegisteredInvoicesView'; // Redirect to another page
                  });
+            });
+            
+            $(document).on('click', '.sendInvoiceButton', function () {
+                      var serviceRegisterID = $(this).data('service-register-id');
+                      var serviceID = $(this).data('service-id');
+                      var customerEmail = $(this).data('customer-email');
+                      $.ajax({
+                            url: '/Care/SendInvoice',
+                                type: 'POST',
+                                data: {
+                                      serviceRegisterID: serviceRegisterID,
+                                      serviceID:serviceID,
+                                      customerEmail:customerEmail
+                                },
+                                success: function (response) {
+                                      // Handle success response
+                                      alert(response); // Show success message
+                                },
+                                error: function (xhr, status, error) {
+                                     // Handle error response
+                                     console.log(xhr.responseText);
+                                     alert('Failed to send invoice. Please try again.');
+                                }
+                      });
             });
             
         });
