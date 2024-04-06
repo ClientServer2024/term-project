@@ -853,23 +853,23 @@ namespace term_project.Controllers
                         Invoice ID: {(invoiceID.HasValue ? invoiceID.Value.ToString() : "N/A")}
                         Invoice Date: {(invoiceDate.HasValue ? invoiceDate.Value.ToString("yyyy-MM-dd HH:mm:ss") : "N/A")}
                         Service Name: {serviceName ?? "N/A"}
-                        Service Charge: {(serviceCharge.HasValue ? serviceCharge.Value.ToString("0.00") + " USD" : "N/A")}
-                        Tax Charge: {(taxCharge.HasValue ? taxCharge.Value.ToString("0.00") + " USD" : "N/A")}
-                        Total Amount: {(totalAmount.HasValue ? totalAmount.Value.ToString("0.00") + " USD" : "N/A")}";
+                        Service Charge: {(serviceCharge.HasValue ? serviceCharge.Value.ToString("0.00") + " CAD" : "N/A")}
+                        Tax Charge: {(taxCharge.HasValue ? taxCharge.Value.ToString("0.00") + " CAD" : "N/A")}
+                        Total Amount: {(totalAmount.HasValue ? totalAmount.Value.ToString("0.00") + " CAD" : "N/A")}";
 
  
 
                 // now construct the email to be sent using all the information we grabbed
                 var email = new MimeMessage();
-                email.From.Add(MailboxAddress.Parse("breanna50@ethereal.email"));
+                email.From.Add(MailboxAddress.Parse(Environment.GetEnvironmentVariable("SMPT__Email")));
                 email.To.Add(MailboxAddress.Parse(customerEmail));
                 email.Subject = "Service Invoice for CS";
                 email.Body = new TextPart(TextFormat.Plain) { Text = emailBody };
                 
                 // now construct the smtp client
                 using var smtp = new SmtpClient();
-                smtp.Connect("smtp.ethereal.email", 587,SecureSocketOptions.StartTls);
-                smtp.Authenticate("breanna50@ethereal.email", "UCrg5fFWaau1C9NQ6h");
+                smtp.Connect(Environment.GetEnvironmentVariable("SMPT__Server"), 587,SecureSocketOptions.StartTls);
+                smtp.Authenticate(Environment.GetEnvironmentVariable("SMPT__Email"), Environment.GetEnvironmentVariable("SMPT_PW"));
                 
                 // now send email and then disconnect
                 smtp.Send(email);
