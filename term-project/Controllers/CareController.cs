@@ -8,12 +8,17 @@ using Newtonsoft.Json;
 using Supabase;
 using term_project.Models.CRMModels;
 using Guid = System.Guid;
+using MimeKit;
+using MimeKit.Text;
+using MailKit.Net.Smtp;
+using MailKit.Security;
 
 namespace term_project.Controllers
 {
     public class CareController : Controller
     {
         private readonly Supabase.Client _supabase;
+        private const double TAX = 0.12;
 
         public CareController()
         {
@@ -308,6 +313,7 @@ namespace term_project.Controllers
                 .Get();
 
             var customerNames = new List<String>();
+            var customerEmails = new List<String>();
 
             var renterResponseList = new List<Renter>();
 
@@ -338,6 +344,7 @@ namespace term_project.Controllers
             foreach (var applicant in ApplicantResponseList)
             {
                 customerNames.Add(applicant.FirstName);
+                customerEmails.Add(applicant.Email);
             }
 
             var serviceScheduleResponseEmployeeList = new List<ServiceScheduleEmployee>();
@@ -367,9 +374,11 @@ namespace term_project.Controllers
             }
 
             var scheduleTimes = new List<DateTimeOffset>();
+            var serviceIDs = new List<Guid>();
             foreach (var service in serviceScheduleResponseList)
             {
                 scheduleTimes.Add(service.Schedule);
+                serviceIDs.Add(service.ServiceId);
             }
 
             var serviceResponseList = new List<Service>();
@@ -427,8 +436,10 @@ namespace term_project.Controllers
             {
                 EmployeeNames = employeeNames,
                 CustomerNames = customerNames,
+                CustomerEmails = customerEmails,
                 ServiceNames = serviceNames,
                 ServiceScheduleTimes = scheduleTimes,
+                ServiceIDs = serviceIDs,
                 ServiceRegisterIds = serviceRegisterIds,
                 InvoiceStatus = serviceInvoiceStatus
             };
@@ -683,6 +694,200 @@ namespace term_project.Controllers
             ViewBag.Services = ret;
             
             return View("~/Views/CareView/ServicesView.cshtml");
+        }
+        
+        public IActionResult RegisteredInvoicesView()
+        {
+            return View("~/Views/CareView/RegisteredInvoices.cshtml");
+
+        } 
+        [HttpPost]
+    public async Task<IActionResult> RegisteredInvoices()
+    {
+        
+        // initialize a list for each column
+        var invoiceIDs = new List<Guid>();
+        var dates = new List<DateTimeOffset>();
+        var customerEmails = new List<String>();
+        var serviceNames = new List<String>();
+        var serviceCharges = new List<float?>();
+        var taxCharges = new List<double?>();
+        var totalAmounts = new List<double?>();
+    
+        // will be used to get customer names and emails
+        var renters = new List<Renter>();
+        var applicants = new List<Applicant>();
+        
+        // will be used to get service names
+        var serviceIDs = new List<Service>();
+        
+        // grab all the invoices that have been sent
+        var response = await _supabase
+            .From<ServiceRegister>()
+            .Select("*")
+            .Where(s => s.Status == "sent" || s.Status == "SENT")
+            .Get();
+
+
+        
+        // grab all the fields we need from invoice table
+        foreach (var invoice in response.Models)
+        {
+            invoiceIDs.Add(invoice.InvoiceId);
+            dates.Add(invoice.InvoiceDate);
+    
+            var renter = await _supabase
+                .From<Renter>()
+                .Select("*")
+                .Where(r => r.RenterId == invoice.RenterId)
+                .Get();
+            renters.AddRange(renter.Models);
+    
+            var serviceSchedule = await _supabase
+                .From<Service>()
+                .Select("*")
+                .Where(s => s.ServiceId == invoice.ServiceId)
+                .Get();
+            serviceIDs.AddRange(serviceSchedule.Models);
+        }
+    
+        // now grab each applicant from renterIDs
+        foreach (var renter in renters)
+        {
+            var applicant = await _supabase
+                .From<Applicant>()
+                .Select("*")
+                .Where(a => a.ApplicantId == renter.ApplicantId)
+                .Get();
+            
+            applicants.AddRange(applicant.Models);
+        }
+        
+        // now grab each customers email
+        foreach (var applicant in applicants)
+        {
+            var email = applicant.Email;
+            customerEmails.Add(email);
+        }
+        
+        
+        // now grab each service name and rate
+        foreach (var serviceID in serviceIDs)
+        {
+            var serviceName = serviceID.ServiceName;
+            serviceNames.Add(serviceName);
+            var serviceCharge = serviceID.Rate;
+            serviceCharges.Add(serviceCharge);
+            // calculate tax and total amount here
+            var thisTaxCharge = serviceCharge * TAX;
+            taxCharges.Add(thisTaxCharge);
+            var thisTotalAmount = serviceCharge + thisTaxCharge;
+            totalAmounts.Add(thisTotalAmount);
+        }
+         
+        // Create an anonymous object containing the required data
+        var jsonData = new
+        {
+            InvoiceIDs = invoiceIDs,
+            Dates = dates,
+            CustomerEmails = customerEmails,
+            ServiceNames = serviceNames,
+            ServiceCharges = serviceCharges,
+            TaxCharges = taxCharges,
+            TotalAmounts = totalAmounts
+        };
+        
+        Console.WriteLine("ABOUT TO RETURN INVOICE JSON");
+    
+        return Json(jsonData);
+        
+    }
+    
+        [HttpPost]
+        public async Task<IActionResult> SendInvoice(Guid serviceRegisterID, Guid serviceID, String customerEmail)
+        {
+            try
+            {
+
+                Guid? invoiceID = null;
+                DateTimeOffset? invoiceDate = null;
+                String? serviceName = null;
+                float? serviceCharge = null;
+                double? taxCharge = null;
+                double? totalAmount = null;
+
+
+                var response = await _supabase
+                    .From<ServiceRegister>()
+                    .Select("*")
+                    .Where(s => s.ServiceRegisterId == serviceRegisterID)
+                    .Single();
+                
+                // Access the invoice_id and invoice_date from the response
+                if (response != null)
+                {
+                    invoiceID = response.InvoiceId;
+                    invoiceDate = response.InvoiceDate;
+                }
+                
+                var secondResponse = await _supabase
+                    .From<Service>()
+                    .Select("*")
+                    .Where(s => s.ServiceId == serviceID)
+                    .Single();
+                
+                if (secondResponse != null)
+                {
+                    serviceName = secondResponse.ServiceName;
+                    serviceCharge = secondResponse.Rate;
+                    taxCharge = serviceCharge * TAX;
+                    totalAmount = serviceCharge + taxCharge;
+                }
+                
+                // create the email body message
+                string emailBody = $@"
+                        Dear Customer,
+
+                        Here is the summary of your service invoice:
+
+                        Invoice ID: {(invoiceID.HasValue ? invoiceID.Value.ToString() : "N/A")}
+                        Invoice Date: {(invoiceDate.HasValue ? invoiceDate.Value.ToString("yyyy-MM-dd HH:mm:ss") : "N/A")}
+                        Service Name: {serviceName ?? "N/A"}
+                        Service Charge: {(serviceCharge.HasValue ? serviceCharge.Value.ToString("0.00") + " CAD" : "N/A")}
+                        Tax Charge: {(taxCharge.HasValue ? taxCharge.Value.ToString("0.00") + " CAD" : "N/A")}
+                        Total Amount: {(totalAmount.HasValue ? totalAmount.Value.ToString("0.00") + " CAD" : "N/A")}";
+
+ 
+
+                // now construct the email to be sent using all the information we grabbed
+                var email = new MimeMessage();
+                email.From.Add(MailboxAddress.Parse(Environment.GetEnvironmentVariable("SMPT__Email")));
+                email.To.Add(MailboxAddress.Parse(customerEmail));
+                email.Subject = "Service Invoice for CS";
+                email.Body = new TextPart(TextFormat.Plain) { Text = emailBody };
+                
+                // now construct the smtp client
+                using var smtp = new SmtpClient();
+                smtp.Connect(Environment.GetEnvironmentVariable("SMPT__Server"), 587,SecureSocketOptions.StartTls);
+                smtp.Authenticate(Environment.GetEnvironmentVariable("SMPT__Email"), Environment.GetEnvironmentVariable("SMPT_PW"));
+                
+                // now send email and then disconnect
+                smtp.Send(email);
+                smtp.Disconnect(true);
+                
+                // now update the status of invoice in db to 'sent'
+                await _supabase
+                    .From<ServiceRegister>()
+                    .Where(d => d.ServiceRegisterId == serviceRegisterID)
+                    .Set(d => d.Status, "sent")
+                    .Update();
+                
+                return Ok("Invoice Sent Successfully!");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }
