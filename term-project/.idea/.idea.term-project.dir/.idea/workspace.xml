@@ -9,38 +9,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c1d1f4df-6b92-47fa-b202-6eb0d114a099" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Utils/Utils.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Views/HRView/HRPayroll_Employees.cshtml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Views/HRView/HRPayroll_Landing.cshtml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Views/HRView/HRPayroll_PayrollInfo.cshtml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.term-project.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.term-project.dir/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Controllers/HRController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/HRController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Views/HRView/HRLanding.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Views/HRView/HRLanding.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Views/HRView/HRPayroll_Employees.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Views/HRView/HRPayroll_Employees.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Views/HRView/HRPayroll_Landing.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Views/HRView/HRPayroll_Landing.cshtml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/Debug/net8.0/term-project.dll" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/net8.0/term-project.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/Debug/net8.0/term-project.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/net8.0/term-project.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/Debug/net8.0/term-project.staticwebassets.runtime.json" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/net8.0/term-project.staticwebassets.runtime.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/net8.0/ref/term-project.dll" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net8.0/ref/term-project.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/net8.0/refint/term-project.dll" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net8.0/refint/term-project.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/Debug/net8.0/staticwebassets.build.json" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net8.0/staticwebassets.build.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/Debug/net8.0/staticwebassets.development.json" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net8.0/staticwebassets.development.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/Debug/net8.0/staticwebassets.pack.json" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net8.0/staticwebassets.pack.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/net8.0/term-project.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net8.0/term-project.AssemblyInfo.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/net8.0/term-project.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net8.0/term-project.AssemblyInfoInputs.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/Debug/net8.0/term-project.GeneratedMSBuildEditorConfig.editorconfig" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net8.0/term-project.GeneratedMSBuildEditorConfig.editorconfig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/Debug/net8.0/term-project.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net8.0/term-project.assets.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/Debug/net8.0/term-project.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net8.0/term-project.csproj.AssemblyReference.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/Debug/net8.0/term-project.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net8.0/term-project.csproj.CoreCompileInputs.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/Debug/net8.0/term-project.csproj.FileListAbsolute.txt" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net8.0/term-project.csproj.FileListAbsolute.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/net8.0/term-project.dll" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net8.0/term-project.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/Debug/net8.0/term-project.genruntimeconfig.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net8.0/term-project.genruntimeconfig.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/net8.0/term-project.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net8.0/term-project.pdb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/net8.0/term-project.sourcelink.json" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net8.0/term-project.sourcelink.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/obj/project.assets.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/project.nuget.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/rider.project.model.nuget.info" beforeDir="false" afterPath="$PROJECT_DIR$/obj/rider.project.model.nuget.info" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/obj/rider.project.restore.info" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/term-project.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/obj/term-project.csproj.nuget.dgspec.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/term-project.csproj.nuget.g.props" beforeDir="false" afterPath="$PROJECT_DIR$/obj/term-project.csproj.nuget.g.props" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -147,16 +128,16 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Controllers/HRController.cs</url>
-          <line>107</line>
-          <properties documentPath="$PROJECT_DIR$/Controllers/HRController.cs" initialLine="94" containingFunctionPresentation="Method 'HrPayroll_FetchEmployeeIdWithName'">
+          <line>103</line>
+          <properties documentPath="$PROJECT_DIR$/Controllers/HRController.cs" initialLine="102" containingFunctionPresentation="Method 'HrPayroll_FetchEmployeesWithName'">
             <startOffsets>
-              <option value="3656" />
+              <option value="3439" />
             </startOffsets>
             <endOffsets>
-              <option value="3673" />
+              <option value="3464" />
             </endOffsets>
           </properties>
-          <option name="timeStamp" value="6" />
+          <option name="timeStamp" value="7" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -39,7 +39,7 @@ namespace term_project.Controllers
         {
             return View("~/Views/HRView/HRLanding.cshtml");
         }
-        
+
         // GET: HR/HRManagePayrolls
         public IActionResult HrPayroll_Landing()
         {
@@ -57,19 +57,23 @@ namespace term_project.Controllers
                 ViewData["FirstName"] = firstName;
                 ViewData["LastName"] = lastName;
                 TempData.Put("Employees", employees);
-                
+
                 return View("~/Views/HRView/HRPayRoll_Employees.cshtml");
             }
-            catch (Exception e)
+            catch (KeyNotFoundException e)
             {
-                return BadRequest(e.Message);
+                Console.WriteLine(e.Message);
+                TempData["EmployeeNotFound"] = true;
+                TempData["EmployeeName"] = $"{firstName} {lastName}";
+                
+                return View("~/Views/HRView/HRPayroll_Landing.cshtml");
             }
         }
 
         public async Task<IActionResult> HrPayroll_PayrollInfo(Guid employeeId)
         {
             const string methodName = "HrPayroll_PayrollInfo";
-            
+
             try
             {
                 Console.WriteLine($"{methodName}: Employee Id is {employeeId}.");
@@ -85,32 +89,27 @@ namespace term_project.Controllers
         }
 
         private async Task<IList<Employee>> HrPayroll_FetchEmployeesWithName(string firstName, string lastName)
-        { 
+        {
             const string methodName = "HrPayroll_FetchEmployeeIdWithName";
             Console.WriteLine($"{methodName}: Fetching employee ids with [{firstName} {lastName}]...");
-            try
-            {
-                var response = await _supabase
-                    .From<Employee>()
-                    .Select("*")
-                    .Where(m => m.FirstName == firstName & m.LastName == lastName)
-                    .Get();
 
-                var employees = response.Models;
+            var response = await _supabase
+                .From<Employee>()
+                .Select("*")
+                .Where(m => m.FirstName == firstName & m.LastName == lastName)
+                .Get();
 
-                if (employees.Count <= 0)
-                {
-                    throw new KeyNotFoundException($"{methodName}-Exception: Employee with the name [{firstName} {lastName}] was not found.");
-                }
-                
-                Console.WriteLine($"{methodName}: Total of {employees.Count} are found.");
-                
-                return employees;
-            }
-            catch (Exception e)
+            var employees = response.Models;
+
+            if (employees.Count <= 0)
             {
-                return null;
+                throw new KeyNotFoundException(
+                    $"{methodName}-Exception: Employee with the name [{firstName} {lastName}] was not found.");
             }
+
+            Console.WriteLine($"{methodName}: Total of {employees.Count} are found.");
+
+            return employees;
         }
     }
 }
