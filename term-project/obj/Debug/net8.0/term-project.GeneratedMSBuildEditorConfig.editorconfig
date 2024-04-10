@@ -34,12 +34,28 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/trist/OneDrive/Desktop/Stuff/Homework/CST_Term_4/CS/term-project/term-project/Views/HRView/HRCreateEmployee.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSFJWaWV3XEhSQ3JlYXRlRW1wbG95ZWUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/trist/OneDrive/Desktop/Stuff/Homework/CST_Term_4/CS/term-project/term-project/Views/HRView/HRDeleteEmployee.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSFJWaWV3XEhSRGVsZXRlRW1wbG95ZWUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/trist/OneDrive/Desktop/Stuff/Homework/CST_Term_4/CS/term-project/term-project/Views/HRView/HREditEmployee.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSFJWaWV3XEhSRWRpdEVtcGxveWVlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/trist/OneDrive/Desktop/Stuff/Homework/CST_Term_4/CS/term-project/term-project/Views/HRView/HRLanding.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSFJWaWV3XEhSTGFuZGluZy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/trist/OneDrive/Desktop/Stuff/Homework/CST_Term_4/CS/term-project/term-project/Views/HRView/HRManageEmployees.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSFJWaWV3XEhSTWFuYWdlRW1wbG95ZWVzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/trist/OneDrive/Desktop/Stuff/Homework/CST_Term_4/CS/term-project/term-project/Views/HRView/HRViewEmployee.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSFJWaWV3XEhSVmlld0VtcGxveWVlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/trist/OneDrive/Desktop/Stuff/Homework/CST_Term_4/CS/term-project/term-project/Views/Shared/Error.cshtml]
