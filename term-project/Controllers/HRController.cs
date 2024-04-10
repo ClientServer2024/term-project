@@ -251,5 +251,11 @@ namespace term_project.Controllers
         {
             return View("~/Views/HRView/HRCreateEmployee.cshtml");
         }
+        
+        /** Shift Management */
+        public IActionResult HRManageShifts()
+        {
+            return View("~/Views/HRView/HRManageShifts.cshtml");
+        }
     }
 }
