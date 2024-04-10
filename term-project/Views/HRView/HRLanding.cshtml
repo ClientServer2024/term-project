@@ -1,10 +1,12 @@
 ﻿@{
-  ViewData["Title"] = "HR";
+    ViewData["Title"] = "HR Landing";
 }
 
 <div class="text-center">
-  <h1 class="display-4">HR Landing</h1>
-  <ul>
-	<li><a asp-area="" asp-controller="HR" asp-action="HRManageEmployees">Manage Employees</a></li>
-  </ul>
+    <h1 class="display-4">HR Landing</h1>
+    <ul>
+        <li><a asp-controller="HR" asp-action="HRManageEmployees">Manage Employees</a></li>
+        
+        <li><a asp-controller="HR" asp-action="HRPayHistory">View Pay History</a></li>
+    </ul>
 </div>

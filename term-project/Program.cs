@@ -55,9 +55,9 @@ async Task InitializeSupabase(string url, string key)
     var logger = app.Services.GetRequiredService<ILogger<Program>>();
     logger.LogInformation("Reached!");
 
-    await InsertEmployee(supabase, logger);
+    //await InsertEmployee(supabase, logger);
 
-    await GetFirstUserEmail(supabase, logger);  
+    //await GetFirstUserEmail(supabase, logger);  
 
 }
 

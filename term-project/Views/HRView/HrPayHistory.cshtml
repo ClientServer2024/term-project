@@ -1,0 +1,59 @@
+﻿@{
+    ViewData["Title"] = "HR";
+}
+
+<h1>Pay History</h1>
+
+<table id="payHistoryTable" class="table">
+    <thead>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Pay Period Start</th>
+            <th>Pay Period End</th>
+            <th>Gross Pay</th>
+            <th>Deductions</th>
+            <th>Net Pay</th>
+            <th>Tax Rate</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Table body will be populated dynamically using JavaScript -->
+    </tbody>
+</table>
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            // Perform AJAX request to fetch pay history data
+            $.ajax({
+                url: '/HR/PayHistory',
+                type: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    // Process the retrieved JSON data
+                    $.each(data, function (index, entry) {
+                        // Append data to a table row
+                        $('#payHistoryTable tbody').append(
+                            '<tr>' +
+                            '<td>' + entry.EmployeeFirstName + '</td>' +
+                            '<td>' + entry.EmployeeLastName + '</td>' +
+                            '<td>' + new Date(entry.PayPeriodStart).toLocaleDateString() + '</td>' +
+                            '<td>' + new Date(entry.PayPeriodEnd).toLocaleDateString() + '</td>' +
+                            '<td>' + entry.GrossPay + '</td>' +
+                            '<td>' + entry.Deductions + '</td>' +
+                            '<td>' + entry.NetPay + '</td>' +
+                            '<td>' + entry.TaxRate + '</td>' +
+                            '</tr>'
+                        );
+                    });
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    // Handle errors
+                    console.error('Error fetching pay history:', textStatus, errorThrown);
+                }
+            });
+        });
+
+    </script>
+}
