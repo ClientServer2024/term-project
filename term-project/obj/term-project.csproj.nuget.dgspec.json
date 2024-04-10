@@ -1,27 +1,26 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\trist\\OneDrive\\Desktop\\Stuff\\Homework\\CST_Term_4\\CS\\term-project\\term-project\\term-project.csproj": {}
+    "/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/term-project.csproj": {}
   },
   "projects": {
-    "C:\\Users\\trist\\OneDrive\\Desktop\\Stuff\\Homework\\CST_Term_4\\CS\\term-project\\term-project\\term-project.csproj": {
+    "/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/term-project.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\trist\\OneDrive\\Desktop\\Stuff\\Homework\\CST_Term_4\\CS\\term-project\\term-project\\term-project.csproj",
+        "projectUniqueName": "/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/term-project.csproj",
         "projectName": "term-project",
-        "projectPath": "C:\\Users\\trist\\OneDrive\\Desktop\\Stuff\\Homework\\CST_Term_4\\CS\\term-project\\term-project\\term-project.csproj",
-        "packagesPath": "C:\\Users\\trist\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\trist\\OneDrive\\Desktop\\Stuff\\Homework\\CST_Term_4\\CS\\term-project\\term-project\\obj\\",
+        "projectPath": "/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/term-project.csproj",
+        "packagesPath": "/Users/davidnam/.nuget/packages/",
+        "outputPath": "/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\trist\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/Users/davidnam/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "/usr/local/share/dotnet/library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -68,7 +67,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.101/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

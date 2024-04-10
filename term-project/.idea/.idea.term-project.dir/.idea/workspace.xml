@@ -9,13 +9,36 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c1d1f4df-6b92-47fa-b202-6eb0d114a099" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Utils/Utils.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Views/HRView/HRPayroll_Employees.cshtml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Views/HRView/HRPayroll_Landing.cshtml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Views/HRView/HRPayroll_PayrollInfo.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.term-project.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.term-project.dir/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controllers/HRController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/HRController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Views/HRView/HRLanding.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Views/HRView/HRLanding.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Debug/net8.0/term-project.dll" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/net8.0/term-project.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Debug/net8.0/term-project.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/net8.0/term-project.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Debug/net8.0/term-project.staticwebassets.runtime.json" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/net8.0/term-project.staticwebassets.runtime.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/Debug/net8.0/ref/term-project.dll" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net8.0/ref/term-project.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/Debug/net8.0/refint/term-project.dll" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net8.0/refint/term-project.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/Debug/net8.0/staticwebassets.build.json" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net8.0/staticwebassets.build.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/Debug/net8.0/staticwebassets.development.json" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net8.0/staticwebassets.development.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/Debug/net8.0/staticwebassets.pack.json" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net8.0/staticwebassets.pack.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/net8.0/term-project.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net8.0/term-project.AssemblyInfo.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/net8.0/term-project.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net8.0/term-project.AssemblyInfoInputs.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/net8.0/term-project.GeneratedMSBuildEditorConfig.editorconfig" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net8.0/term-project.GeneratedMSBuildEditorConfig.editorconfig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/net8.0/term-project.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net8.0/term-project.assets.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/net8.0/term-project.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net8.0/term-project.csproj.AssemblyReference.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/Debug/net8.0/term-project.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net8.0/term-project.csproj.CoreCompileInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/Debug/net8.0/term-project.csproj.FileListAbsolute.txt" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net8.0/term-project.csproj.FileListAbsolute.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/Debug/net8.0/term-project.dll" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net8.0/term-project.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/Debug/net8.0/term-project.genruntimeconfig.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net8.0/term-project.genruntimeconfig.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/Debug/net8.0/term-project.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net8.0/term-project.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/Debug/net8.0/term-project.sourcelink.json" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net8.0/term-project.sourcelink.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/obj/project.assets.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/project.nuget.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/rider.project.model.nuget.info" beforeDir="false" afterPath="$PROJECT_DIR$/obj/rider.project.model.nuget.info" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/obj/rider.project.restore.info" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/term-project.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/obj/term-project.csproj.nuget.dgspec.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/term-project.csproj.nuget.g.props" beforeDir="false" afterPath="$PROJECT_DIR$/obj/term-project.csproj.nuget.g.props" afterDir="false" />
     </list>
@@ -28,7 +51,11 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/6944caef51964961b37f49507d2b53dfd82000/71/9d68aec2/Guid.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/6944caef51964961b37f49507d2b53dfd82000/af/1791537a/ExceptionDispatchInfo.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/6a7ad30fb6d74ff0af45e87c35f635ff3d000/b9/d7f5e4e0/RazorPageBase.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/6fb07e288afa4fb5b6e5c73ac90727b2219600/8a/feffb1a7/ActionMethodExecutor.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/d01c91b030b76dd79e516e8b1a2727c40c6526e63297fc8b4fc4430f119/Client.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 6
@@ -38,30 +65,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;.NET Launch Settings Profile.term-project: http.executor&quot;: &quot;Debug&quot;,
-    &quot;.NET Launch Settings Profile.term-project: https.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;features/dev2-DavidNam&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;advanced.settings&quot;,
-    &quot;typescript.add.unambiguous.imports.on.the.fly&quot;: &quot;true&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    ".NET Launch Settings Profile.term-project: http.executor": "Run",
+    ".NET Launch Settings Profile.term-project: https.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "features/dev2-DavidNam",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "advanced.settings",
+    "typescript.add.unambiguous.imports.on.the.fly": "true",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;rider.external.source.directories&quot;: [
-      &quot;/Users/davidnam/Library/Application Support/JetBrains/Rider2023.3/resharper-host/DecompilerCache&quot;,
-      &quot;/Users/davidnam/Library/Application Support/JetBrains/Rider2023.3/resharper-host/SourcesCache&quot;,
-      &quot;/Users/davidnam/.local/share/Symbols/src&quot;
+  "keyToStringList": {
+    "rider.external.source.directories": [
+      "/Users/davidnam/Library/Application Support/JetBrains/Rider2023.3/resharper-host/DecompilerCache",
+      "/Users/davidnam/Library/Application Support/JetBrains/Rider2023.3/resharper-host/SourcesCache",
+      "/Users/davidnam/.local/share/Symbols/src"
     ]
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected=".NET Launch Settings Profile.term-project: http">
     <configuration name="term-project: http" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/term-project.csproj" />
@@ -105,6 +132,7 @@
       <workItem from="1702773121365" duration="225000" />
       <workItem from="1712338517914" duration="590000" />
       <workItem from="1712339131465" duration="213000" />
+      <workItem from="1712621838077" duration="6562000" />
     </task>
     <servers />
   </component>
@@ -118,17 +146,17 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Program.cs</url>
-          <line>11</line>
-          <properties documentPath="$PROJECT_DIR$/Program.cs" initialLine="11" containingFunctionPresentation="">
+          <url>file://$PROJECT_DIR$/Controllers/HRController.cs</url>
+          <line>107</line>
+          <properties documentPath="$PROJECT_DIR$/Controllers/HRController.cs" initialLine="94" containingFunctionPresentation="Method 'HrPayroll_FetchEmployeeIdWithName'">
             <startOffsets>
-              <option value="240" />
+              <option value="3656" />
             </startOffsets>
             <endOffsets>
-              <option value="310" />
+              <option value="3673" />
             </endOffsets>
           </properties>
-          <option name="timeStamp" value="2" />
+          <option name="timeStamp" value="6" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
