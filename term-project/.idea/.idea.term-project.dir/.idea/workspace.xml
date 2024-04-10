@@ -9,16 +9,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c1d1f4df-6b92-47fa-b202-6eb0d114a099" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Views/HRView/HRPayroll_Payrolls.cshtml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.term-project.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.term-project.dir/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Controllers/HRController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/HRController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Views/HRView/HRPayroll_Employees.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Views/HRView/HRPayroll_Employees.cshtml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Views/HRView/HRPayroll_Landing.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Views/HRView/HRPayroll_Landing.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Views/HRView/HRPayroll_PayrollInfo.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Views/HRView/HRPayroll_PayrollInfo.cshtml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/Debug/net8.0/term-project.dll" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/net8.0/term-project.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/Debug/net8.0/term-project.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/net8.0/term-project.pdb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/net8.0/ref/term-project.dll" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net8.0/ref/term-project.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/net8.0/refint/term-project.dll" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net8.0/refint/term-project.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/net8.0/term-project.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net8.0/term-project.AssemblyInfo.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/net8.0/term-project.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net8.0/term-project.AssemblyInfoInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/Debug/net8.0/term-project.GeneratedMSBuildEditorConfig.editorconfig" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net8.0/term-project.GeneratedMSBuildEditorConfig.editorconfig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/net8.0/term-project.dll" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net8.0/term-project.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/net8.0/term-project.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net8.0/term-project.pdb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/net8.0/term-project.sourcelink.json" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net8.0/term-project.sourcelink.json" afterDir="false" />
@@ -122,24 +125,5 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Controllers/HRController.cs</url>
-          <line>103</line>
-          <properties documentPath="$PROJECT_DIR$/Controllers/HRController.cs" initialLine="102" containingFunctionPresentation="Method 'HrPayroll_FetchEmployeesWithName'">
-            <startOffsets>
-              <option value="3439" />
-            </startOffsets>
-            <endOffsets>
-              <option value="3464" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="7" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

@@ -1,0 +1,64 @@
+﻿@{
+    ViewData["Title"] = "HR-Payrolls";
+}
+
+@using term_project.Models.CareModels
+@model IEnumerable<term_project.Models.CareModels.Payroll>
+
+<div class="text-center">
+    <h1 class="display-6">Payrolls for</h1>
+    <h1 class="display-4">[@ViewData["EmployeeId"]]</h1>
+</div>
+
+@using (Html.BeginForm("HrPayroll_PayrollInfo", "HR", FormMethod.Get))
+{
+    <table class="table">
+        <thead>
+        <tr>
+            <th>
+                View
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PayrollId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PayPeriodStart)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PayPeriodEnd)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GrossPay)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NetPay)
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var payroll in TempData.Get<IList<Payroll>>("Payrolls"))
+        {
+            <tr>
+                <td>
+                    <a asp-area="" asp-controller="HR" asp-action="HrPayroll_PayrollInfo" asp-route-payrollId="@payroll.PayrollId">View</a>
+                </td>
+                <td>
+                    @payroll.PayrollId
+                </td>
+                <td>
+                    @payroll.PayPeriodStart
+                </td>
+                <td>
+                    @payroll.PayPeriodEnd
+                </td>
+                <td>
+                    @payroll.GrossPay
+                </td>
+                <td>
+                    @payroll.NetPay
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}

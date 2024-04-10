@@ -6,15 +6,15 @@
 @model IEnumerable<term_project.Models.CareModels.Employee>
 
 <div class="text-center">
-    <h1 class="display-6">Name: </h1>
-    <h1 class="display-4">[@ViewData["FirstName"] @ViewData["LastName"]]</h1>
+    <h1 class="display-6">Search results for</h1>
+    <h1 class="display-4">@ViewData["FirstName"] @ViewData["LastName"]</h1>
 </div>
 
 <table class="table">
     <thead>
     <tr>
         <th>
-            Edit
+            View
         </th>
         <th>
             @Html.DisplayNameFor(model => model.EmployeeId)
@@ -29,7 +29,7 @@
     {
         <tr>
             <td>
-                <a asp-area="" asp-controller="HR" asp-action="HrPayroll_PayrollInfo" asp-route-employeeId="@employee.EmployeeId">View</a>
+                <a asp-area="" asp-controller="HR" asp-action="HrPayroll_Payrolls" asp-route-employeeId="@employee.EmployeeId">View</a>
             </td>
             <td>
                 @employee.EmployeeId

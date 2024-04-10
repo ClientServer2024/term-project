@@ -40,18 +40,22 @@ namespace term_project.Controllers
             return View("~/Views/HRView/HRLanding.cshtml");
         }
 
-        // GET: HR/HRManagePayrolls
+        // GET: HR/HrPayroll_Landing
         public IActionResult HrPayroll_Landing()
         {
             return View("~/Views/HRView/HRPayroll_Landing.cshtml");
         }
 
+
+        
+        // GET: HR/HRPayRoll_Employees?firstName={firstName}&lastName={lastName}
         public async Task<IActionResult> HrPayroll_Employees(string firstName, string lastName)
         {
             const string methodName = "HrPayroll_FetchEmployeeIdWithName";
+            Console.WriteLine($"{methodName}: Searching for employee with name [{firstName} {lastName}]...");
+
             try
             {
-                Console.WriteLine($"{methodName}: Searching for employee with the name [{firstName} {lastName}]...");
                 var employees = await HrPayroll_FetchEmployeesWithName(firstName, lastName);
 
                 ViewData["FirstName"] = firstName;
@@ -65,33 +69,18 @@ namespace term_project.Controllers
                 Console.WriteLine(e.Message);
                 TempData["EmployeeNotFound"] = true;
                 TempData["EmployeeName"] = $"{firstName} {lastName}";
-                
+
                 return View("~/Views/HRView/HRPayroll_Landing.cshtml");
             }
         }
 
-        public async Task<IActionResult> HrPayroll_PayrollInfo(Guid employeeId)
-        {
-            const string methodName = "HrPayroll_PayrollInfo";
-
-            try
-            {
-                Console.WriteLine($"{methodName}: Employee Id is {employeeId}.");
-
-                return Ok();
-
-                //return View("~/Views/HRView/HRPayRoll_PayrollInfo.cshtml");
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
-        }
-
+        /* Helper Method for HrPayroll_Employees.
+         * Fetches employees with the given name.
+         */
         private async Task<IList<Employee>> HrPayroll_FetchEmployeesWithName(string firstName, string lastName)
         {
             const string methodName = "HrPayroll_FetchEmployeeIdWithName";
-            Console.WriteLine($"{methodName}: Fetching employee ids with [{firstName} {lastName}]...");
+            Console.WriteLine($"{methodName}: Fetching employee ids with name [{firstName} {lastName}]...");
 
             var response = await _supabase
                 .From<Employee>()
@@ -104,12 +93,162 @@ namespace term_project.Controllers
             if (employees.Count <= 0)
             {
                 throw new KeyNotFoundException(
-                    $"{methodName}-Exception: Employee with the name [{firstName} {lastName}] was not found.");
+                    $"{methodName}-Exception: Employee with name [{firstName} {lastName}] was not found.");
             }
 
             Console.WriteLine($"{methodName}: Total of {employees.Count} are found.");
 
             return employees;
+        }
+
+
+        
+        // GET: HR/HrPayroll_Payrolls?employeeId={employeeId}
+        public async Task<IActionResult> HrPayroll_Payrolls(Guid employeeId)
+        {
+            const string methodName = "HrPayroll_Payrolls";
+            Console.WriteLine($"{methodName}: Searching for payrolls of employee with id [{employeeId}]...");
+
+            try
+            {
+                var payrolls = await HrPayroll_FetchAllPayrolls(employeeId);
+                ViewData["EmployeeId"] = employeeId;
+                TempData.Put("Payrolls", payrolls);
+                return View("~/Views/HRView/HRPayroll_Payrolls.cshtml");
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        // Helper Method for HrPayroll_Payrolls.
+        private async Task<IList<Payroll>> HrPayroll_FetchAllPayrolls(Guid employeeId)
+        {
+            const string methodName = "HrPayroll_FetchAllPayrolls";
+            Console.WriteLine($"{methodName}: Fetching payrolls with employee id [{employeeId}]...");
+
+            var payrollResponse = await _supabase
+                .From<Payroll>()
+                .Select("*")
+                .Where(m => m.EmployeeId == employeeId)
+                .Get();
+
+            return payrollResponse.Models;
+        }
+
+
+        
+        // GET: HR/HRPayRoll_PayrollInfo?employeeId={employeeId}
+        public async Task<IActionResult> HrPayroll_PayrollInfo(Guid payrollId)
+        {
+            const string methodName = "HrPayroll_PayrollInfo";
+            Console.WriteLine($"{methodName}: Searching for payroll data with id [{payrollId}]...");
+
+            try
+            {
+                var payroll = await HrPayroll_FetchPayroll(payrollId);
+                ViewData["PayrollId"] = payrollId;
+                TempData.Put("Payroll", payroll);
+                return View("~/Views/HRView/HRPayroll_PayrollInfo.cshtml");
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+        
+        // Helper Method for HrPayroll_PayrollInfo.
+        private async Task<Payroll> HrPayroll_FetchPayroll(Guid payrollId)
+        {
+            const string methodName = "HrPayroll_FetchPayroll";
+            Console.WriteLine($"{methodName}: Fetching payroll with id [{payrollId}]...");
+
+            var payrollResponse = await _supabase
+                .From<Payroll>()
+                .Select("*")
+                .Where(m => m.PayrollId == payrollId)
+                .Get();
+
+            var payroll = payrollResponse.Model;
+
+            if (payroll == null)
+                throw new KeyNotFoundException(
+                    $"{methodName}-Exception: Payroll was not found with id {payrollId}.");
+            
+            return payroll;
+        }
+
+        /* Helper Method for HrPayroll_PayrollInfo.
+         Fetches all shifts that have specific employeeId within given pay period.
+         */
+        private async Task<IList<Shift>> HrPayroll_FetchAllShifts(Guid employeeId, DateTime payPeriodStart,
+            DateTime payPeriodEnd)
+        {
+            const string methodName = "HrPayroll_FetchAllShifts";
+            Console.WriteLine(
+                $"{methodName}: Fetching shifts with id [{employeeId}] from [{payPeriodStart}] to [{payPeriodEnd}]...");
+
+            var employeeShiftsResponse = await _supabase
+                .From<EmployeeShift>()
+                .Select("*")
+                .Where(m => m.EmployeeId == employeeId)
+                .Where(m => m.Date >= payPeriodStart && m.Date < payPeriodEnd)
+                .Get();
+            var employeeShifts = employeeShiftsResponse.Models;
+            if (employeeShifts.Count <= 0)
+            {
+                throw new KeyNotFoundException(
+                    $"{methodName}-Exception: Shifts with employee id [{employeeId}] was not found.");
+            }
+
+            var shiftIds = employeeShifts.Select(employeeShift => employeeShift.ShiftId).ToList();
+            var shifts = new List<Shift>();
+
+            await foreach (var fetchedShifts in HrPayroll_FetchShifts(shiftIds))
+            {
+                shifts.AddRange(fetchedShifts);
+            }
+
+            return shifts;
+        }
+
+        /* Helper method for HrPayroll_FetchAllShifts
+         * Fetches shifts from Shift Table asynchronously using the shiftIds.
+         * This method returns something immediately once every shifts are found with shift Id.
+         */
+        private async IAsyncEnumerable<IList<Shift>> HrPayroll_FetchShifts(List<Guid> shiftIds)
+        {
+            const string methodName = "HrPayroll_FetchShift";
+
+            foreach (var shiftId in shiftIds)
+            {
+                Console.WriteLine($"{methodName}: Fetching shift with shift id [{shiftId}]...");
+                var shiftResponse = await _supabase
+                    .From<Shift>()
+                    .Select("*")
+                    .Where(m => m.ShiftId == shiftId)
+                    .Get();
+
+                yield return shiftResponse.Models;
+            }
+        }
+
+        /* Helper Method for HrPayroll_PayrollInfo.
+         * Fetches all attendances that have specific employeeId.
+         */
+        private async Task<IList<Attendance>> HrPayroll_FetchAttendances(Guid employeeId)
+        {
+            const string methodName = "HrPayroll_FetchAttendances";
+            Console.WriteLine($"{methodName}: Fetching attendances with employee id [{employeeId}]...");
+
+            var attendanceResponse = await _supabase
+                .From<Attendance>()
+                .Select("*")
+                .Where(m => m.EmployeeId == employeeId)
+                .Get();
+
+            return attendanceResponse.Models;
         }
     }
 }
