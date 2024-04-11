@@ -2,6 +2,7 @@
 using term_project.Models.CareModels;
 
 using dotenv.net;
+using term_project.Models.CRMModels;
 
 // Inside the appropriate method
 DotEnv.Load();
@@ -38,7 +39,9 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 // Adjust this part according to how you instantiate your Supabase client
-await InitializeSupabase(supabaseUrl, supabaseKey);
+
+    await InitializeSupabase(supabaseUrl, supabaseKey);
+
 
 app.Run();
 
@@ -57,10 +60,39 @@ async Task InitializeSupabase(string url, string key)
 
     await InsertEmployee(supabase, logger);
 
-    await GetFirstUserEmail(supabase, logger);  
+    await GetFirstUserEmail(supabase, logger);
+
+    await InsertAsset(supabase, logger);
+
 
 }
 
+// QA TEAM: try catch block is for testing purposes only. It should be removed when code gets pushed to prod.
+
+async Task InsertAsset(Supabase.Client supabase, ILogger logger)
+{
+    try
+    {
+        // Create a new asset object
+        var newAsset = new Asset
+        {
+            AssetId = Guid.NewGuid(), // Generate a new GUID
+            Type = "House", // Set the type of asset
+            Status = "Unavailable", // Set the status of the asset
+            ApplicationCount = 0, // Initialize application count
+            Rate = 1800.00f // Set the rate for the asset
+        };
+
+        // Perform the insert operation
+        var response = await supabase.From<Asset>().Insert(newAsset);
+
+        logger.LogInformation("New asset inserted successfully.");
+    }
+    catch (Exception ex)
+    {
+        logger.LogError($"An exception occurred while inserting the asset: {ex.Message}");
+    }
+}
 async Task InsertEmployee(Supabase.Client supabase, ILogger logger)
 {
     try
@@ -86,7 +118,7 @@ async Task InsertEmployee(Supabase.Client supabase, ILogger logger)
 
 
         logger.LogInformation("New employee inserted successfully.");
-        
+
 
     }
     catch (Exception ex)
@@ -117,3 +149,4 @@ async Task GetFirstUserEmail(Supabase.Client supabase, ILogger logger)
         logger.LogError($"An error occurred while fetching the email: {ex.Message}");
     }
 }
+
