@@ -1,0 +1,46 @@
+@{
+    ViewData["Title"] = "Create Service";
+}
+
+<h1>Welcome to the Create Services Page!</h1>
+
+<label for="serviceName">Service Name:</label>
+<input type="text" id="serviceName" name="serviceName">
+<br>
+<label for="serviceRate">Service Rate:</label>
+<input type="number" id="serviceRate" name="serviceRate">
+<br/>
+<button id="createServiceBtn" type="button">Create Service</button>
+
+@section scripts {
+    <script>
+        $(function () {
+            console.log("Document ready. JavaScript function is executing."); // Log message
+            
+            $("#createServiceBtn").click(function () {
+               var serviceName = $("#serviceName").val()
+               var serviceRate = $("#serviceRate").val()
+               console.log(serviceName, serviceRate)
+               
+               $.ajax({
+                url: '/Care/CreateService/',
+                type: 'POST',
+                data: {
+                    serviceName: serviceName,
+                    serviceRate: Number(serviceRate)
+                },
+               success: function (response) {
+                // Handle success response
+                alert(response); // Show success message
+               },
+               error: function (xhr, status, error) {
+                // Handle error response
+                console.log(xhr.responseText);
+                alert('Failed to register service. Please try again.');
+               }
+               }) 
+            })
+        });
+    </script>
+}
+

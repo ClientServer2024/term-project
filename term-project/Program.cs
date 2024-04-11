@@ -2,6 +2,7 @@
 using term_project.Models.CareModels;
 
 using dotenv.net;
+using term_project.Models.CRMModels;
 
 // Inside the appropriate method
 DotEnv.Load();
@@ -59,8 +60,37 @@ async Task InitializeSupabase(string url, string key)
 
     await GetFirstUserEmail(supabase, logger);  
 
+    await InsertAsset(supabase, logger);
+
+
 }
 
+// QA TEAM: try catch block is for testing purposes only. It should be removed when code gets pushed to prod.
+
+async Task InsertAsset(Supabase.Client supabase, ILogger logger)
+{
+    try
+    {
+        // Create a new asset object
+        var newAsset = new Asset
+        {
+            AssetId = Guid.NewGuid(), // Generate a new GUID
+            Type = "House", // Set the type of asset
+            Status = "Unavailable", // Set the status of the asset
+            ApplicationCount = 0, // Initialize application count
+            Rate = 1800.00f // Set the rate for the asset
+        };
+
+        // Perform the insert operation
+        var response = await supabase.From<Asset>().Insert(newAsset);
+
+        logger.LogInformation("New asset inserted successfully.");
+    }
+    catch (Exception ex)
+    {
+        logger.LogError($"An exception occurred while inserting the asset: {ex.Message}");
+    }
+}
 async Task InsertEmployee(Supabase.Client supabase, ILogger logger)
 {
     try
@@ -115,5 +145,46 @@ async Task GetFirstUserEmail(Supabase.Client supabase, ILogger logger)
     catch (Exception ex)
     {
         logger.LogError($"An error occurred while fetching the email: {ex.Message}");
+    }
+}
+
+async Task populatePayHistory(Supabase.Client supabase, ILogger logger)
+{
+    try
+    {
+        // Retrieve all employees
+        var employeeResponse = await supabase
+            .From<Employee>()
+            .Select("*")
+            .Get();
+
+        var employees = employeeResponse.Models;
+
+        foreach (var employee in employees)
+        {
+            // Check if SalaryRate has a value before using it
+            float newSalaryRate = employee.SalaryRate.HasValue ? (float)employee.SalaryRate : 0;
+
+            // Create a pay history entry for each employee
+            var payHistoryId = Guid.NewGuid();
+            var payHistory = new PayHistory
+            {
+                PayHistoryId = payHistoryId,
+                EmployeeId = employee.EmployeeId,
+                PayRaiseDate = DateTime.Now, // Set pay raise date to current time
+                PreviousSalaryRate = 0, // No previous salary rate for new employee
+                NewSalaryRate = newSalaryRate // Set new salary rate to the initial salary rate
+            };
+
+            // Insert pay history entry into the database
+            await supabase.From<PayHistory>().Insert(payHistory);
+        }
+
+
+        logger.LogInformation("Pay history populated successfully.");
+    }
+    catch (Exception ex)
+    {
+        logger.LogError($"Error populating pay history: {ex.Message}");
     }
 }

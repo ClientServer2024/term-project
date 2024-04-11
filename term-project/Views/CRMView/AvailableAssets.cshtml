@@ -1,0 +1,41 @@
+﻿@model IEnumerable<term_project.Models.CRMModels.Asset>
+
+@{
+    ViewData["Title"] = "Available Assets";
+}
+
+<h2>Available Assets</h2>
+
+@if (!Model.Any())
+{
+    <p>No available assets found.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Asset ID</th>
+                <th>Type</th>
+                <th>Status</th>
+                <th>Rate</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var asset in Model.Where(a => a.Status.Equals("Available")))
+            {
+                <tr>
+                    <td>@asset.AssetId</td>
+                    <td>@asset.Type</td>
+                    <td>@asset.Status</td>
+                    <td>@String.Format("{0:C}", asset.Rate)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<!-- Back Button -->
+<div>
+    <a href="@Url.Action("CRMLanding", "CRM")" class="btn btn-secondary">Back to CRM Landing</a>
+</div>
