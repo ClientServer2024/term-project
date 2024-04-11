@@ -129,7 +129,7 @@ namespace term_project.Controllers
         }
 
         [HttpPost]
-        public async Task <IActionResult> EditEmployee(Guid employeeID)
+        public async Task<IActionResult> EditEmployee(Guid employeeID)
         {
             string requestBody;
             using (StreamReader reader = new StreamReader(Request.Body))
@@ -150,10 +150,45 @@ namespace term_project.Controllers
             string salaryRateString = (string)jsonData["employeeSalaryRate"];
             string email = (string)jsonData["employeeEmail"];
 
-
-            if (float.TryParse(salaryRateString, out float salaryRate))
+            if (float.TryParse(salaryRateString, out float newSalaryRate))
             {
-                var update = await _supabase
+                // Get the existing employee from the database
+                var existingEmployeeResponse = await _supabase
+                    .From<Employee>()
+                    .Select("*")
+                    .Where(e => e.EmployeeId == employeeID)
+                    .Single();
+
+                if (existingEmployeeResponse == null)
+                {
+                    return Json(new { error = "Employee not found" });
+                }
+
+                var existingEmployee = existingEmployeeResponse;
+
+                // Get the existing pay history entry for the employee
+                var payHistoryResponse = await _supabase
+                    .From<PayHistory>()
+                    .Select("*")
+                    .Where(p => p.EmployeeId == employeeID)
+                    .Single();
+
+                var payHistory = payHistoryResponse;
+
+                if (payHistory != null)
+                {
+                    // Update the pay history entry with the new salary rate and current date
+                    var updatePayHistory = await _supabase
+                        .From<PayHistory>()
+                        .Where(p => p.PayHistoryId == payHistory.PayHistoryId)
+                        .Set(p => p.PreviousSalaryRate, payHistory.NewSalaryRate) // Set previous salary rate to the current new salary rate
+                        .Set(p => p.NewSalaryRate, newSalaryRate) // Set new salary rate to the updated salary rate
+                        .Set(p => p.PayRaiseDate, DateTime.Now) // Set pay raise date to current time
+                        .Update();
+                }
+
+                // Update the employee details
+                var updateEmployee = await _supabase
                     .From<Employee>()
                     .Where(e => e.EmployeeId == employeeID)
                     .Set(e => e.FirstName, firstName)
@@ -162,7 +197,7 @@ namespace term_project.Controllers
                     .Set(e => e.EmergencyContact, emergencyContact)
                     .Set(e => e.JobTitle, jobTitle)
                     .Set(e => e.EmploymentType, employmentType)
-                    .Set(e => e.SalaryRate, salaryRate)
+                    .Set(e => e.SalaryRate, newSalaryRate) // Update salary rate to the new rate
                     .Set(e => e.Email, email)
                     .Update();
 
@@ -175,24 +210,34 @@ namespace term_project.Controllers
             }
         }
 
+
+
         public IActionResult HREditEmployee(Guid employeeID)
         {
             ViewData["EmployeeID"] = employeeID;
             return View("~/Views/HRView/HREditEmployee.cshtml");
         }
 
-        [HttpPost]
-        public async Task<IActionResult> DeleteEmployee(Guid employeeID)
-        {
-            var deleteEntry = _supabase
-                .From<Employee>()
-                .Where(e => e.EmployeeId == employeeID)
-                .Delete();
+		[HttpPost]
+		public async Task<IActionResult> DeleteEmployee(Guid employeeID)
+		{
+			// Delete the employee
+			var deleteEmployee = _supabase
+				.From<Employee>()
+				.Where(e => e.EmployeeId == employeeID)
+				.Delete();
 
-            return Json(new { redirect = Url.Action("HRManageEmployees", "HR") });
-        }
+			// Delete the associated PayHistory entry
+			var deletePayHistory = _supabase
+				.From<PayHistory>()
+				.Where(p => p.EmployeeId == employeeID)
+				.Delete();
 
-        public IActionResult HRDeleteEmployee(Guid employeeID)
+			return Json(new { redirect = Url.Action("HRManageEmployees", "HR") });
+		}
+
+
+		public IActionResult HRDeleteEmployee(Guid employeeID)
         {
             ViewData["EmployeeID"] = employeeID;
             return View("~/Views/HRView/HRDeleteEmployee.cshtml");
@@ -209,8 +254,6 @@ namespace term_project.Controllers
 
             JObject jsonData = JObject.Parse(requestBody);
 
-            Console.WriteLine(jsonData.ToString());
-
             string firstName = (string)jsonData["employeefirstName"];
             string lastName = (string)jsonData["employeelastName"];
             string address = (string)jsonData["employeeaddress"];
@@ -222,10 +265,10 @@ namespace term_project.Controllers
 
             if (float.TryParse(salaryRateString, out float salaryRate))
             {
-
+                var employeeId = Guid.NewGuid();
                 var model = new Employee
                 {
-                    EmployeeId = Guid.NewGuid(),
+                    EmployeeId = employeeId,
                     FirstName = firstName,
                     LastName = lastName,
                     Address = address,
@@ -238,18 +281,149 @@ namespace term_project.Controllers
 
                 await _supabase.From<Employee>().Insert(model);
 
+                var payHistoryModel = new PayHistory
+                {
+                    PayHistoryId = Guid.NewGuid(),
+                    EmployeeId = employeeId, // Use the ID of the newly created employee
+                    PayRaiseDate = DateTime.Now, // Set the pay raise date to the current date
+                    PreviousSalaryRate = 0, // Set initial previous salary rate to 0
+                    NewSalaryRate = salaryRate // Set the new salary rate to the rate of the newly created employee
+                };
+
+                await _supabase.From<PayHistory>().Insert(payHistoryModel);
+
                 return Json(new { redirect = Url.Action("HRManageEmployees", "HR") });
             }
             else
             {
-                // Return an error response
                 return BadRequest("Failed to parse salary rate.");
             }
         }
+
+        public async Task<IActionResult> InsertAllNewEntries()
+        {
+            // Retrieve all employees
+            var employeeResponse = await _supabase
+                .From<Employee>()
+                .Select("*")
+                .Get();
+
+            var employees = employeeResponse.Models;
+
+            // Retrieve existing employee IDs from Pay_History table
+            var payHistoryResponse = await _supabase
+                .From<PayHistory>()
+                .Select("employee_id")
+                .Get();
+
+            var existingEmployeeIds = payHistoryResponse.Models.Select(p => p.EmployeeId).ToList();
+
+            // Filter out new employees who are not in the Pay_History table
+            var newEmployees = employees.Where(e => !existingEmployeeIds.Contains(e.EmployeeId)).ToList();
+
+            foreach (var employee in newEmployees)
+            {
+                // Check if SalaryRate has a value before using it
+                float newSalaryRate = employee.SalaryRate.HasValue ? (float)employee.SalaryRate : 0;
+
+                // Create a pay history entry for each new employee
+                var payHistoryId = Guid.NewGuid();
+                var payHistory = new PayHistory
+                {
+                    PayHistoryId = payHistoryId,
+                    EmployeeId = employee.EmployeeId,
+                    PayRaiseDate = DateTime.Now, // Set pay raise date to current time
+                    PreviousSalaryRate = 0, // No previous salary rate for new employee
+                    NewSalaryRate = newSalaryRate // Set new salary rate to the initial salary rate
+                };
+
+                // Insert pay history entry into the database
+                await _supabase.From<PayHistory>().Insert(payHistory);
+            }
+
+            return Ok("New entries inserted successfully.");
+        }
+
+
 
         public IActionResult HRCreateEmployee()
         {
             return View("~/Views/HRView/HRCreateEmployee.cshtml");
         }
-    }
+
+        [HttpGet]
+        public async Task<IActionResult> PayHistory(int page = 1, int pageSize = 10)
+        {
+            // Calculate the offset based on the page number and page size
+            int offset = (page - 1) * pageSize;
+
+            await InsertAllNewEntries();
+
+            // Retrieve PayHistory data with pagination
+            var payHistoryResponse = await _supabase
+                .From<PayHistory>()
+                .Select("*")
+                .Range(offset, offset + pageSize - 1) // Specify the range for pagination
+                .Get();
+
+            var payHistoryList = payHistoryResponse.Models;
+
+            // Create a list to store pay history entries with employee details
+            var payHistoryWithEmployeeDetails = new List<object>();
+
+            foreach (var payrollEntry in payHistoryList)
+            {
+                // Extract pay history details
+                var payRaiseDate = payrollEntry.PayRaiseDate;
+                var previousSalaryRate = payrollEntry.PreviousSalaryRate;
+                var newSalaryRate = payrollEntry.NewSalaryRate;
+
+                // Extract employee ID
+                var employeeId = payrollEntry.EmployeeId;
+
+                // Retrieve employee details
+                var employeeResponse = await _supabase
+                    .From<Employee>()
+                    .Select("first_name, last_name")
+                    .Where(employeeResponse => employeeResponse.EmployeeId == employeeId)
+                    .Single();
+
+                if (employeeResponse != null)
+                {
+                    var employee = employeeResponse;
+
+                    // Extract employee details
+                    var employeeFirstName = employee.FirstName;
+                    var employeeLastName = employee.LastName;
+
+                    // Create an anonymous object with pay history and employee details
+                    var payHistoryEntry = new
+                    {
+                        EmployeeFirstName = employeeFirstName,
+                        EmployeeLastName = employeeLastName,
+                        PayRaiseDate = payRaiseDate,
+                        PreviousSalaryRate = previousSalaryRate,
+                        NewSalaryRate = newSalaryRate
+                    };
+
+                    // Add the pay history entry to the list
+                    payHistoryWithEmployeeDetails.Add(payHistoryEntry);
+                }
+            }
+
+            // Serialize the list to JSON and return it
+            var jsonData = JsonConvert.SerializeObject(payHistoryWithEmployeeDetails);
+            return Content(jsonData, "application/json");
+        }
+
+
+
+
+
+        public IActionResult HRPayHistory()
+		{
+
+			return View("~/Views/HRView/HRPayHistory.cshtml");
+		}
+	}
 }

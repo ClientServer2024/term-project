@@ -55,9 +55,10 @@ async Task InitializeSupabase(string url, string key)
     var logger = app.Services.GetRequiredService<ILogger<Program>>();
     logger.LogInformation("Reached!");
 
-    await InsertEmployee(supabase, logger);
+    //await InsertEmployee(supabase, logger);
 
-    await GetFirstUserEmail(supabase, logger);  
+    //await GetFirstUserEmail(supabase, logger);  
+    //await populatePayHistory(supabase, logger);
 
 }
 
@@ -115,5 +116,47 @@ async Task GetFirstUserEmail(Supabase.Client supabase, ILogger logger)
     catch (Exception ex)
     {
         logger.LogError($"An error occurred while fetching the email: {ex.Message}");
+    }
+}
+
+
+async Task populatePayHistory(Supabase.Client supabase, ILogger logger)
+{
+    try
+    {
+        // Retrieve all employees
+        var employeeResponse = await supabase
+            .From<Employee>()
+            .Select("*")
+            .Get();
+
+        var employees = employeeResponse.Models;
+
+        foreach (var employee in employees)
+        {
+            // Check if SalaryRate has a value before using it
+            float newSalaryRate = employee.SalaryRate.HasValue ? (float)employee.SalaryRate : 0;
+
+            // Create a pay history entry for each employee
+            var payHistoryId = Guid.NewGuid();
+            var payHistory = new PayHistory
+            {
+                PayHistoryId = payHistoryId,
+                EmployeeId = employee.EmployeeId,
+                PayRaiseDate = DateTime.Now, // Set pay raise date to current time
+                PreviousSalaryRate = 0, // No previous salary rate for new employee
+                NewSalaryRate = newSalaryRate // Set new salary rate to the initial salary rate
+            };
+
+            // Insert pay history entry into the database
+            await supabase.From<PayHistory>().Insert(payHistory);
+        }
+
+
+        logger.LogInformation("Pay history populated successfully.");
+    }
+    catch (Exception ex)
+    {
+        logger.LogError($"Error populating pay history: {ex.Message}");
     }
 }
