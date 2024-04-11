@@ -22,14 +22,12 @@
     <button type="submit" class="btn btn-primary btn-block" id="createShift">Create</button>
 </form>
 
-
 @section scripts {
     <script>
         $(document).ready(function() {
-                $('#createShiftForm').on('submit', function(e) {
-                    e.preventDefault();
-                console.log("button clicked")
-                
+            $('#createShiftForm').on('submit', function(e) {
+                e.preventDefault();
+
                 // Serialize form data
                 let formData = $('#createShiftForm').serialize();
                 
@@ -49,7 +47,8 @@
                 };
 
                 console.log(JSON.stringify(newData));
-                console.log("sending ajax")
+                console.log("sending ajax");
+
                 // AJAX request
                 $.ajax({
                     url: '/HR/CreateShift',
@@ -58,11 +57,11 @@
                     data: JSON.stringify(newData),
                     success: function (response) {
                         alert("Shift created successfully");
-                        window.location.href = response.redirect; // Redirect after success
+                        window.location.href = response.redirect; 
                     },
                     error: function (xhr, status, error) {
                         console.error("Error creating shift: ", error);
-                        alert("Error creating shift. Please try again."); // Notify user of error
+                        alert("Error creating shift. Please try again."); 
                     }
                 });
             });

@@ -267,27 +267,29 @@ namespace term_project.Controllers
         public async Task<IActionResult> CreateShift()
         {
             Console.WriteLine("Creating shift...");
-            string requestBody;
-            using (StreamReader reader = new StreamReader(Request.Body))
-            {
-                requestBody = await reader.ReadToEndAsync();
-            }
-            JObject jsonData = JObject.Parse(requestBody);
-            Console.WriteLine(jsonData.ToString());
-            
-            string shiftType = (string)jsonData["shiftType"];
-            Date shiftDate = (Date)jsonData["shiftDate"];
-            Time startTime = (Time)jsonData["startTime"];
-            Time endTime = (Time)jsonData["endTime"];
             
             try
             {
+                string requestBody;
+                using (StreamReader reader = new StreamReader(Request.Body))
+                {
+                    requestBody = await reader.ReadToEndAsync();
+                }
+                JObject jsonData = JObject.Parse(requestBody);
+                Console.WriteLine(jsonData.ToString());
+
+                string shiftType = (string)jsonData["shiftType"];
+                DateTime shiftDate = (DateTime)jsonData["shiftDate"];
+                TimeSpan startTime = (TimeSpan)jsonData["startTime"];
+                TimeSpan endTime = (TimeSpan)jsonData["endTime"];
+                
                 var new_shift = new Shift
                 {
                     ShiftId = Guid.NewGuid(),
                     ShiftType = shiftType,
                     StartTime = startTime,
-                    EndTime = endTime
+                    EndTime = endTime,
+                    ShiftDate = shiftDate
                 };
                 Console.WriteLine(new_shift);
 
@@ -296,7 +298,7 @@ namespace term_project.Controllers
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                Console.WriteLine("Error occurred while creating new shift:" + e);
                 return BadRequest(e);
             }
         }
