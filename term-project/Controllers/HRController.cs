@@ -257,5 +257,48 @@ namespace term_project.Controllers
         {
             return View("~/Views/HRView/HRManageShifts.cshtml");
         }
+
+        public IActionResult HRCreateShift()
+        {
+            return View("~/Views/HRView/HRCreateShift.cshtml");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateShift()
+        {
+            Console.WriteLine("Creating shift...");
+            string requestBody;
+            using (StreamReader reader = new StreamReader(Request.Body))
+            {
+                requestBody = await reader.ReadToEndAsync();
+            }
+            JObject jsonData = JObject.Parse(requestBody);
+            Console.WriteLine(jsonData.ToString());
+            
+            string shiftType = (string)jsonData["shiftType"];
+            Date shiftDate = (Date)jsonData["shiftDate"];
+            Time startTime = (Time)jsonData["startTime"];
+            Time endTime = (Time)jsonData["endTime"];
+            
+            try
+            {
+                var new_shift = new Shift
+                {
+                    ShiftId = Guid.NewGuid(),
+                    ShiftType = shiftType,
+                    StartTime = startTime,
+                    EndTime = endTime
+                };
+                Console.WriteLine(new_shift);
+
+                await _supabase.From<Shift>().Insert(new_shift);
+                return Json(new { redirect = Url.Action("HRManageShifts", "HR") });
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return BadRequest(e);
+            }
+        }
     }
 }
