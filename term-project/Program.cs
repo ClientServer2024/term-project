@@ -67,6 +67,8 @@ async Task InitializeSupabase(string url, string key)
 
 }
 
+// QA TEAM: try catch block is for testing purposes only. It should be removed when code gets pushed to prod.
+
 async Task InsertAsset(Supabase.Client supabase, ILogger logger)
 {
     try
