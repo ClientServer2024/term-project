@@ -1,0 +1,21 @@
+﻿@{
+    ViewData["Title"] = "Maintenance Landing";
+}
+
+<h1>Welcome to the Maintenance Landing Page</h1>
+
+<button id="createRequestPageButton">Create Maintenance Request</button>
+<button id="viewRequestsButton">View Maintenance Requests</button>
+
+@section scripts {
+    <script>
+        $(function () {
+            $('#createRequestPageButton').click(function () {
+                window.location.href = '/CRM/CreateRequest';
+            });
+            $('#viewRequestsButton').click(function () {
+                window.location.href = '/CRM/ViewRequests';
+            });
+        });
+    </script>
+}

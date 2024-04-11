@@ -1,0 +1,47 @@
+﻿@model term_project.Models.CRMModels.MaintenanceRequest
+@{
+    ViewData["Title"] = "Create Maintenance Request";
+}
+
+<h1>Create Maintenance Request</h1>
+
+<form asp-action="CreateRequest" method="post">
+    <div>
+        <label for="RenterId">Renter ID:</label>
+        <select id="RenterId" name="RenterId" required>
+            <option value="">Select a Renter</option>
+            @foreach (var renter in ViewBag.Renters)
+            {
+                <option value="@renter.RenterId">@renter.RenterId</option>
+            }
+        </select>
+    </div>
+    <div>
+        <label for="AssetId">Asset ID:</label>
+        <select id="AssetId" name="AssetId" required>
+            <option value="">Select an Asset</option>
+            <!-- Hardcoded option for testing -->
+            <option value="c8a5ca4d-8bce-4d0c-b169-d15724120f09">c8a5ca4d-8bce-4d0c-b169-d15724120f09</option>
+        </select>
+    </div>
+    <div>
+        <label for="Description">Description:</label>
+        <textarea id="Description" name="Description" required></textarea>
+    </div>
+    <div>
+        <label for="Status">Status:</label>
+        <select id="Status" name="Status" required>
+            <option value="Pending">Pending</option>
+            <option value="InProgress">In Progress</option>
+            <option value="Completed">Completed</option>
+            <option value="Cancelled">Cancelled</option>
+        </select>
+    </div>
+    <div>
+        <label for="DueDate">Due Date:</label>
+        <input type="date" id="DueDate" name="DueDate" required>
+    </div>
+    <button type="submit">Submit Request</button>
+</form>
+
+

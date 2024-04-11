@@ -1,0 +1,45 @@
+﻿@model IEnumerable<term_project.Models.CRMModels.MaintenanceRequest>
+
+@{
+    ViewData["Title"] = "View Requests";
+}
+
+<h2>Maintenance Requests</h2>
+
+@if (!Model.Any())
+{
+    <p>No maintenance requests to display.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Maintenance Request ID</th>
+                <th>Asset ID</th>
+                <th>Renter ID</th>
+                <th>Description</th>
+                <th>Status</th>
+                <th>Due Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var request in Model)
+            {
+                <tr>
+                    <td>@request.MaintenanceRequestId</td>
+                    <td>@request.AssetId</td>
+                    <td>@request.RenterId</td>
+                    <td>@request.Description</td>
+                    <td>@request.Status</td>
+                    <td>@request.DueDate.ToString("d")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<div>
+    <a href="@Url.Action("MaintenanceLanding", "CRM")" class="btn btn-primary">Back to Maintenance Landing</a>
+</div>
+
