@@ -281,16 +281,8 @@ namespace term_project.Controllers
 
                 await _supabase.From<Employee>().Insert(model);
 
-                var payHistoryModel = new PayHistory
-                {
-                    PayHistoryId = Guid.NewGuid(),
-                    EmployeeId = employeeId, // Use the ID of the newly created employee
-                    PayRaiseDate = DateTime.Now, // Set the pay raise date to the current date
-                    PreviousSalaryRate = 0, // Set initial previous salary rate to 0
-                    NewSalaryRate = salaryRate // Set the new salary rate to the rate of the newly created employee
-                };
+                await InsertAllNewEntries();
 
-                await _supabase.From<PayHistory>().Insert(payHistoryModel);
 
                 return Json(new { redirect = Url.Action("HRManageEmployees", "HR") });
             }
@@ -357,7 +349,6 @@ namespace term_project.Controllers
             // Calculate the offset based on the page number and page size
             int offset = (page - 1) * pageSize;
 
-            await InsertAllNewEntries();
 
             // Retrieve PayHistory data with pagination
             var payHistoryResponse = await _supabase
