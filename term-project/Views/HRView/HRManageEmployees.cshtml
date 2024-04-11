@@ -1,0 +1,59 @@
+﻿@{
+    ViewData["Title"] = "HR";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Manage Employees</h1>
+</div>
+
+<div>
+    <button type="button" class="btn btn-primary" onclick="window.location.href='@Url.Action("HRCreateEmployee", "HR")'">Create</button>
+</div>
+
+<table id="employeesTable" class="table">
+    <thead>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Job Title</th>
+        </tr>
+    </thead>
+    <tbody>
+
+    </tbody>
+</table>
+
+@section scripts {
+    <script>
+        $(function () {
+            function fetchAllEmployees() {
+                $.ajax({
+                    url: '/HR/GetAllEmployees',
+                    method: 'GET',
+                    success: function (data) {
+                        var table = $('#employeesTable tbody');
+                        table.empty();
+                        console.log(data);
+                        // Assuming the lengths of all arrays are the same
+                        for (var i = 0; i < data.employeeFirstNames.length; i++) {
+                            var row = '<tr>';
+                            row += '<td>' + data.employeeFirstNames[i] + '</td>';
+                            row += '<td>' + data.employeeLastNames[i] + '</td>';
+                            row += '<td>' + data.employeeJobTitles[i] + '</td>';
+                            row += '<td><a href="' + '@Url.Action("HRViewEmployee", "HR")' + '?employeeId=' + data.employeeIDs[i] + '">View</a></td>';
+                            row += '<td><a href="' + '@Url.Action("HREditEmployee", "HR")' + '?employeeId=' + data.employeeIDs[i] + '">Update</a></td>';
+                            row += '<td><a href="' + '@Url.Action("HRDeleteEmployee", "HR")' + '?employeeId=' + data.employeeIDs[i] + '">Delete</a></td>';
+                            row += '</tr>';
+                            table.append(row);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.log(xhr.responseText);
+                    }
+                })
+            }
+
+            fetchAllEmployees();
+        });
+    </script>
+}

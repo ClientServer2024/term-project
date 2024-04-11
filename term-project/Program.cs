@@ -39,9 +39,7 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 // Adjust this part according to how you instantiate your Supabase client
-
-    await InitializeSupabase(supabaseUrl, supabaseKey);
-
+await InitializeSupabase(supabaseUrl, supabaseKey);
 
 app.Run();
 
@@ -60,7 +58,7 @@ async Task InitializeSupabase(string url, string key)
 
     await InsertEmployee(supabase, logger);
 
-    await GetFirstUserEmail(supabase, logger);
+    await GetFirstUserEmail(supabase, logger);  
 
     await InsertAsset(supabase, logger);
 
@@ -118,7 +116,7 @@ async Task InsertEmployee(Supabase.Client supabase, ILogger logger)
 
 
         logger.LogInformation("New employee inserted successfully.");
-
+        
 
     }
     catch (Exception ex)
@@ -150,3 +148,43 @@ async Task GetFirstUserEmail(Supabase.Client supabase, ILogger logger)
     }
 }
 
+async Task populatePayHistory(Supabase.Client supabase, ILogger logger)
+{
+    try
+    {
+        // Retrieve all employees
+        var employeeResponse = await supabase
+            .From<Employee>()
+            .Select("*")
+            .Get();
+
+        var employees = employeeResponse.Models;
+
+        foreach (var employee in employees)
+        {
+            // Check if SalaryRate has a value before using it
+            float newSalaryRate = employee.SalaryRate.HasValue ? (float)employee.SalaryRate : 0;
+
+            // Create a pay history entry for each employee
+            var payHistoryId = Guid.NewGuid();
+            var payHistory = new PayHistory
+            {
+                PayHistoryId = payHistoryId,
+                EmployeeId = employee.EmployeeId,
+                PayRaiseDate = DateTime.Now, // Set pay raise date to current time
+                PreviousSalaryRate = 0, // No previous salary rate for new employee
+                NewSalaryRate = newSalaryRate // Set new salary rate to the initial salary rate
+            };
+
+            // Insert pay history entry into the database
+            await supabase.From<PayHistory>().Insert(payHistory);
+        }
+
+
+        logger.LogInformation("Pay history populated successfully.");
+    }
+    catch (Exception ex)
+    {
+        logger.LogError($"Error populating pay history: {ex.Message}");
+    }
+}

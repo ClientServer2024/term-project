@@ -1,0 +1,115 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+
+@{
+    ViewData["Title"] = "HR";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Do you wish to delete this employee?</h1>
+</div>
+<hr />
+<div id="employeeInfo">
+    <dt class="col-sm-2">
+        First Name
+    </dt>
+    <dd class="col-sm-10" id="FirstName">
+
+    </dd>
+    <dt class="col-sm-2">
+        Last Name
+    </dt>
+    <dd class="col-sm-10" id="LastName">
+
+    </dd>
+    <dt class="col-sm-2">
+        Address
+    </dt>
+    <dd class="col-sm-10" id="Address">
+
+    </dd>
+    <dt class="col-sm-2">
+        Emergency Contact
+    </dt>
+    <dd class="col-sm-10" id="Emergency">
+
+    </dd>
+    <dt class="col-sm-2">
+        Job Title
+    </dt>
+    <dd class="col-sm-10" id="Job">
+
+    </dd>
+    <dt class="col-sm-2">
+        Employment Type
+    </dt>
+    <dd class="col-sm-10" id="Employment">
+
+    </dd>
+    <dt class="col-sm-2">
+        Salary Rate
+    </dt>
+    <dd class="col-sm-10" id="Salary">
+
+    </dd>
+    <dt class="col-sm-2">
+        Email
+    </dt>
+    <dd class="col-sm-10" id="Email">
+
+    </dd>
+    <button type="button" class="btn btn-danger" id="deleteEmployee">Delete</button>
+    <button type="button" class="btn btn-primary" onclick="window.location.href='@Url.Action("HRManageEmployees", "HR")'">Cancel</button>
+</div>
+
+@section scripts {
+    <script>
+        $(function () {
+
+            // Define the fetchSpecificEmployee function
+            function fetchSpecificEmployee() {
+                $.ajax({
+                    url: '/HR/GetEmployee/?employeeID=' + '@ViewData["EmployeeID"]',
+                    method: 'GET',
+                    success: function (data) {
+                        // Update each section with the retrieved data
+                        $('#FirstName').text(data.employeeFirstName);
+                        $('#LastName').text(data.employeeLastName);
+                        $('#Address').text(data.employeeAddress);
+                        $('#Emergency').text(data.employeeEmergencyContact);
+                        $('#Job').text(data.employeeJobTitle);
+                        $('#Employment').text(data.employeeEmploymentType);
+                        $('#Salary').text(data.employeeSalaryRate);
+                        $('#Email').text(data.employeeEmail);
+                    },
+                    error: function (xhr, status, error) {
+                        console.log(xhr.responseText);
+                    }
+                });
+            }
+
+            // Call the fetchSpecificEmployee function
+            fetchSpecificEmployee();
+
+            $('#deleteEmployee').click(function () {
+                var employeeID = '@ViewData["EmployeeID"]'; // Convert GUID to string
+                $.ajax({
+                    url: '/HR/DeleteEmployee',
+                    method: 'POST',
+                    data: { employeeID: employeeID }, // Ensure employeeID is a string
+                    success: function (response) {
+                        alert("Delete successful");
+                        window.location.href = response.redirect;
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Error: ", error);
+                    }
+                });
+            });
+
+        });
+    </script>
+}
+
