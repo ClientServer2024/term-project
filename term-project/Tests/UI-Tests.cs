@@ -7,19 +7,6 @@ using System;
 using OpenQA.Selenium.DevTools.V121.CSS;
 
 
-// Your test class and methods follow
-
-
-/*
-Installed Packages:
-
-dotnet add package Selenium.WebDriver
-dotnet add package Selenium.WebDriver.ChromeDriver
-dotnet add package xunit
-dotnet add package xunit.runner.visualstudio
-*/
-
-
 namespace term_project.Tests
 {
     public class UITests : IDisposable
