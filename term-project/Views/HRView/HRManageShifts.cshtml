@@ -1,21 +1,23 @@
 @{
     ViewData["Title"] = "HR";
 }
+
 @model term_project.Views.HRView.HRManageShifts
 
 @{
     Layout = "_Layout";
 }
 
-<!DOCTYPE html>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.1.0/main.min.css">
 
-<html>
-<head>
-    <title>Employee Schedule Management</title>
-</head>
-<body>
 <div>
     <h2>Employee Schedule Management</h2>
+    <br/>
+    <div id="calendar"></div>
 </div>
-</body>
-</html>
+
+@section Scripts
+{
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.1.0/main.min.js"></script>
+    <script src="~/js/HRManageShifts.js"></script>
+}
