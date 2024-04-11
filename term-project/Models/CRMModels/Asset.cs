@@ -15,10 +15,11 @@ namespace term_project.Models.CRMModels
         [Column("status")]
         public string Status { get; set; }
 
-        [Column("rent_history_id")]
-        public Guid RentHistoryId { get; set; }
 
         [Column("application_count")]
-        public long? ApplicationCount { get; set; }
+        public int ApplicationCount { get; set; }
+
+        [Column("rate")]
+        public float Rate { get; set; }
     }
 }
