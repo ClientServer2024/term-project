@@ -5,43 +5,134 @@
 
 <h1>Create Maintenance Request</h1>
 
-<form asp-action="CreateRequest" method="post">
-    <div>
-        <label for="RenterId">Renter ID:</label>
-        <select id="RenterId" name="RenterId" required>
-            <option value="">Select a Renter</option>
-            @foreach (var renter in ViewBag.Renters)
-            {
-                <option value="@renter.RenterId">@renter.RenterId</option>
-            }
-        </select>
-    </div>
-    <div>
-        <label for="AssetId">Asset ID:</label>
-        <select id="AssetId" name="AssetId" required>
-            <option value="">Select an Asset</option>
-            <!-- Hardcoded option for testing -->
-            <option value="c8a5ca4d-8bce-4d0c-b169-d15724120f09">c8a5ca4d-8bce-4d0c-b169-d15724120f09</option>
-        </select>
-    </div>
-    <div>
-        <label for="Description">Description:</label>
-        <textarea id="Description" name="Description" required></textarea>
-    </div>
-    <div>
-        <label for="Status">Status:</label>
-        <select id="Status" name="Status" required>
-            <option value="Pending">Pending</option>
-            <option value="InProgress">In Progress</option>
-            <option value="Completed">Completed</option>
-            <option value="Cancelled">Cancelled</option>
-        </select>
-    </div>
-    <div>
-        <label for="DueDate">Due Date:</label>
-        <input type="date" id="DueDate" name="DueDate" required>
-    </div>
-    <button type="submit">Submit Request</button>
+<form id="maintenanceRequestForm">
+<label for="customerEmail">Customer Email:</label>
+<select id="customerEmail" name="customerEmail">
+</select>
+<br>
+<label for="assetType">Select Asset Type:</label>
+<select id="assetType" name="assetType">
+</select>
+<br>
+    <label for="applianceMake">Select Appliance Make:</label>
+<select id="applianceMake" name="applianceMake">
+</select>
+<br>
+    <label for="applianceModel">Select Appliance Model:</label>
+<select id="applianceModel" name="applianceModel">
+</select>
+<br />
+<label for="Description">Description:</label>
+<textarea id="Description" name="Description" required></textarea>
+<label for="Status">Status:</label>
+<select id="Status" name="Status" required>
+    <option value="Pending">Pending</option>
+    <option value="InProgress">In Progress</option>
+    <option value="Completed">Completed</option>
+    <option value="Cancelled">Cancelled</option>
+</select>
+<label for="DueDate">Due Date:</label>
+<input type="date" id="DueDate" name="DueDate" required>
+<button id="createRequest" type="button">Submit Request</button>
 </form>
 
+<div>
+    <a href="@Url.Action("ViewRequests", "CRM")" class="btn btn-primary">View Requests</a>
+</div>
 
+@section scripts {
+    <script>
+        $(function () {
+            $.ajax({
+                url: '/CRM/GetAllApplicants',
+                type: 'GET',
+                success: function (data) {
+                    var customerDropdown = $('#customerEmail');
+                    customerDropdown.empty();
+                    $.each(data.applicantEmails, function (i, email) {
+                        customerDropdown.append($('<option></option>').text(email));
+                    });
+                },
+                error: function (xhr, status, error) {
+                    console.log(xhr.responseText);
+                }
+            });
+
+            $('#customerEmail').change(function () {
+                var selectedOption = $(this).find('option:selected'); 
+                var customerEmail = selectedOption.text();
+                $.ajax({
+                    url: '/CRM/GetAvailableAssetTypes',
+                    type: 'GET',
+                    data: { customerEmail: customerEmail },
+                    success: function (assetData) {
+                        var assetTypedropdown = $('#assetType');
+                        assetTypedropdown.empty();
+                        $.each(assetData, function (i, asset) {
+                            assetTypedropdown.append($('<option></option>').val(asset.AssetID).text(asset.AssetType));
+                        });
+
+                    },
+                    error: function (xhr, status, error) {
+                        console.log(xhr.responseText);
+                    }
+                });
+            });
+            $('#assetType').on('click', function () {
+                var assetId = $(this).val();
+                var selectedOption = $(this).find('option:selected'); 
+                var assetType = selectedOption.text();
+                $.ajax({
+                    url: '/CRM/GetAvailableApplianceInfo',
+                    type: 'GET',
+                    data: { assetId: assetId, assetType: assetType },
+                    success: function (applianceData) {
+                        var applianceMakedropdown = $('#applianceMake');
+                        applianceMakedropdown.empty();
+                        var applianceModeldropdown = $('#applianceModel');
+                        applianceModeldropdown.empty();
+                        $.each(applianceData, function (i, appliance) {
+                            console.log(appliance);
+                            var option = $('<option></option>').val(appliance.ApplianceMakes).text(appliance.ApplianceMakes);
+                            var option2 = $('<option></option>').val(appliance.ApplianceModels).text(appliance.ApplianceModels);
+                            applianceMakedropdown.append(option);
+                            applianceModeldropdown.append(option2);
+                        });
+
+                    },
+                    error: function (xhr, status, error) {
+                        console.log(xhr.responseText);
+                    }
+                });
+            });
+
+            $('#createRequest').click(function () {
+                var requestData = {
+                    customerEmail: $('#customerEmail').find('option:selected').text(),
+                    assetType: $('#assetType').find('option:selected').text(),
+                    applianceMake: $('#applianceMake').find('option:selected').text(),
+                    applianceModel: $('#applianceModel').find('option:selected').text(),
+                    description: $('#Description').val(),
+                    status: $('#Status').find('option:selected').text(),
+                    dueDate: $('#DueDate').val()
+                };
+
+                $.ajax({
+                    url: '/CRM/CreateRequest/',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(requestData),
+                    success: function (response) {
+                        alert('Maintenance request created successfully!');
+                        console.log(response);
+                    },
+                    error: function (xhr, status, error) {
+                        alert('Error creating maintenance request. Please try again.');
+                        console.log(xhr.responseText);
+                    }
+                });
+            });
+
+        });
+    </script>
+}

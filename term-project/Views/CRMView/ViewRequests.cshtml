@@ -16,11 +16,14 @@ else
         <thead>
             <tr>
                 <th>Maintenance Request ID</th>
-                <th>Asset ID</th>
-                <th>Renter ID</th>
+                <th>Customer Email</th>
+                <th>Asset Type</th>
                 <th>Description</th>
                 <th>Status</th>
                 <th>Due Date</th>
+                <th>Appliance Make</th>
+                <th>Appliance Model</th>
+                <th> </th>
             </tr>
         </thead>
         <tbody>
@@ -28,18 +31,80 @@ else
             {
                 <tr>
                     <td>@request.MaintenanceRequestId</td>
-                    <td>@request.AssetId</td>
-                    <td>@request.RenterId</td>
+                    <td>@request.CustomerEmail</td>
+                    <td>@request.AssetType</td>
                     <td>@request.Description</td>
-                    <td>@request.Status</td>
+                    <td id="statusText-@request.MaintenanceRequestId">@request.Status</td>
                     <td>@request.DueDate.ToString("d")</td>
+                    <td>@request.ApplianceMake</td>
+                    <td>@request.ApplianceModel</td>
+                    <td>
+                        <!-- Button to open the modal -->
+                        <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#editStatusModal-@request.MaintenanceRequestId">
+                            Edit Status
+                        </button>
+                    </td>
                 </tr>
             }
         </tbody>
     </table>
+
+    <!-- Modals for editing status -->
+    @foreach (var request in Model)
+    {
+        <div class="modal fade" id="editStatusModal-@request.MaintenanceRequestId" tabindex="-1" aria-labelledby="editStatusModalLabel-@request.MaintenanceRequestId" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editStatusModalLabel-@request.MaintenanceRequestId">Edit Status</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form class="status-edit-form" data-request-id="@request.MaintenanceRequestId">
+                            <div class="mb-3">
+                                <label for="statusSelect-@request.MaintenanceRequestId" class="form-label">New Status</label>
+                                <select class="form-select" id="statusSelect-@request.MaintenanceRequestId" name="status">
+                                    <option value="Pending">Pending</option>
+                                    <option value="InProgress">In Progress</option>
+                                    <option value="Completed">Completed</option>
+                                    <option value="Cancelled">Cancelled</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Update</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
 }
 
 <div>
     <a href="@Url.Action("MaintenanceLanding", "CRM")" class="btn btn-primary">Back to Maintenance Landing</a>
 </div>
 
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('.status-edit-form').on('submit', function (e) {
+                e.preventDefault();
+
+                var requestId = $(this).data('request-id');
+                var newStatus = $('#statusSelect-' + requestId).val();
+
+                $.ajax({
+                    url: '/CRM/UpdateStatus/',
+                    type: 'POST',
+                    data: { maintenanceRequestId: requestId, status: newStatus },
+                    success: function (response) {
+                        $('#statusText-' + requestId).text(newStatus);
+                        $('#editStatusModal-' + requestId).modal('hide');
+                    },
+                    error: function (xhr, status, error) {
+                        alert('Error updating status. ' + xhr.responseText);
+                    }
+                });
+            });
+        });
+    </script>
+}
