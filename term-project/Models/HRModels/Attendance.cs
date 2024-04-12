@@ -13,11 +13,11 @@ namespace term_project.Models.CareModels
         public Guid EmployeeId { get; set; }
 
         [Column("clock_in_time")]
-        public DateTime ClockInTime { get; set; }
+        public DateTime? ClockInTime { get; set; }
 
         [Column("clock_out_time")]
-        public DateTime ClockOutTime { get; set; }
-        
+        public DateTime? ClockOutTime { get; set; }
+
         [Column("overtime_start")]
         public DateTime? OverTimeStart { get; set; }
 
@@ -29,6 +29,5 @@ namespace term_project.Models.CareModels
 
         [Column("status")]
         public string Status { get; set; }
-
     }
 }

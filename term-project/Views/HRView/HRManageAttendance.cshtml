@@ -1,0 +1,113 @@
+﻿@{
+    ViewData["Title"] = "Manage Employee Attendance Records";
+}
+
+<h1>Manage Employee Attendance Records</h1>
+
+<form id="attendanceForm">
+    <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" class="form-control" id="email" name="email" required>
+    </div>
+    <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" class="form-control" id="password" name="password" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+<table id="attendanceRecords">
+    <thead>
+        <tr>
+            <th>Employee</th>
+            <th>ClockIn Time</th>
+            <th>ClockOut Time</th>
+            <th>Date</th>
+            <th>Status</th>
+            <th>OT Start</th>
+            <th>OT End</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Table body will be populated dynamically using JavaScript -->
+    </tbody>
+</table>
+
+@section scripts {
+    <style>
+        /* Add CSS styling for table cells */
+        #attendanceRecords {
+            width: 100%; /* Set table width to 100% */
+            border-collapse: collapse; /* Collapse table borders */
+            margin-top: 20px; /* Add margin for spacing */
+        }
+
+            #attendanceRecords th, #attendanceRecords td {
+                padding: 8px; /* Adjust padding as needed */
+                border: 1px solid #dddddd; /* Add border to separate cells */
+                text-align: left; /* Align text to the left within cells */
+            }
+    </style>
+
+    <script>
+        $(document).ready(function () {
+            $('#attendanceForm').submit(function (e) {
+                e.preventDefault();
+                var email = $('#email').val();
+                var password = $('#password').val();
+
+                var requestData = {
+                    email: email,
+                    password: password
+                };
+
+                $.ajax({
+                    url: '/HR/ManageEmployeeAttendanceRecords',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(requestData),
+                    success: function (data) {
+                        // Clear existing table rows
+                        $('#attendanceRecords tbody').empty();
+
+                        if (data.error) {
+                            alert(data.error); // Display the error message
+                        } else {
+                            // Process the retrieved JSON data
+                            data.forEach(function (entry) {
+                                entry.Records.forEach(function (record) {
+                                    var editButtonHtml = '<button class="btn btn-primary edit-btn" data-record=\'' + JSON.stringify(record) + '\'>Edit</button>';
+                                    var editButtonCell = '<td>' + editButtonHtml + '</td>';
+
+                                    $('#attendanceRecords tbody').append(
+                                        '<tr>' +
+                                        '<td>' + entry.FirstName + ' ' + entry.LastName + '</td>' +
+                                        '<td>' + new Date(record.ClockInTime).toLocaleString() + '</td>' +
+                                        '<td>' + new Date(record.ClockOutTime).toLocaleString() + '</td>' +
+                                        '<td>' + new Date(record.Date).toLocaleDateString() + '</td>' +
+                                        '<td>' + record.Status + '</td>' +
+                                        '<td>' + (record.OverTimeStart ? new Date(record.OverTimeStart).toLocaleString() : '') + '</td>' +
+                                        '<td>' + (record.OverTimeEnd ? new Date(record.OverTimeEnd).toLocaleString() : '') + '</td>' +
+                                        editButtonCell + // Add edit button to the row
+                                        '</tr>'
+                                    );
+                                });
+                            });
+
+                            // Attach click event handler to edit buttons
+                            $('.edit-btn').click(function () {
+                                var recordData = $(this).data('record');
+                                // Redirect to HREditAttendance page with record data
+                                window.location.href = '/HR/HREditAttendance?record=' + encodeURIComponent(JSON.stringify(recordData));
+                            });
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        alert('Error: ' + error); // Display the AJAX error message
+                    }
+                });
+            });
+        });
+
+    </script>
+}
