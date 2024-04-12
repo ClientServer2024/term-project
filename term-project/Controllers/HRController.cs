@@ -376,6 +376,36 @@ namespace term_project.Controllers
             ViewData["ShiftID"] = shiftId;
             return PartialView("~/Views/HRView/HRDeleteShift.cshtml");
         }
+        
+        [HttpPost]
+        public async Task<IActionResult> DeleteShift(Guid shiftId)
+        {
+            try
+            {
+
+                // Deleting Shift records from EmployeeShift table
+                Console.WriteLine("Deleting Shift records from EmployeeShift table...");
+                await _supabase
+                    .From<EmployeeShift>()
+                    .Where(es => es.ShiftId == shiftId)
+                    .Delete();
+
+                // Deleting Shift record from Shift table
+                Console.WriteLine("Deleting Shift record from Shift table...");
+                await _supabase
+                    .From<Shift>()
+                    .Where(s => s.ShiftId == shiftId)
+                    .Delete();
+                
+                return Json(new { redirect = Url.Action("HRManageShifts", "HR") });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error occurred while deleting shift: {ex}");
+                return BadRequest(ex);
+            }
+        }
+
 
         [HttpGet]
         public async Task<IActionResult> GetShift(Guid shiftId)
