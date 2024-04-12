@@ -285,6 +285,12 @@ namespace term_project.Controllers
 				.Where(p => p.EmployeeId == employeeID)
 				.Delete();
 
+            // Delete the associated Qualifications
+            var deleteQualifications = _supabase
+                .From<EmployeeQualification>()
+                .Where(q => q.EmployeeId == employeeID)
+                .Delete();
+
 			return Json(new { redirect = Url.Action("HRManageEmployees", "HR") });
 		}
 
