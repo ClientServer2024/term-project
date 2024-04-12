@@ -778,7 +778,7 @@ namespace term_project.Controllers
                 foreach (var attendance in attendances)
                 {
                     grossPay += (attendance.ClockOutTime!.Value - attendance.ClockInTime!.Value).Hours * salaryRate;
-                    if (attendance.OverTimeStart != null || attendance.OverTimeEnd != null)
+                    if (attendance.OverTimeStart != null && attendance.OverTimeEnd != null)
                     {
                         grossPay += (attendance.OverTimeEnd!.Value - attendance.OverTimeStart!.Value).Hours * 0.5f;
                     }
@@ -844,7 +844,7 @@ namespace term_project.Controllers
 
         private async Task<Employee> HrPayroll_FetchEmployee(Guid employeeId)
         {
-            const string methodName = "HrPayroll_GeneratePayroll_PostPayroll";
+            const string methodName = "HrPayroll_FetchEmployee";
             Console.WriteLine(
                 $"{methodName}: Fetching employee with id [{employeeId}]...");
 
