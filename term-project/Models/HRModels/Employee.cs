@@ -37,6 +37,6 @@ namespace term_project.Models.CareModels
         public float? SalaryRate { get; set; }
 
         [Column("manager_id")]
-        public long? ManagerId { get; set; }
+        public Guid? ManagerId { get; set; }
     }
 }
