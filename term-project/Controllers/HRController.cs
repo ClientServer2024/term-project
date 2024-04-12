@@ -416,5 +416,84 @@ namespace term_project.Controllers
 
 			return View("~/Views/HRView/HRPayHistory.cshtml");
 		}
-	}
+
+        [HttpPost]
+        public async Task<IActionResult> GetAttendanceRecords(string email, string password)
+        {
+
+            string requestBody;
+            using (StreamReader reader = new StreamReader(Request.Body))
+            {
+                requestBody = await reader.ReadToEndAsync();
+            }
+
+            JObject jsonToBeVerified = JObject.Parse(requestBody);
+
+            string employeeEmail = (string)jsonToBeVerified["email"];
+            string employeePassword = (string)jsonToBeVerified["password"];
+
+            // First, check if the email exists in the database.
+            var employeeResponse = await _supabase
+                .From<Employee>()
+                .Select("employee_id, email")
+                .Where(e => e.Email == employeeEmail)
+                .Single();
+
+            if (employeeResponse == null)
+            {
+                return Json(new { error = "Invalid email or password" });
+            }
+
+            // If the email exists, retrieve the corresponding employee's ID.
+            var employeeId = employeeResponse.EmployeeId;
+
+            // Now, verify the password.
+            // You need to implement your password verification logic here.
+            // For simplicity, let's assume the password is stored in the database and directly compare it.
+            var employeePasswordResponse = await _supabase
+                .From<Employee>()
+                .Select("password")
+                .Where(e => e.EmployeeId == employeeId)
+                .Single();
+
+            if (employeePasswordResponse == null)
+            {
+                return Json(new { error = "Invalid email or password" });
+            }
+
+            string storedPassword = (string)employeePasswordResponse.Password;
+
+            // Compare the provided password with the stored password.
+            if (employeePassword != storedPassword)
+            {
+                return Json(new { error = "Invalid email or password" });
+            }
+
+            // Now, fetch the attendance records for the authenticated employee.
+            var attendanceResponse = await _supabase
+                .From<Attendance>()
+                .Select("*")
+                .Where(a => a.EmployeeId == employeeId)
+                .Get();
+
+            var attendanceRecords = attendanceResponse.Models;
+
+            // If there are no attendance records for the employee, return an appropriate response.
+            if (attendanceRecords == null || !attendanceRecords.Any())
+            {
+                return Json(new { error = "No attendance records found for the employee" });
+            }
+
+            // Serialize the attendance records and return them.
+            var jsonData = JsonConvert.SerializeObject(attendanceRecords);
+            return Content(jsonData, "application/json");
+        }
+
+        public IActionResult HREmployeeAttendance()
+        {
+
+            return View("~/Views/HRView/HREmploeeAttendance.cshtml");
+        }
+
+    }
 }
