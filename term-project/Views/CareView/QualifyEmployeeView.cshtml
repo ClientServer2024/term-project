@@ -1,0 +1,55 @@
+@{
+    ViewData["Title"] = "Qualify Employee";
+}
+
+<h1>Welcome to the Qualify Employee Page!</h1>
+
+<label for="employeeId">Select Employee:</label>
+<select id="employeeId" name="employeeId">
+    @foreach (var employee in ViewBag.Employees)
+    {
+        <option value="@employee.EmployeeId">@employee.FirstName @employee.LastName</option>
+    }
+</select>
+<br>
+<label for="qualificationId">Select Qualification:</label>
+<select id="qualificationId" name="qualificationId">
+    @foreach (var qualification in ViewBag.Qualifications)
+    {
+        <option value="@qualification.QualificationId">@qualification.QualificationName</option>
+    }
+</select>
+<br/>
+<button id="addBtn" type="button">Add Qualification</button>
+
+@section scripts {
+    <script>
+        $(function () {
+            console.log("Document ready. JavaScript function is executing."); // Log message
+
+            $("#addBtn").click(function () {
+               var employeeId = $("#employeeId").val()
+               var qualificationId = $("#qualificationId").val()
+               console.log(employeeId, qualificationId)
+               //
+               $.ajax({
+                url: '/Care/QualifyEmployee/',
+                type: 'POST',
+                data: {
+                    employeeId: employeeId,
+                    qualificationId: qualificationId 
+                },
+               success: function (response) {
+                // Handle success response
+                alert(response); // Show success message
+               },
+               error: function (xhr, status, error) {
+                // Handle error response
+                console.log(xhr.responseText);
+                alert('Failed to register service. Please try again.');
+               }
+               })
+            })
+        });
+    </script>
+}

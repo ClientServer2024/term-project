@@ -1,4 +1,6 @@
 .vs/
-.env
-bin/
-obj/
+.env/
+/term-project/.env
+/obj
+/bin
+
