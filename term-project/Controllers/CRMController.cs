@@ -251,8 +251,6 @@ public async Task<IActionResult> CreateRenter(Guid applicantId)
 
 
 // renter stuff
-
-
   [HttpGet]
         public async Task<IActionResult> GetAllRenters()
         {
