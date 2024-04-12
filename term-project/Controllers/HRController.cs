@@ -10,6 +10,7 @@ using Supabase;
 using term_project.Models.CRMModels;
 using Guid = System.Guid;
 using System.IO.Compression;
+using term_project.Models.HRModels;
 
 namespace term_project.Controllers
 {
@@ -407,69 +408,31 @@ namespace term_project.Controllers
             return Content(jsonData, "application/json");
         }
 
-
-
-
-
         public IActionResult HRPayHistory()
 		{
 
 			return View("~/Views/HRView/HRPayHistory.cshtml");
 		}
+        
+
+        
+
 
         [HttpPost]
         public async Task<IActionResult> GetAttendanceRecords(string email, string password)
         {
-
-            string requestBody;
-            using (StreamReader reader = new StreamReader(Request.Body))
-            {
-                requestBody = await reader.ReadToEndAsync();
-            }
-
-            JObject jsonToBeVerified = JObject.Parse(requestBody);
+            JObject jsonToBeVerified = await ReadAndParseRequestBodyAsync();
 
             string employeeEmail = (string)jsonToBeVerified["email"];
             string employeePassword = (string)jsonToBeVerified["password"];
 
-            // First, check if the email exists in the database.
-            var employeeResponse = await _supabase
-                .From<Employee>()
-                .Select("employee_id, email")
-                .Where(e => e.Email == employeeEmail)
-                .Single();
+            var employeeId = await AuthenticateEmployeeAsync(employeeEmail, employeePassword);
 
-            if (employeeResponse == null)
+            if (employeeId == null)
             {
                 return Json(new { error = "Invalid email or password" });
             }
 
-            // If the email exists, retrieve the corresponding employee's ID.
-            var employeeId = employeeResponse.EmployeeId;
-
-            // Now, verify the password.
-            // You need to implement your password verification logic here.
-            // For simplicity, let's assume the password is stored in the database and directly compare it.
-            var employeePasswordResponse = await _supabase
-                .From<Employee>()
-                .Select("password")
-                .Where(e => e.EmployeeId == employeeId)
-                .Single();
-
-            if (employeePasswordResponse == null)
-            {
-                return Json(new { error = "Invalid email or password" });
-            }
-
-            string storedPassword = (string)employeePasswordResponse.Password;
-
-            // Compare the provided password with the stored password.
-            if (employeePassword != storedPassword)
-            {
-                return Json(new { error = "Invalid email or password" });
-            }
-
-            // Now, fetch the attendance records for the authenticated employee.
             var attendanceResponse = await _supabase
                 .From<Attendance>()
                 .Select("*")
@@ -478,13 +441,11 @@ namespace term_project.Controllers
 
             var attendanceRecords = attendanceResponse.Models;
 
-            // If there are no attendance records for the employee, return an appropriate response.
             if (attendanceRecords == null || !attendanceRecords.Any())
             {
                 return Json(new { error = "No attendance records found for the employee" });
             }
 
-            // Serialize the attendance records and return them.
             var jsonData = JsonConvert.SerializeObject(attendanceRecords);
             return Content(jsonData, "application/json");
         }
@@ -492,8 +453,176 @@ namespace term_project.Controllers
         public IActionResult HREmployeeAttendance()
         {
 
-            return View("~/Views/HRView/HREmploeeAttendance.cshtml");
+            return View("~/Views/HRView/HREmployeeAttendance.cshtml");
         }
+
+
+        [HttpPost]
+        public async Task<IActionResult> ManageEmployeeAttendanceRecords()
+        {
+            JObject jsonToBeVerified = await ReadAndParseRequestBodyAsync();
+
+            string employeeEmail = (string)jsonToBeVerified["email"];
+            string employeePassword = (string)jsonToBeVerified["password"];
+
+            var employeeId = await AuthenticateEmployeeAsync(employeeEmail, employeePassword);
+
+            if (employeeId == null)
+            {
+                return Json(new { error = "Invalid email or password" });
+            }
+
+            var managerIDResponse = await _supabase
+                .From<Manager>()
+                .Select("manager_id")
+                .Where(m => m.EmployeeId == employeeId)
+                .Single();
+
+            var managerID = managerIDResponse?.ManagerId;
+
+            if (managerID == null)
+            {
+                return Json(new { error = "Employee is not a manager" });
+            }
+
+            var managedEmployeeIdsResponse = await _supabase
+                .From<Employee>()
+                .Select("*")
+                .Where(e => e.ManagerId == managerID)
+                .Get();
+
+            var managedEmployeeIds = managedEmployeeIdsResponse.Models?
+                .Select(e => e.EmployeeId)
+                .ToList();
+
+            if (managedEmployeeIds == null || !managedEmployeeIds.Any())
+            {
+                return Json(new { error = "No managed employees found" });
+            }
+
+            var employeeAttendanceData = new List<object>();
+
+            foreach (var managedEmployeeId in managedEmployeeIds)
+            {
+                var employeeInfoResponse = await _supabase
+                    .From<Employee>()
+                    .Select("first_name, last_name")
+                    .Where(e => e.EmployeeId == managedEmployeeId)
+                    .Single();
+
+                if (employeeInfoResponse == null)
+                {
+                    return Json(new { error = "Employee information not found for ID: " + managedEmployeeId });
+                }
+
+                string firstName = (string)employeeInfoResponse.FirstName;
+                string lastName = (string)employeeInfoResponse.LastName;
+
+                var attendanceResponse = await _supabase
+                    .From<Attendance>()
+                    .Select("*")
+                    .Where(a => a.EmployeeId == managedEmployeeId)
+                    .Get();
+
+                var attendanceRecords = attendanceResponse.Models;
+
+                var employeeData = new
+                {
+                    FirstName = firstName,
+                    LastName = lastName,
+                    Records = attendanceRecords
+                };
+
+                employeeAttendanceData.Add(employeeData);
+            }
+
+            var jsonData = JsonConvert.SerializeObject(employeeAttendanceData);
+            return Content(jsonData, "application/json");
+        }
+
+
+        
+
+        private async Task<Guid?> AuthenticateEmployeeAsync(string email, string password)
+        {
+            var employeeResponse = await _supabase
+                .From<Employee>()
+                .Select("employee_id, password")
+                .Where(e => e.Email == email)
+                .Single();
+
+            if (employeeResponse == null)
+            {
+                return null; // Email not found
+            }
+
+            var storedPassword = (string)employeeResponse.Password;
+
+            if (password != storedPassword)
+            {
+                return null; // Incorrect password
+            }
+
+            return (Guid)employeeResponse.EmployeeId; // Return the employee ID if authentication is successful
+        }
+
+        private async Task<JObject> ReadAndParseRequestBodyAsync()
+        {
+            string requestBody;
+            using (StreamReader reader = new StreamReader(Request.Body))
+            {
+                requestBody = await reader.ReadToEndAsync();
+            }
+
+            return JObject.Parse(requestBody);
+        }
+
+
+        public IActionResult HRManageAttendance()
+        {
+
+            return View("~/Views/HRView/HRManageAttendance.cshtml");
+        }
+
+
+        public IActionResult HREditAttendance(string record)
+        {
+            ViewData["Title"] = "Edit Attendance Record";
+
+            // Deserialize the record data into an Attendance object
+            var recordData = JsonConvert.DeserializeObject<Attendance>(record);
+
+            // Pass the Attendance object to the view
+            return View("~/Views/HRView/HREditAttendance.cshtml", recordData);
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateAttendanceRecord(Guid employeeId, DateTime? clockInTime, DateTime? clockOutTime, DateTime date, string status, DateTime? overTimeStart, DateTime? overTimeEnd)
+        {
+            try
+            {
+                await _supabase
+                    .From<Attendance>()
+                    .Where(a => a.EmployeeId == employeeId)
+                    .Set(a => a.ClockInTime, clockInTime)
+                    .Set(a => a.ClockOutTime, clockOutTime)
+                    .Set(a => a.Date, date)
+                    .Set(a => a.Status, status)
+                    .Set(a => a.OverTimeStart, overTimeStart)
+                    .Set(a => a.OverTimeEnd, overTimeEnd)
+                    .Update();
+
+                return Json(new { redirect = Url.Action("HRManageAttendance", "HR") });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { error = "An error occurred while updating the attendance record: " + ex.Message });
+            }
+        }
+
+
+
 
     }
 }
