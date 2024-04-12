@@ -33,8 +33,6 @@ async function load_calender() {
     
     // Create an event for each shift
     let events = shifts.map(shift => {
-        //console.log("date format: ",  shift.shiftDate);
-        //console.log("starttime format: ",  shift.startTime);
         let datePart = shift.shiftDate.substring(0,11);
         let startDateTime = `${datePart}${shift.startTime}`;
         let endDateTime = `${datePart}${shift.endTime}`;

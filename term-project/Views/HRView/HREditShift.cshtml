@@ -96,10 +96,7 @@
                 assignedEmployees: formDataObject['assignedEmployees'],
                 additionalEmployees: formDataObject['additionalEmployees']
             };
-            
-            console.log("newdata: ", JSON.stringify(newData));
         
-            // Your AJAX request using newData
             $.ajax({
                 url: '/HR/UpdateShift/?shiftId=' + '@ViewData["ShiftID"]',
                 method: 'POST',

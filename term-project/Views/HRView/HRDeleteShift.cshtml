@@ -92,8 +92,6 @@
                 assignedEmployees: formDataObject['assignedEmployees']
             };
             
-        
-            // Your AJAX request using newData
             $.ajax({
                 url: '/HR/DeleteShift/?shiftId=' + '@ViewData["ShiftID"]',
                 method: 'POST',

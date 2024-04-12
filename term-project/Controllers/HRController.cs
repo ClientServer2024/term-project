@@ -138,10 +138,7 @@ namespace term_project.Controllers
             {
                 requestBody = await reader.ReadToEndAsync();
             }
-
             JObject jsonData = JObject.Parse(requestBody);
-
-            Console.WriteLine(jsonData.ToString());
 
             string firstName = (string)jsonData["employeefirstName"];
             string lastName = (string)jsonData["employeelastName"];
@@ -276,9 +273,7 @@ namespace term_project.Controllers
                 {
                     requestBody = await reader.ReadToEndAsync();
                 }
-
                 JObject jsonData = JObject.Parse(requestBody);
-                Console.WriteLine(jsonData.ToString());
 
                 string shiftType = (string)jsonData["shiftType"];
                 DateTime shiftDate = (DateTime)jsonData["shiftDate"];
@@ -382,7 +377,6 @@ namespace term_project.Controllers
         {
             try
             {
-
                 // Deleting Shift records from EmployeeShift table
                 Console.WriteLine("Deleting Shift records from EmployeeShift table...");
                 await _supabase
@@ -450,7 +444,6 @@ namespace term_project.Controllers
                     };
                     jsonData.Add(shiftData);
                 }
-
                 return Json(jsonData);
             }
             catch (Exception ex)
@@ -459,7 +452,6 @@ namespace term_project.Controllers
                 return StatusCode(500, "An error occurred while fetching shifts and employees.");
             }
         }
-        
         
         
         [HttpPost]
@@ -474,8 +466,6 @@ namespace term_project.Controllers
                 {
                     requestBody = await reader.ReadToEndAsync();
                 }
-                
-        
                 JObject jsonData = JObject.Parse(requestBody);
                 
                 string shiftType = (string)jsonData["shiftType"];
@@ -484,7 +474,6 @@ namespace term_project.Controllers
                 TimeSpan endTime = (TimeSpan)jsonData["endTime"];
                 string assignedEmployeesStr = (string)jsonData["assignedEmployees"];
                 string additionalEmployeesStr = (string)jsonData["additionalEmployees"];
-
                 
                 // Parse string values into arrays of GUIDs
                 List<Guid> assignedEmployees = ParseGuidArray(assignedEmployeesStr);
@@ -494,7 +483,6 @@ namespace term_project.Controllers
                 List<Guid> allEmployees = new List<Guid>();
                 allEmployees.AddRange(assignedEmployees);
                 allEmployees.AddRange(additionalEmployees);
-                Console.WriteLine("AllEmployees: " + allEmployees);
 
                 var updateShift = await _supabase
                     .From<Shift>()
@@ -512,8 +500,7 @@ namespace term_project.Controllers
                     .From<EmployeeShift>()
                     .Where(es => es.ShiftId == shiftId)
                     .Delete();
-                     
-                     Console.WriteLine("EmployeeShift Table records deleted successfully!");
+
                      foreach (var emp_id in allEmployees)
                      {
                          var employeeShift_Insert = await _supabase
@@ -524,12 +511,8 @@ namespace term_project.Controllers
                                  EmployeeId = emp_id
                              });
                      }
-                     
                      Console.WriteLine("EmployeeShift Table records updated successfully!");
                     
-
-
-                
                 return Json(new { redirect = Url.Action("HRManageShifts", "HR") });
             }
             catch (Exception e)
