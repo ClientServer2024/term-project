@@ -16,7 +16,7 @@ namespace term_project.Models.CareModels
         public DateTime ClockInTime { get; set; }
 
         [Column("clock_out_time")]
-        public DateTime ClockOutTime { get; set; }
+        public DateTime? ClockOutTime { get; set; }
         
         [Column("overtime_start")]
         public DateTime? OverTimeStart { get; set; }
