@@ -60,10 +60,10 @@
                             '<tr>' +
                             '<th>ClockIn Time</th>' +
                             '<th>ClockOut Time</th>' +
-                            '<th>OT Start</th>' +
-                            '<th>OT End</th>' +
                             '<th>Date</th>' +
                             '<th>Status</th>' +
+                            '<th>OT Start</th>' +
+                            '<th>OT End</th>' +
                             '</tr>'
                         );
 
@@ -74,10 +74,10 @@
                                 '<tr>' +
                                 '<td>' + new Date(entry.ClockInTime).toLocaleString() + '</td>' +
                                 '<td>' + new Date(entry.ClockOutTime).toLocaleString() + '</td>' +
-                                '<td>' + (entry.OverTimeStart ? new Date(entry.OverTimeStart).toLocaleString() : '') + '</td>' +
-                                '<td>' + (entry.OverTimeEnd ? new Date(entry.OverTimeEnd).toLocaleString() : '') + '</td>' +
                                 '<td>' + new Date(entry.Date).toLocaleDateString() + '</td>' +
                                 '<td>' + entry.Status + '</td>' +
+                                '<td>' + (entry.OverTimeStart ? new Date(entry.OverTimeStart).toLocaleString() : '') + '</td>' +
+                                '<td>' + (entry.OverTimeEnd ? new Date(entry.OverTimeEnd).toLocaleString() : '') + '</td>' +
                                 '</tr>'
                             );
                         });
