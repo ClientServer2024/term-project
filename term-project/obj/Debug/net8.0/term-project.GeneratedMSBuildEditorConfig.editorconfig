@@ -46,8 +46,16 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSFJWaWV3L0hSUGF5cm9sbF9FbXBsb3llZXMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/Views/HRView/HRPayroll_GeneratePayroll.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSFJWaWV3L0hSUGF5cm9sbF9HZW5lcmF0ZVBheXJvbGwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/Views/HRView/HRPayroll_Landing.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSFJWaWV3L0hSUGF5cm9sbF9MYW5kaW5nLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/Views/HRView/HRPayroll_Partial_GeneratePayroll_Info.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSFJWaWV3L0hSUGF5cm9sbF9QYXJ0aWFsX0dlbmVyYXRlUGF5cm9sbF9JbmZvLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/Views/HRView/HRPayroll_PayrollInfo.cshtml]

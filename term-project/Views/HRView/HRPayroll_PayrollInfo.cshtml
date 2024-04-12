@@ -7,18 +7,18 @@
 
 <div class="text-center">
     <h1 class="display-6">Payroll ID</h1>
-    <h1 class="display-4">[@ViewData["PayrollId"]]</h1>
+    <h1 class="display-6">[@ViewData["PayrollId"]]</h1>
 </div>
 
 <div class="justify-content-center">
-    <table>
+    <table class="table">
         <tr>
             <td>Pay Period Start: </td>
-            <td>@(TempData.Get<Payroll>("Payroll").PayPeriodStart)</td>
+            <td>@(ViewData["PayPeriodStart"])</td>
         </tr>
         <tr>
             <td>Pay Period End: </td>
-            <td style="text-align: right">@(TempData.Get<Payroll>("Payroll").PayPeriodEnd)</td>
+            <td>@(ViewData["PayPeriodEnd"])</td>
         </tr>
         <tr>
             <td>Gross Pay: </td>

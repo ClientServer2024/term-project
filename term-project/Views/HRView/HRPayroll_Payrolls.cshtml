@@ -7,7 +7,11 @@
 
 <div class="text-center">
     <h1 class="display-6">Payrolls for</h1>
-    <h1 class="display-4">[@ViewData["EmployeeId"]]</h1>
+    <h1 class="display-6">[@ViewData["EmployeeId"]]</h1>
+</div>
+
+<div>
+    <a asp-area="" asp-controller="HR" asp-action="HrPayroll_GeneratePayroll" asp-route-employeeId="@ViewData["EmployeeId"]">Generate New Payroll</a>
 </div>
 
 @using (Html.BeginForm("HrPayroll_PayrollInfo", "HR", FormMethod.Get))

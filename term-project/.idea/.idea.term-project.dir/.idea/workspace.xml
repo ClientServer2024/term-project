@@ -9,12 +9,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c1d1f4df-6b92-47fa-b202-6eb0d114a099" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Views/HRView/HRPayroll_Payrolls.cshtml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Views/HRView/HRPayroll_GeneratePayroll.cshtml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Views/HRView/HRPayroll_Partial_GeneratePayroll_Info.cshtml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.term-project.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.term-project.dir/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Controllers/HRController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/HRController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Views/HRView/HRPayroll_Employees.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Views/HRView/HRPayroll_Employees.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Views/HRView/HRPayroll_Landing.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Views/HRView/HRPayroll_Landing.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/HRModels/Attendance.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/HRModels/Attendance.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/HRModels/Employee.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/HRModels/Employee.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/HRModels/EmployeeShift.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/HRModels/EmployeeShift.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/HRModels/Shift.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/HRModels/Shift.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Program.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Views/HRView/HRPayroll_PayrollInfo.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Views/HRView/HRPayroll_PayrollInfo.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Views/HRView/HRPayroll_Payrolls.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Views/HRView/HRPayroll_Payrolls.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Debug/net8.0/term-project.deps.json" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/net8.0/term-project.deps.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/Debug/net8.0/term-project.dll" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/net8.0/term-project.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/Debug/net8.0/term-project.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/net8.0/term-project.pdb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/net8.0/ref/term-project.dll" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net8.0/ref/term-project.dll" afterDir="false" />
@@ -22,9 +28,18 @@
       <change beforePath="$PROJECT_DIR$/obj/Debug/net8.0/term-project.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net8.0/term-project.AssemblyInfo.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/net8.0/term-project.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net8.0/term-project.AssemblyInfoInputs.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/net8.0/term-project.GeneratedMSBuildEditorConfig.editorconfig" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net8.0/term-project.GeneratedMSBuildEditorConfig.editorconfig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/Debug/net8.0/term-project.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net8.0/term-project.assets.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/net8.0/term-project.dll" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net8.0/term-project.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/net8.0/term-project.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net8.0/term-project.pdb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/net8.0/term-project.sourcelink.json" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net8.0/term-project.sourcelink.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/obj/project.assets.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/project.nuget.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/obj/project.packagespec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/rider.project.model.nuget.info" beforeDir="false" afterPath="$PROJECT_DIR$/obj/rider.project.model.nuget.info" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/obj/rider.project.restore.info" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/term-project.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/obj/term-project.csproj.nuget.dgspec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/term-project.csproj.nuget.g.props" beforeDir="false" afterPath="$PROJECT_DIR$/obj/term-project.csproj.nuget.g.props" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/term-project.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/term-project.csproj" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,11 +50,21 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/61d895d4f5b54a849c3317176ec9cf3ac6c00/fc/c70f773b/Controller.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/6944caef51964961b37f49507d2b53dfd82000/48/00be1bc7/AsyncMethodBuilderCore.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/6944caef51964961b37f49507d2b53dfd82000/60/8b551c2b/Task.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/6944caef51964961b37f49507d2b53dfd82000/71/9d68aec2/Guid.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/6944caef51964961b37f49507d2b53dfd82000/99/52b4135c/IDictionary`2.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/6944caef51964961b37f49507d2b53dfd82000/9c/c7ead498/AsyncTaskMethodBuilder`1.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/6944caef51964961b37f49507d2b53dfd82000/af/1791537a/ExceptionDispatchInfo.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/6944caef51964961b37f49507d2b53dfd82000/c5/af099f6d/DateTime.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/6a7ad30fb6d74ff0af45e87c35f635ff3d000/b9/d7f5e4e0/RazorPageBase.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/6fb07e288afa4fb5b6e5c73ac90727b2219600/8a/feffb1a7/ActionMethodExecutor.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/e596ee680cac4423957e39626120089e6e00/18/863a84c3/JSType.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/d01c91b030b76dd79e516e8b1a2727c40c6526e63297fc8b4fc4430f119/Client.cs" root0="SKIP_HIGHLIGHTING" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 6
@@ -73,6 +98,12 @@
     ]
   }
 }]]></component>
+  <component name="RiderProblemsViewState">
+    <hideBySeverity>
+      <option value="15" />
+      <option value="300" />
+    </hideBySeverity>
+  </component>
   <component name="RunManager" selected=".NET Launch Settings Profile.term-project: http">
     <configuration name="term-project: http" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/term-project.csproj" />
@@ -117,6 +148,8 @@
       <workItem from="1712338517914" duration="590000" />
       <workItem from="1712339131465" duration="213000" />
       <workItem from="1712621838077" duration="6562000" />
+      <workItem from="1712783760399" duration="26325000" />
+      <workItem from="1712890119013" duration="5166000" />
     </task>
     <servers />
   </component>
@@ -125,5 +158,37 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Controllers/HRController.cs</url>
+          <line>253</line>
+          <properties documentPath="$PROJECT_DIR$/Controllers/HRController.cs" initialLine="241" containingFunctionPresentation="Method 'HrPayroll_GeneratePayroll_PostPayroll'">
+            <startOffsets>
+              <option value="9644" />
+            </startOffsets>
+            <endOffsets>
+              <option value="9651" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="17" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Controllers/HRController.cs</url>
+          <line>250</line>
+          <properties documentPath="$PROJECT_DIR$/Controllers/HRController.cs" initialLine="250" containingFunctionPresentation="Method 'HrPayroll_GeneratePayroll_PostPayroll'">
+            <startOffsets>
+              <option value="9544" />
+            </startOffsets>
+            <endOffsets>
+              <option value="9626" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="18" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

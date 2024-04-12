@@ -55,9 +55,9 @@ async Task InitializeSupabase(string url, string key)
     var logger = app.Services.GetRequiredService<ILogger<Program>>();
     logger.LogInformation("Reached!");
 
-    await InsertEmployee(supabase, logger);
+    //await InsertEmployee(supabase, logger);
 
-    await GetFirstUserEmail(supabase, logger);  
+    //await GetFirstUserEmail(supabase, logger);  
 
 }
 
@@ -78,7 +78,7 @@ async Task InsertEmployee(Supabase.Client supabase, ILogger logger)
             JobTitle = "Developer",
             EmploymentType = "full-time",
             SalaryRate = 60000, // Example salary
-            ManagerId = 1 // Example manager ID, adjust accordingly
+            //ManagerId =  // Example manager ID, adjust accordingly
         };
 
         // Perform the insert operation

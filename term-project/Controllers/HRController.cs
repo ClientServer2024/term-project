@@ -1,4 +1,5 @@
 ﻿using System.Data;
+using System.Runtime.InteropServices.JavaScript;
 using dotenv.net;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -47,8 +48,8 @@ namespace term_project.Controllers
         }
 
 
-        
         // GET: HR/HRPayRoll_Employees?firstName={firstName}&lastName={lastName}
+        [HttpGet]
         public async Task<IActionResult> HrPayroll_Employees(string firstName, string lastName)
         {
             const string methodName = "HrPayroll_FetchEmployeeIdWithName";
@@ -102,8 +103,8 @@ namespace term_project.Controllers
         }
 
 
-        
         // GET: HR/HrPayroll_Payrolls?employeeId={employeeId}
+        [HttpGet]
         public async Task<IActionResult> HrPayroll_Payrolls(Guid employeeId)
         {
             const string methodName = "HrPayroll_Payrolls";
@@ -114,6 +115,7 @@ namespace term_project.Controllers
                 var payrolls = await HrPayroll_FetchAllPayrolls(employeeId);
                 ViewData["EmployeeId"] = employeeId;
                 TempData.Put("Payrolls", payrolls);
+
                 return View("~/Views/HRView/HRPayroll_Payrolls.cshtml");
             }
             catch (Exception e)
@@ -134,12 +136,150 @@ namespace term_project.Controllers
                 .Where(m => m.EmployeeId == employeeId)
                 .Get();
 
-            return payrollResponse.Models;
+            var payrolls = payrollResponse.Models;
+            
+            if (payrolls.Count <= 0)
+            {
+                throw new KeyNotFoundException("");
+            }
+
+            return payrolls;
         }
 
 
-        
+        // GET: HR/HrPayroll_GeneratePayroll?employeeId={employeeId}
+        [HttpGet]
+        public async Task<IActionResult> HrPayroll_GeneratePayroll(Guid employeeId)
+        {
+            const string methodName = "HrPayroll_GeneratePayroll";
+            Console.WriteLine($"{methodName}: Redirecting to payroll generation with employee id [{employeeId}]...");
+
+            try
+            {
+                var payPeriodStart = DateTime.Now.AddDays(-14).Date.ToString().Split(" ")[0];
+                var payPeriodEnd = DateTime.Now.Date.ToString().Split(" ")[0];
+                TempData["PayPeriodStart"] = payPeriodStart;
+                TempData["PayPeriodEnd"] = payPeriodEnd;
+                TempData["EmployeeId"] = employeeId;
+
+                return View("~/Views/HRView/HRPayroll_GeneratePayroll.cshtml");
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+
+        [HttpPost]
+
+        // POST: HR/HrPayroll_GeneratePayroll_PostInfo
+        public async Task<IActionResult> HrPayroll_GeneratePayroll_PostInfo(Guid employeeId, DateTime payPeriodStart,
+            DateTime payPeriodEnd)
+        {
+            const string methodName = "HrPayroll_GeneratePayroll_PostInfo";
+            Console.WriteLine(
+                $"{methodName}: Fetching shifts and attendances with employee id [{employeeId}] from [{payPeriodStart}] to [{payPeriodEnd}]...");
+
+            try
+            {
+                var shifts = await HrPayroll_FetchAllShifts(employeeId, payPeriodStart, payPeriodEnd);
+                var attendances = await HrPayroll_FetchAttendances(employeeId, payPeriodStart, payPeriodEnd);
+                var employee = await HrPayroll_FetchEmployee(employeeId);
+
+                float grossPay = 0f;
+                float taxRate = 0.12f; 
+                float deduction = 0f;
+                float netPay = 0f;
+                float salaryRate = employee.SalaryRate!.Value;
+
+                foreach (var attendance in attendances)
+                {
+                    grossPay += (attendance.ClockOutTime!.Value - attendance.ClockInTime!.Value).Hours * salaryRate;
+                    if (attendance.OverTimeStart != null || attendance.OverTimeEnd != null)
+                    {
+                        grossPay += (attendance.OverTimeEnd!.Value - attendance.OverTimeStart!.Value).Hours * 0.5f;
+                    }
+                }
+
+                deduction = grossPay * taxRate;
+                netPay = grossPay - deduction;
+
+                TempData.Put("Shifts", shifts);
+                TempData.Put("Attendances", attendances);
+                TempData["SalaryRate"] = salaryRate.ToString();
+                TempData["GrossPay"] = grossPay.ToString();
+                TempData["TaxRate"] = taxRate.ToString();
+                TempData["Deduction"] = deduction.ToString();
+                TempData["NetPay"] = netPay.ToString();
+                
+                ViewData["SalaryRate"] = salaryRate.ToString();
+                ViewData["GrossPay"] = grossPay.ToString();
+                ViewData["TaxRate"] = taxRate.ToString();
+                ViewData["Deduction"] = deduction.ToString();
+                ViewData["NetPay"] = netPay.ToString();
+
+                return PartialView("~/Views/HRView/HRPayroll_Partial_GeneratePayroll_Info.cshtml");
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
+        }
+
+        // POST: HR/HrPayroll_GeneratePayroll_PostPayroll
+        [HttpPost]
+        public async Task<IActionResult> HrPayroll_GeneratePayroll_PostPayroll(Guid employeeId, DateTime payPeriodStart,
+            DateTime payPeriodEnd, float grossPay, float taxRate, float deduction, float netPay)
+        {
+            const string methodName = "HrPayroll_GeneratePayroll_PostPayroll";
+            Console.WriteLine(
+                $"{methodName}: Generating payrolls with employee id [{employeeId}] from [{payPeriodStart}] to [{payPeriodEnd}]...");
+            try
+            {
+                var employee = await HrPayroll_FetchEmployee(employeeId);
+                var payroll = new Payroll
+                {
+                    EmployeeId = employeeId,
+                    PayPeriodStart = payPeriodStart,
+                    PayPeriodEnd = payPeriodEnd,
+                    GrossPay = grossPay,
+                    Deductions = deduction,
+                    NetPay = netPay,
+                    TaxRate = taxRate
+                };
+                var result = await _supabase.From<Payroll>()
+                    .Insert(payroll);
+
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+
+        private async Task<Employee> HrPayroll_FetchEmployee(Guid employeeId)
+        {
+            const string methodName = "HrPayroll_GeneratePayroll_PostPayroll";
+            Console.WriteLine(
+                $"{methodName}: Fetching employee with id [{employeeId}]...");
+
+            var employeeResponse = await _supabase
+                .From<Employee>()
+                .Select("*")
+                .Where(m => m.EmployeeId == employeeId)
+                .Get();
+
+            var employee = employeeResponse.Model!;
+
+            return employee;
+        }
+
+
         // GET: HR/HRPayRoll_PayrollInfo?employeeId={employeeId}
+        [HttpGet]
         public async Task<IActionResult> HrPayroll_PayrollInfo(Guid payrollId)
         {
             const string methodName = "HrPayroll_PayrollInfo";
@@ -149,7 +289,10 @@ namespace term_project.Controllers
             {
                 var payroll = await HrPayroll_FetchPayroll(payrollId);
                 ViewData["PayrollId"] = payrollId;
+                ViewData["PayPeriodStart"] = payroll.PayPeriodStart.ToString().Split(" ")[0];
+                ViewData["PayPeriodEnd"] = payroll.PayPeriodEnd.ToString().Split(" ")[0];
                 TempData.Put("Payroll", payroll);
+
                 return View("~/Views/HRView/HRPayroll_PayrollInfo.cshtml");
             }
             catch (Exception e)
@@ -157,7 +300,7 @@ namespace term_project.Controllers
                 return BadRequest(e.Message);
             }
         }
-        
+
         // Helper Method for HrPayroll_PayrollInfo.
         private async Task<Payroll> HrPayroll_FetchPayroll(Guid payrollId)
         {
@@ -175,7 +318,7 @@ namespace term_project.Controllers
             if (payroll == null)
                 throw new KeyNotFoundException(
                     $"{methodName}-Exception: Payroll was not found with id {payrollId}.");
-            
+
             return payroll;
         }
 
@@ -193,9 +336,10 @@ namespace term_project.Controllers
                 .From<EmployeeShift>()
                 .Select("*")
                 .Where(m => m.EmployeeId == employeeId)
-                .Where(m => m.Date >= payPeriodStart && m.Date < payPeriodEnd)
                 .Get();
+
             var employeeShifts = employeeShiftsResponse.Models;
+            
             if (employeeShifts.Count <= 0)
             {
                 throw new KeyNotFoundException(
@@ -205,7 +349,7 @@ namespace term_project.Controllers
             var shiftIds = employeeShifts.Select(employeeShift => employeeShift.ShiftId).ToList();
             var shifts = new List<Shift>();
 
-            await foreach (var fetchedShifts in HrPayroll_FetchShifts(shiftIds))
+            await foreach (var fetchedShifts in HrPayroll_FetchShifts(shiftIds, payPeriodStart, payPeriodEnd))
             {
                 shifts.AddRange(fetchedShifts);
             }
@@ -217,9 +361,10 @@ namespace term_project.Controllers
          * Fetches shifts from Shift Table asynchronously using the shiftIds.
          * This method returns something immediately once every shifts are found with shift Id.
          */
-        private async IAsyncEnumerable<IList<Shift>> HrPayroll_FetchShifts(List<Guid> shiftIds)
+        private async IAsyncEnumerable<IList<Shift>> HrPayroll_FetchShifts(List<Guid> shiftIds, DateTime payPeriodStart,
+            DateTime payPeriodEnd)
         {
-            const string methodName = "HrPayroll_FetchShift";
+            const string methodName = "HrPayroll_FetchShifts";
 
             foreach (var shiftId in shiftIds)
             {
@@ -228,27 +373,41 @@ namespace term_project.Controllers
                     .From<Shift>()
                     .Select("*")
                     .Where(m => m.ShiftId == shiftId)
+                    .Where(m => m.ShiftDate >= payPeriodStart && m.ShiftDate < payPeriodEnd)
                     .Get();
 
-                yield return shiftResponse.Models;
+                var shifts = shiftResponse.Models;
+
+                yield return shifts;
             }
         }
 
         /* Helper Method for HrPayroll_PayrollInfo.
-         * Fetches all attendances that have specific employeeId.
+         * Fetches all attendances that have specific employeeId within given pay period.
          */
-        private async Task<IList<Attendance>> HrPayroll_FetchAttendances(Guid employeeId)
+        private async Task<IList<Attendance>> HrPayroll_FetchAttendances(Guid employeeId, DateTime payPeriodStart,
+            DateTime payPeriodEnd)
         {
             const string methodName = "HrPayroll_FetchAttendances";
-            Console.WriteLine($"{methodName}: Fetching attendances with employee id [{employeeId}]...");
+            Console.WriteLine($"{methodName}: Fetching attendances with employee id [{employeeId}]" +
+                              $"from [{payPeriodStart}] to [{payPeriodEnd}]...");
 
             var attendanceResponse = await _supabase
                 .From<Attendance>()
                 .Select("*")
                 .Where(m => m.EmployeeId == employeeId)
+                .Where(m => m.Date >= payPeriodStart && m.Date < payPeriodEnd)
                 .Get();
 
-            return attendanceResponse.Models;
+            var attendances = attendanceResponse.Models;
+            
+            if (attendances.Count <= 0 || attendances == null)
+            {
+                throw new KeyNotFoundException($"{methodName}-Exception: Attendances with employee id [{employeeId}] " +
+                                               $"from [{payPeriodStart}] to [{payPeriodEnd}] was not found.");
+            }
+
+            return attendances;
         }
     }
 }

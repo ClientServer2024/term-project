@@ -1,0 +1,126 @@
+﻿@using term_project.Models.CareModels
+<div>
+    <h1 class="display-4">Employee's work</h1>
+
+    <div class="d-grid justify-content-around" style="grid-template-columns: 0.45fr 0.45fr;">
+        <div id="shift-container">
+            <h1 class="display-6">Shifts</h1>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>
+                        Date
+                    </th>
+                    <th>
+                        Shift
+                    </th>
+                    <th>
+                        Start Time
+                    </th>
+                    <th>
+                        End Time
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var shift in TempData.Get<IList<Shift>>("Shifts"))
+                {
+                    <tr>
+                        <td>
+                            @shift.ShiftDate.ToString().Split(" ")[0]
+                        </td>
+                        <td>
+                            @shift.ShiftType
+                        </td>
+                        <td>
+                            @shift.StartTime
+                        </td>
+                        <td>
+                            @shift.EndTime
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+
+        <div id="attendance-container">
+            <h1 class="display-6">Attendances</h1>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>
+                        Date
+                    </th>
+                    <th>
+                        Status
+                    </th>
+                    <th>
+                        Clock In
+                    </th>
+                    <th>
+                        Clock Out
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var attendance in TempData.Get<IList<Attendance>>("Attendances"))
+                {
+                    <tr>
+                        <td>
+                            @attendance.Date.ToString().Split(" ")[0]
+                        </td>
+                        <td>
+                            @attendance.Status
+                        </td>
+                        <td>
+                            @(attendance.ClockInTime)
+                        </td>
+                        <td>
+                            @(attendance.ClockOutTime)
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="payroll-container">
+        <h1 class="display-4">Payroll</h1>
+        <table class="table">
+            <tr>
+                <td>Salary Rate</td>
+                <td>
+                    $ <input type="number" id="salaryRate" value="@ViewData["SalaryRate"]"/>
+                </td>
+            </tr>
+            <tr>
+                <td>Gross Pay</td>
+                <td>
+                    $ <input type="number" id="grossPay" value="@ViewData["GrossPay"]"/>
+                </td>
+            </tr>
+            <tr>
+                <td>Tax Rate</td>
+                <td>
+                    <input type="number" id="taxRate" value="@ViewData["TaxRate"]"/>
+                </td>
+            </tr>
+            <tr>
+                <td>Deduction</td>
+                <td>
+                    $ <input type="text" id="deduction" value="@ViewData["Deduction"]"/>
+                </td>
+            </tr>
+            <tr>
+                <td>Net Pay</td>
+                <td>
+                    $ <input type="text" id="netPay" value="@ViewData["NetPay"]"/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <button type="button" onclick="GeneratePayroll()">Create Payroll</button>
+
+</div>
