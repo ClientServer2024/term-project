@@ -244,7 +244,6 @@ namespace term_project.Controllers
             }
             else
             {
-                // Return an error response
                 return BadRequest("Failed to parse salary rate.");
             }
         }
@@ -358,20 +357,155 @@ namespace term_project.Controllers
             }
         }
         
+        [HttpGet]
         public IActionResult HRShiftModification()
         {
             return View("~/Views/HRView/HRShiftModification.cshtml");
         }
 
-        /*
-         
-         [HttpPost]
-        public async Task<IActionResult> FindShift()
+        [HttpGet]
+        public IActionResult HREditShift(Guid shiftId)
         {
-            Console.WriteLine("Finding shifts...");
+            ViewData["ShiftID"] = shiftId;
+            return PartialView("~/Views/HRView/HREditShift.cshtml");
         }
         
-        */
+        [HttpGet]
+        public IActionResult HRDeleteShift(Guid shiftId)
+        {
+            ViewData["ShiftID"] = shiftId;
+            return PartialView("~/Views/HRView/HRDeleteShift.cshtml");
+        }
 
+        [HttpGet]
+        public async Task<IActionResult> GetShift(Guid shiftId)
+        {
+            try
+            {
+                // Fetch all shifts
+                var shiftResponse = await _supabase
+                    .From<Shift>()
+                    .Select("*")
+                    .Where(s => s.ShiftId == shiftId)
+                    .Get();
+                
+                var shiftList = shiftResponse.Models;
+
+                // Fetch employees assigned to each shift
+                var shiftEmployeeMap = new Dictionary<Guid, List<Guid>>();
+                foreach (var shift in shiftList)
+                {
+                    var employeeShiftResponse = await _supabase
+                        .From<EmployeeShift>()
+                        .Select("employee_id")
+                        .Where(es => es.ShiftId == shift.ShiftId)
+                        .Get();
+
+                    var employeeIds = employeeShiftResponse.Models.Select(es => es.EmployeeId).ToList();
+                    shiftEmployeeMap.Add(shift.ShiftId, employeeIds);
+                }
+
+                // Construct JSON data
+                var jsonData = new List<object>();
+                foreach (var shift in shiftList)
+                {
+                    var shiftData = new
+                    {
+                        ShiftId = shift.ShiftId,
+                        ShiftType = shift.ShiftType,
+                        StartTime = shift.StartTime,
+                        EndTime = shift.EndTime,
+                        ShiftDate = shift.ShiftDate,
+                        Employees = shiftEmployeeMap.ContainsKey(shift.ShiftId) ? shiftEmployeeMap[shift.ShiftId] : new List<Guid>()
+                    };
+                    jsonData.Add(shiftData);
+                }
+
+                return Json(jsonData);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error fetching shifts and employees: {ex}");
+                return StatusCode(500, "An error occurred while fetching shifts and employees.");
+            }
+        }
+        
+        
+        
+        [HttpPost]
+        public async Task<IActionResult> UpdateShift(Guid shiftId)
+        {
+            Console.WriteLine("Updating shift...");
+
+            try
+            {
+                string requestBody;
+                using (StreamReader reader = new StreamReader(Request.Body))
+                {
+                    requestBody = await reader.ReadToEndAsync();
+                }
+
+                JObject jsonData = JObject.Parse(requestBody);
+                Console.WriteLine(jsonData.ToString());
+
+                string shiftType = (string)jsonData["shiftType"];
+                DateTime shiftDate = (DateTime)jsonData["shiftDate"];
+                TimeSpan startTime = (TimeSpan)jsonData["startTime"];
+                TimeSpan endTime = (TimeSpan)jsonData["endTime"];
+                string assignedEmployeesStr = (string)jsonData["assignedEmployees"];
+                string additionalEmployeesStr = (string)jsonData["additionalEmployees"];
+
+                // Parse string values into arrays of GUIDs
+                List<Guid> assignedEmployees = ParseGuidArray(assignedEmployeesStr);
+                List<Guid> additionalEmployees = ParseGuidArray(additionalEmployeesStr);
+
+                // Combine both lists
+                List<Guid> allEmployees = new List<Guid>();
+                allEmployees.AddRange(assignedEmployees);
+                allEmployees.AddRange(additionalEmployees);
+
+                var update = await _supabase
+                    .From<Shift>()
+                    .Where(s => s.ShiftId == shiftId)
+                    .Set(s => s.ShiftType, shiftType)
+                    .Set(s => s.StartTime, startTime)
+                    .Set(s => s.EndTime, endTime)
+                    .Update();
+
+                /*
+                foreach (var employee in allEmployees)
+                {
+                    var update_employee_shift = await _supabase
+                        .From<EmployeeShift>()
+                        .Where(es => es.ShiftId == shiftId)
+                        .Set(es => es.EmployeeId ==);
+                }
+                */
+                    
+                return Json(new { redirect = Url.Action("HRManageShifts", "HR") });
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error occurred while updating shift:" + e);
+                return BadRequest(e);
+            }
+        }
+        
+        public List<Guid> ParseGuidArray(string input)
+        {
+            List<Guid> guidList = new List<Guid>();
+            if (!string.IsNullOrEmpty(input))
+            {
+                string[] stringArray = input.Split(',');
+                foreach (string str in stringArray)
+                {
+                    if (Guid.TryParse(str.Trim(), out Guid guid))
+                    {
+                        guidList.Add(guid);
+                    }
+                }
+            }
+            return guidList;
+        }
     }
 }

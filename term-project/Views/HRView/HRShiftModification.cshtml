@@ -31,6 +31,8 @@
                     <th>Start Time</th>
                     <th>End Time</th>
                     <th>Employees Assigned</th>
+                    <th></th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -55,10 +57,12 @@
                 var table = $('#shiftsTable tbody');
                 table.empty();
                 
-                console.log("shifts length: ", shifts.length);
                 // Populate the table with the selected shifts
                 shifts.forEach(shift => {
-                    let employeesAssigned = shift.employees.join(', ');
+                    let employeesAssigned = shift.employees.join('\n');
+                    let editUrl = '@Url.Action("HREditShift", "HR")' + '?shiftId=' + shift.shiftId;
+                    let deleteUrl = '@Url.Action("HRDeleteShift", "HR")' + '?shiftId=' + shift.shiftId;
+                    
                     let row = `<tr>
                                     <td>${shift.shiftId}</td>
                                     <td>${shift.shiftType}</td>
@@ -66,6 +70,8 @@
                                     <td>${shift.startTime}</td>
                                     <td>${shift.endTime}</td>
                                     <td>${employeesAssigned}</td>
+                                    <td><a href="${editUrl}">Edit</a></td>
+                                    <td><a href="${deleteUrl}">Delete</a></td>
                                 </tr>`;
                     table.append(row);
                 });
