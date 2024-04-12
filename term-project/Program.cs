@@ -67,49 +67,49 @@ async Task InitializeSupabase(string url, string key)
 
     await InsertMaintenanceRequest(supabase, logger);
 
-    await InsertAsset(supabase, logger);
+    // await InsertAsset(supabase, logger);
 
 
 }
 
 // QA TEAM: try catch block is for testing purposes only. It should be removed when code gets pushed to prod.
 
-async Task InsertAsset(Supabase.Client supabase, ILogger logger)
-{
-    try
-    {
-        // Create a new asset object
-        var newAsset = new Asset
-        {
-
-            EmployeeId = Guid.NewGuid(), // Generate a new GUID if your primary key is a GUID and not auto-generated
-            Email = "newemployee@example.com",
-            Password = "securepassword", // Make sure to never store plain text passwords in production
-            FirstName = "New",
-            LastName = "Employee",
-            Address = "123 New Street",
-            EmergencyContact = "9876543210",
-            JobTitle = "Developer",
-            EmploymentType = "full-time",
-            SalaryRate = 60000, // Example salary
-            //ManagerId = 1 // Example manager ID, adjust accordingly
-            AssetId = Guid.NewGuid(), // Generate a new GUID
-            Type = "House", // Set the type of asset
-            Status = "Unavailable", // Set the status of the asset
-            ApplicationCount = 0, // Initialize application count
-            Rate = 1800.00f // Set the rate for the asset
-        };
-
-        // Perform the insert operation
-        var response = await supabase.From<Asset>().Insert(newAsset);
-
-        logger.LogInformation("New asset inserted successfully.");
-    }
-    catch (Exception ex)
-    {
-        logger.LogError($"An exception occurred while inserting the asset: {ex.Message}");
-    }
-}
+// async Task InsertAsset(Supabase.Client supabase, ILogger logger)
+// {
+//     try
+//     {
+//         // Create a new asset object
+//         var newAsset = new Asset
+//         {
+//
+//             EmployeeId = Guid.NewGuid(), // Generate a new GUID if your primary key is a GUID and not auto-generated
+//             Email = "newemployee@example.com",
+//             Password = "securepassword", // Make sure to never store plain text passwords in production
+//             FirstName = "New",
+//             LastName = "Employee",
+//             Address = "123 New Street",
+//             EmergencyContact = "9876543210",
+//             JobTitle = "Developer",
+//             EmploymentType = "full-time",
+//             SalaryRate = 60000, // Example salary
+//             //ManagerId = 1 // Example manager ID, adjust accordingly
+//             AssetId = Guid.NewGuid(), // Generate a new GUID
+//             Type = "House", // Set the type of asset
+//             Status = "Unavailable", // Set the status of the asset
+//             ApplicationCount = 0, // Initialize application count
+//             Rate = 1800.00f // Set the rate for the asset
+//         };
+//
+//         // Perform the insert operation
+//         var response = await supabase.From<Asset>().Insert(newAsset);
+//
+//         logger.LogInformation("New asset inserted successfully.");
+//     }
+//     catch (Exception ex)
+//     {
+//         logger.LogError($"An exception occurred while inserting the asset: {ex.Message}");
+//     }
+// }
 // async Task InsertEmployee(Supabase.Client supabase, ILogger logger)
 // {
 //     try
