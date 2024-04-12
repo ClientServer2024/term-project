@@ -4,12 +4,14 @@ using System;
 using System.Linq;
 using term_project.Models.CareModels;
 using dotenv.net;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Supabase;
 using term_project.Models.CRMModels;
 using Guid = System.Guid;
 using System.IO.Compression;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using JsonSerializer = Newtonsoft.Json.JsonSerializer;
 
 namespace term_project.Controllers
 {
@@ -85,7 +87,7 @@ namespace term_project.Controllers
             };
 
             return Json(JsonData);
-        }   
+        }
 
         public IActionResult HRManageEmployees()
         {
@@ -129,7 +131,7 @@ namespace term_project.Controllers
         }
 
         [HttpPost]
-        public async Task <IActionResult> EditEmployee(Guid employeeID)
+        public async Task<IActionResult> EditEmployee(Guid employeeID)
         {
             string requestBody;
             using (StreamReader reader = new StreamReader(Request.Body))
@@ -251,7 +253,7 @@ namespace term_project.Controllers
         {
             return View("~/Views/HRView/HRCreateEmployee.cshtml");
         }
-        
+
         /** Shift Management */
         public IActionResult HRManageShifts()
         {
@@ -267,7 +269,7 @@ namespace term_project.Controllers
         public async Task<IActionResult> CreateShift()
         {
             Console.WriteLine("Creating shift...");
-            
+
             try
             {
                 string requestBody;
@@ -275,6 +277,7 @@ namespace term_project.Controllers
                 {
                     requestBody = await reader.ReadToEndAsync();
                 }
+
                 JObject jsonData = JObject.Parse(requestBody);
                 Console.WriteLine(jsonData.ToString());
 
@@ -282,7 +285,7 @@ namespace term_project.Controllers
                 DateTime shiftDate = (DateTime)jsonData["shiftDate"];
                 TimeSpan startTime = (TimeSpan)jsonData["startTime"];
                 TimeSpan endTime = (TimeSpan)jsonData["endTime"];
-                
+
                 var new_shift = new Shift
                 {
                     ShiftId = Guid.NewGuid(),
@@ -302,5 +305,58 @@ namespace term_project.Controllers
                 return BadRequest(e);
             }
         }
+
+        [HttpGet]
+        public async Task<IActionResult> HRGetAllShiftsAndEmployees()
+        {
+            try
+            {
+                // Fetch all shifts
+                var shiftResponse = await _supabase
+                    .From<Shift>()
+                    .Select("*")
+                    .Get();
+                
+                var shiftList = shiftResponse.Models;
+
+                // Fetch employees assigned to each shift
+                var shiftEmployeeMap = new Dictionary<Guid, List<Guid>>();
+                foreach (var shift in shiftList)
+                {
+                    var employeeShiftResponse = await _supabase
+                        .From<EmployeeShift>()
+                        .Select("employee_id")
+                        .Where(es => es.ShiftId == shift.ShiftId)
+                        .Get();
+
+                    var employeeIds = employeeShiftResponse.Models.Select(es => es.EmployeeId).ToList();
+                    shiftEmployeeMap.Add(shift.ShiftId, employeeIds);
+                }
+
+                // Construct JSON data
+                var jsonData = new List<object>();
+                foreach (var shift in shiftList)
+                {
+                    var shiftData = new
+                    {
+                        ShiftId = shift.ShiftId,
+                        ShiftType = shift.ShiftType,
+                        StartTime = shift.StartTime,
+                        EndTime = shift.EndTime,
+                        ShiftDate = shift.ShiftDate,
+                        Employees = shiftEmployeeMap.ContainsKey(shift.ShiftId) ? shiftEmployeeMap[shift.ShiftId] : new List<Guid>()
+                    };
+                    jsonData.Add(shiftData);
+                }
+
+                return Json(jsonData);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error fetching shifts and employees: {ex}");
+                return StatusCode(500, "An error occurred while fetching shifts and employees.");
+            }
+        }
+
     }
 }

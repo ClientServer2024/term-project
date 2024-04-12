@@ -2,17 +2,66 @@ document.addEventListener('DOMContentLoaded', () => {
     load_calender();
      
     // retrieve buttons and add event listeners
-    const vc_btn = document.getElementById('vc_btn');
-    const cs_btn = document.getElementById('cs_btn');
-    const ms_btn = document.getElementById('ms_btn');
-    vc_btn.addEventListener('click', Handle_VC_Click);
-    cs_btn.addEventListener('click', Handle_CS_Click);
-    ms_btn.addEventListener('click', Handle_MS_Click);
+    document.getElementById('vc_btn').addEventListener('click', Handle_VC_Click);
+    document.getElementById('cs_btn').addEventListener('click', Handle_CS_Click);
+    document.getElementById('ms_btn').addEventListener('click', Handle_MS_Click);
 });
 
-function load_calender() {
+async function get_all_shifts() {
+    try {
+        let data = await $.ajax({
+            url: '/HR/HRGetAllShiftsAndEmployees',
+            type: 'GET'
+        });
+        console.log("everything loaded");
+        return data;
+    } catch (error) {
+        console.error("Error fetching shifts: ", error);
+        throw error;
+    }
+}
+
+async function load_calender() {
     let calendarEl = document.getElementById('content-box');
     calendarEl.innerHTML = '';
+    let shifts = [];
+    let shiftData = await get_all_shifts();
+    shiftData.forEach(function(shift){
+       shifts.push(shift); 
+    });
+    console.log(shifts);
+    
+    // Create an event for each shift
+    let events = shifts.map(shift => {
+        //console.log("date format: ",  shift.shiftDate);
+        //console.log("starttime format: ",  shift.startTime);
+        let datePart = shift.shiftDate.substring(0,11);
+        let startDateTime = `${datePart}${shift.startTime}`;
+        let endDateTime = `${datePart}${shift.endTime}`;
+        return {
+            title: `[${shift.shiftType}]`,
+            start: startDateTime,
+            end: endDateTime,
+            extendedProps: {
+                employees: shift.employees
+            }
+        };
+    });
+    console.log("EVENTS:\n", events);
+
+    function eventDidMount(arg) {
+        let eventElement = arg.el;
+        let employees = arg.event.extendedProps.employees;
+        if (Array.isArray(employees)) {
+            let employeeString = `Employees Assigned:\n ${employees.join('\n')}`;
+            let employeeElement = document.createElement('div');
+            employeeElement.classList.add('fc-event-employees');
+            employeeElement.textContent = employeeString;
+            eventElement.appendChild(employeeElement);
+        }
+    }
+
+
     let calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: 'dayGridMonth',
         headerToolbar: {
@@ -20,18 +69,15 @@ function load_calender() {
             center: 'title',
             right: 'dayGridMonth,timeGridWeek,timeGridDay'
         },
-        events: [
-            {
-                title: 'Shift 1',
-                start: '2024-04-01T08:00:00',
-                end: '2024-04-01T16:00:00'
-            },
-            {
-                title: 'Shift 2',
-                start: '2024-04-02T12:00:00',
-                end: '2024-04-02T20:00:00'
+        events: events,
+        eventDidMount: eventDidMount,
+        eventClick: function(arg) {
+            let employees = arg.event.extendedProps.employees;
+            if (Array.isArray(employees)) {
+                let employeeString = employees.join(', ');
+                alert("Employees Assigned: " + employeeString);
             }
-        ]
+        }
     });
     calendar.render();
 }
