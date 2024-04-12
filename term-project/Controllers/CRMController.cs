@@ -720,6 +720,46 @@ namespace term_project.Controllers
       }
     }
 
+    [HttpGet]
+    public async Task<IActionResult> GetApprovedApplicantsNames()
+    {
+      try
+      {
+        // Fetch approved applicants from the database
+        var applicantResponse = await _supabase
+            .From<Applicant>()
+            .Select("*") // Select only necessary fields
+            .Where(applicant => applicant.Status == "Approved") // Filter by status
+            .Get();
+
+        var approvedApplicants = applicantResponse.Models;
+
+        var firstNames = new List<string>();
+        var lastNames = new List<string>();
+
+        foreach (var applicant in approvedApplicants)
+        {
+          firstNames.Add(applicant.FirstName);
+          lastNames.Add(applicant.LastName);
+
+        }
+
+        var JsonData = new
+        {
+          FirstNames = firstNames,
+          LastNames = lastNames
+        };
+
+        return Json(JsonData);
+      }
+      catch (Exception ex)
+      {
+        // Return a BadRequest response with the exception message
+        return BadRequest(ex.Message);
+      }
+    }
+
+
 
   }
 
