@@ -1,0 +1,107 @@
+@{
+    ViewData["Title"] = "Care Landing";
+}
+
+<h1>Welcome to the Register Services Page!</h1>
+
+<label for="customerName">Customer Name:</label>
+<select id="customerName" name="customerName">
+    <!-- Populated dynamically based on the available applicants -->
+</select>
+<br>
+
+<label for="serviceId">Select Service:</label>
+<select id="serviceId" name="serviceId">
+    @foreach (var service in ViewBag.Services)
+    {
+        <option value="@service.ServiceId">@service.ServiceName</option>
+    }
+</select>
+<br>
+
+<label for="employeeId">Select Employee:</label>
+<select id="employeeId" name="employeeId">
+    <!-- Populated dynamically based on the selected service -->
+</select>
+<br>
+
+<button id="registerServiceBtn" type="button">Register Service</button>
+<button id="viewRegisteredServicesBtn" type="button">View Registered Services</button>
+
+@section scripts {
+    <script>
+        $(function () {
+            console.log("Document ready. JavaScript function is executing."); // Log message
+            
+            // Fetch applicant names and populate the customer name dropdown
+            $.ajax({
+                url: '/Care/GetAllApplicants',
+                type: 'GET',
+                success: function (data) {
+                    var customerDropdown = $('#customerName');
+                    customerDropdown.empty();
+                    // Append each applicant name to the dropdown
+                    $.each(data.applicantNames, function (i, name) {
+                        // Append each applicant name and its corresponding renter ID as data attribute to the dropdown
+                        customerDropdown.append($('<option></option>').val(data.renterIds[i]).text(name).data('renter-id', data.renterIds[i]));
+                    });
+                },
+                error: function (xhr, status, error) {
+                    console.log(xhr.responseText);
+                }
+            });
+            
+            $('#serviceId').change(function () {
+                var serviceId = $(this).val();
+                console.log(serviceId);
+                $.ajax({
+                    url: '/Care/GetAvailableEmployees',
+                    type: 'GET',
+                    data: { serviceId: serviceId },
+                    success: function (employeeData) {
+                        var employeeDropdown = $('#employeeId');
+                        employeeDropdown.empty();
+                        // Append each employee to the dropdown
+                        $.each(employeeData, function (i, employee) {
+                            // Append each employee name to the dropdown
+                            employeeDropdown.append($('<option></option>').val(employee.ServiceScheduleId).text(employee.EmployeeName));
+                        });
+                    },
+                    error: function (xhr, status, error) {
+                        console.log(xhr.responseText);
+                    }
+                });
+            });
+            
+            $('#registerServiceBtn').click(function () {
+                var serviceScheduleEmployeeId = $('#employeeId').val();
+                var renterId = $('#customerName option:selected').val() // Get the selected renter ID
+    
+                // Perform validation if needed
+    
+                // Call the RegisterService endpoint
+                $.ajax({
+                    url: '/Care/RegisterService',
+                    type: 'POST',
+                    data: {
+                        serviceScheduleEmployeeId: serviceScheduleEmployeeId,
+                        renterId: renterId // Pass the renter ID to the backend
+                    },
+                    success: function (response) {
+                        // Handle success response
+                        alert(response); // Show success message
+                    },
+                    error: function (xhr, status, error) {
+                        // Handle error response
+                        console.log(xhr.responseText);
+                        alert('Failed to register service. Please try again.');
+                    }
+                });
+            });
+            
+            $('#viewRegisteredServicesBtn').click(function () {
+                window.location.href = '/Care/RegisteredServicesView';
+            });
+        });
+    </script>
+}

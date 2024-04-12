@@ -2,6 +2,7 @@
 using term_project.Models.CareModels;
 
 using dotenv.net;
+using term_project.Models.CRMModels;
 
 // Inside the appropriate method
 DotEnv.Load();
@@ -38,7 +39,9 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 // Adjust this part according to how you instantiate your Supabase client
-await InitializeSupabase(supabaseUrl, supabaseKey);
+
+    await InitializeSupabase(supabaseUrl, supabaseKey);
+
 
 app.Run();
 
@@ -55,20 +58,30 @@ async Task InitializeSupabase(string url, string key)
     var logger = app.Services.GetRequiredService<ILogger<Program>>();
     logger.LogInformation("Reached!");
 
-    //await InsertEmployee(supabase, logger);
+    // await InsertEmployee(supabase, logger);
 
-    //await GetFirstUserEmail(supabase, logger);  
-    //await populatePayHistory(supabase, logger);
+    await GetFirstUserEmail(supabase, logger);
+
+    await InsertRenter(supabase, logger);
+    System.Console.WriteLine("renter addded");
+
+    await InsertMaintenanceRequest(supabase, logger);
+
+    await InsertAsset(supabase, logger);
+
 
 }
 
-async Task InsertEmployee(Supabase.Client supabase, ILogger logger)
+// QA TEAM: try catch block is for testing purposes only. It should be removed when code gets pushed to prod.
+
+async Task InsertAsset(Supabase.Client supabase, ILogger logger)
 {
     try
     {
-        // Create a new employee object
-        var newEmployee = new Employee
+        // Create a new asset object
+        var newAsset = new Asset
         {
+
             EmployeeId = Guid.NewGuid(), // Generate a new GUID if your primary key is a GUID and not auto-generated
             Email = "newemployee@example.com",
             Password = "securepassword", // Make sure to never store plain text passwords in production
@@ -80,21 +93,56 @@ async Task InsertEmployee(Supabase.Client supabase, ILogger logger)
             EmploymentType = "full-time",
             SalaryRate = 60000, // Example salary
             //ManagerId = 1 // Example manager ID, adjust accordingly
+            AssetId = Guid.NewGuid(), // Generate a new GUID
+            Type = "House", // Set the type of asset
+            Status = "Unavailable", // Set the status of the asset
+            ApplicationCount = 0, // Initialize application count
+            Rate = 1800.00f // Set the rate for the asset
         };
 
         // Perform the insert operation
-        var response = await supabase.From<Employee>().Insert(newEmployee);
+        var response = await supabase.From<Asset>().Insert(newAsset);
 
-
-        logger.LogInformation("New employee inserted successfully.");
-        
-
+        logger.LogInformation("New asset inserted successfully.");
     }
     catch (Exception ex)
     {
-        logger.LogError($"An exception occurred while inserting the employee: {ex.Message}");
+        logger.LogError($"An exception occurred while inserting the asset: {ex.Message}");
     }
 }
+// async Task InsertEmployee(Supabase.Client supabase, ILogger logger)
+// {
+//     try
+//     {
+//         // Create a new employee object
+//         var newEmployee = new Employee
+//         {
+//             EmployeeId = Guid.NewGuid(), // Generate a new GUID if your primary key is a GUID and not auto-generated
+//             Email = "newemployee@example.com",
+//             Password = "securepassword", // Make sure to never store plain text passwords in production
+//             FirstName = "New",
+//             LastName = "Employee",
+//             Address = "123 New Street",
+//             EmergencyContact = "9876543210",
+//             JobTitle = "Developer",
+//             EmploymentType = "full-time",
+//             SalaryRate = 60000, // Example salary
+//             ManagerId = 1 // Example manager ID, adjust accordingly
+//         };
+//
+//         // Perform the insert operation
+//         var response = await supabase.From<Employee>().Insert(newEmployee);
+//
+//
+//         logger.LogInformation("New employee inserted successfully.");
+//
+//
+//     }
+//     catch (Exception ex)
+//     {
+//         logger.LogError($"An exception occurred while inserting the employee: {ex.Message}");
+//     }
+// }
 
 async Task GetFirstUserEmail(Supabase.Client supabase, ILogger logger)
 {
@@ -119,6 +167,55 @@ async Task GetFirstUserEmail(Supabase.Client supabase, ILogger logger)
     }
 }
 
+async Task InsertRenter(Supabase.Client supabase, ILogger logger)
+{
+    try
+    {
+        Guid applicantId = new Guid("c43c866d-7fd6-4bc5-90cb-c6dc5cd8086b"); 
+        // Create a new renter object
+        var newRenter = new Renter
+        {
+            RenterId = Guid.NewGuid(), // Assuming RenterId is a GUID primary key
+            ApplicantId = applicantId, // Example ApplicantId, adjust accordingly
+            EmergencyContacts = "Emergency contact information", // Example emergency contacts
+            FamilyDoctor = "Dr. Smith", // Example family doctor
+            Status = "Active" // Example status
+        };
+
+        // Perform the insert operation
+        var response = await supabase.From<Renter>().Insert(newRenter);
+
+        logger.LogInformation("New renter inserted successfully.");
+    }
+    catch (Exception ex)
+    {
+        logger.LogError($"An exception occurred while inserting the renter: {ex.Message}");
+    }
+}
+
+async Task InsertMaintenanceRequest(Supabase.Client supabase, ILogger logger)
+{
+    try
+    {
+        var newMaintenanceRequest = new MaintenanceRequest
+        {
+            MaintenanceRequestId = Guid.NewGuid(), 
+            AssetId = new Guid("c8a5ca4d-8bce-4d0c-b169-d15724120f09"), // Example AssetId
+            RenterId = new Guid("6b161358-25c1-4bb5-b29f-5bf7d1117d47"), // Example RenterId
+            Description = "Fridge needs to be repaired",
+            Status = "Pending", 
+            DueDate = DateTime.UtcNow.AddDays(7) 
+        };
+
+        var response = await supabase.From<MaintenanceRequest>().Insert(newMaintenanceRequest);
+
+        logger.LogInformation("New maintenance request inserted successfully.");
+    }
+    catch (Exception ex)
+    {
+        logger.LogError($"An exception occurred while inserting the maintenance request: {ex.Message}");
+    }
+}
 
 async Task populatePayHistory(Supabase.Client supabase, ILogger logger)
 {
@@ -160,3 +257,4 @@ async Task populatePayHistory(Supabase.Client supabase, ILogger logger)
         logger.LogError($"Error populating pay history: {ex.Message}");
     }
 }
+

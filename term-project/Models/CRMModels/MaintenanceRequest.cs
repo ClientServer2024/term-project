@@ -23,5 +23,18 @@ namespace term_project.Models.CRMModels
 
         [Column("due_date")]
         public DateTime DueDate { get; set; }
+
+        [Column("appliance_make")]
+        public string ApplianceMake { get; set; }
+
+        [Column("appliance_model")]
+        public string ApplianceModel { get; set; }
+
+        [Column("customer_email")]
+        public string CustomerEmail { get; set; }
+
+        [Column("asset_type")]
+        public string AssetType { get; set; }
+
     }
 }

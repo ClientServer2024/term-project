@@ -1,4 +1,4 @@
-﻿@model term_project.Models.CareModels.Attendance
+@model term_project.Models.CareModels.Attendance
 
 @{
     ViewData["Title"] = "Edit Attendance Record";
@@ -8,6 +8,8 @@
 
 <form id="editAttendanceForm">
     <input type="hidden" id="employeeId" name="employeeId" value="@Model.EmployeeId" />
+    <input type="hidden" id="attendanceId" name="attendanceId" value="@Model.AttendanceId" />
+
     <div class="form-group">
         <label for="clockInTime">Clock In Time:</label>
         <input type="datetime-local" class="form-control" id="clockInTime" name="clockInTime" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" required>
@@ -38,8 +40,7 @@
     </div>
     <div class="form-group">
         <label for="overTimeEnd">OT End:</label>
-        <input type="datetime-local" class="form-control" id="overTimeStart" name="overTimeStart">
-
+        <input type="datetime-local" class="form-control" id="overTimeEnd" name="overTimeEnd" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" required>
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>
