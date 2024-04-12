@@ -357,6 +357,21 @@ namespace term_project.Controllers
                 return StatusCode(500, "An error occurred while fetching shifts and employees.");
             }
         }
+        
+        public IActionResult HRShiftModification()
+        {
+            return View("~/Views/HRView/HRShiftModification.cshtml");
+        }
+
+        /*
+         
+         [HttpPost]
+        public async Task<IActionResult> FindShift()
+        {
+            Console.WriteLine("Finding shifts...");
+        }
+        
+        */
 
     }
 }

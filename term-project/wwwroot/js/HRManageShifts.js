@@ -102,7 +102,7 @@ function Handle_CS_Click() {
 
 function Handle_MS_Click() {
     $.ajax({
-        url: '/HR/HRCreateShift',
+        url: '/HR/HRShiftModification',
         type: 'GET',
         success: function(data) {
             $('#content-box').html('');

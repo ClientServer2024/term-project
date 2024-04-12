@@ -1,29 +1,43 @@
-<form id="createShiftForm" method="post">
-    <div class="form-group mb-3">
-        <label for="shiftType">Type:</label>
-        <select class="form-control" id="shiftType" name="shiftType" required>
-            <option value="" disabled selected>Select type...</option>
-            <option value="recurring">Recurring</option>
-            <option value="on-call">On-call</option>
-        </select>
-    </div>
-    <div class="form-group mb-3">
-        <label for="shiftDate">Date:</label>
-        <input type="date" class="form-control" id="shiftDate" name="shiftDate" required>
-    </div>
-    <div class="form-group mb-3">
-        <label for="startTime">Start Time:</label>
-        <input type="time" class="form-control" id="startTime" name="startTime" required>
-    </div>
-    <div class="form-group mb-3">
-        <label for="endTime">End Time:</label>
-        <input type="time" class="form-control" id="endTime" name="endTime" required>
-    </div>
-    <button type="submit" class="btn btn-primary btn-block" id="createShift">Create</button>
-</form>
+@page
 
-@section scripts {
-    <script>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<div>
+    <form id="createShiftForm" method="post">
+        <div class="form-group mb-3">
+            <label for="shiftType">Type:</label>
+            <select class="form-control" id="shiftType" name="shiftType" required>
+                <option value="" disabled selected>Select type...</option>
+                <option value="recurring">Recurring</option>
+                <option value="on-call">On-call</option>
+            </select>
+        </div>
+        <div class="form-group mb-3">
+            <label for="shiftDate">Date:</label>
+            <input type="date" class="form-control" id="shiftDate" name="shiftDate" required>
+        </div>
+        <div class="form-group mb-3">
+            <label for="startTime">Start Time:</label>
+            <input type="time" class="form-control" id="startTime" name="startTime" required>
+        </div>
+        <div class="form-group mb-3">
+            <label for="endTime">End Time:</label>
+            <input type="time" class="form-control" id="endTime" name="endTime" required>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block" id="createShift">Create</button>
+    </form>
+</div>
+
+<script>
         $(document).ready(function() {
             $('#createShiftForm').on('submit', function(e) {
                 e.preventDefault();
@@ -67,4 +81,5 @@
             });
         });
     </script>
-}
+</body>
+</html>

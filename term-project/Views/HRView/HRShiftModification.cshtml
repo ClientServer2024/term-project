@@ -1,0 +1,76 @@
+@page
+@model term_project.Views.HRView.HRShiftModification
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>HR Shift Modification</title>
+</head>
+<body>
+    <div>
+        <form id="findShiftForm" method="post" class="row g-2 align-items-center">
+            <div class="col-auto">
+                <label for="shiftDate">Select Date:</label><br/>
+                <input type="date" class="form-control form-control-sm" id="shiftDate" name="shiftDate" required>
+            </div>
+            <div class="col-auto">
+                <button type="submit" class="btn btn-primary btn-sm mt-4" id="findShift">Find Shifts</button>
+            </div>
+        </form>
+        
+        <table id="shiftsTable" class="table mt-4" style="display:none;">
+            <thead>
+                <tr>
+                    <th>Shift ID</th>
+                    <th>Shift Type</th>
+                    <th>Shift Date</th>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                    <th>Employees Assigned</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $('#findShiftForm').on('submit', async function(e) {
+                e.preventDefault();
+                let formData = $('#findShiftForm').serialize();
+                let all_shifts = await get_all_shifts();
+                let selectedDate = ($('#shiftDate').val()).toString(); 
+                selectedDate = `${selectedDate}T00:00:00`;
+                
+                // Filter shifts for the selected date
+                let shifts = all_shifts.filter(shift => shift.shiftDate === selectedDate);
+                console.log("Shifts found for selected date: ", shifts);
+                
+                $('#shiftsTable').show();
+                var table = $('#shiftsTable tbody');
+                table.empty();
+                
+                console.log("shifts length: ", shifts.length);
+                // Populate the table with the selected shifts
+                shifts.forEach(shift => {
+                    let employeesAssigned = shift.employees.join(', ');
+                    let row = `<tr>
+                                    <td>${shift.shiftId}</td>
+                                    <td>${shift.shiftType}</td>
+                                    <td>${(shift.shiftDate).substring(0, 10)}</td>
+                                    <td>${shift.startTime}</td>
+                                    <td>${shift.endTime}</td>
+                                    <td>${employeesAssigned}</td>
+                                </tr>`;
+                    table.append(row);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
