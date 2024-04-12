@@ -3,11 +3,19 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">CRM Landing</h1>
-    <!-- Add a link to the ManageAssets action method -->
-    <a class="btn btn-primary" asp-controller="CRM" asp-action="ManageAssets">Manage Assets</a>
-    <a class="btn btn-primary" asp-controller="CRM" asp-action="AvailableAssets">View Available Assets</a>
+  <h1 class="display-4">CRM Landing</h1>
+    <button id="goToMaintenanceButton" class="btn btn-primary">Go to Maintenance</button>
+  <a class="btn btn-primary" asp-controller="CRM" asp-action="ManageAssets">Manage Assets</a>
+  <a class="btn btn-primary" asp-controller="CRM" asp-action="AvailableAssets">View Available Assets</a>
 </div>
 
+@section scripts {
+    <script>
+        $(function () {
+            $('#goToMaintenanceButton').click(function () {
+                window.location.href = '/CRM/MaintenanceLanding';
+            });
+        });
+    </script>
 
-
+}
