@@ -24,12 +24,6 @@ namespace term_project.Models.CareModels
         [Column("overtime_end")]
         public DateTime? OverTimeEnd { get; set; }
 
-        [Column("overtime_start")]
-        public DateTime? OverTimeStart { get; set; }
-
-        [Column("overtime_end")]
-        public DateTime? OverTimeEnd { get; set; }
-
         [Column("date")]
         public DateTime Date { get; set; }
 
