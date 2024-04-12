@@ -38,10 +38,7 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-// Adjust this part according to how you instantiate your Supabase client
-
     await InitializeSupabase(supabaseUrl, supabaseKey);
-
 
 app.Run();
 
@@ -61,6 +58,11 @@ async Task InitializeSupabase(string url, string key)
     await InsertEmployee(supabase, logger);
 
     await GetFirstUserEmail(supabase, logger);
+
+    await InsertRenter(supabase, logger);
+    System.Console.WriteLine("renter addded");
+
+    await InsertMaintenanceRequest(supabase, logger);
 
     await InsertAsset(supabase, logger);
 
@@ -127,6 +129,7 @@ async Task InsertEmployee(Supabase.Client supabase, ILogger logger)
     }
 }
 
+
 async Task GetFirstUserEmail(Supabase.Client supabase, ILogger logger)
 {
     try
@@ -147,6 +150,56 @@ async Task GetFirstUserEmail(Supabase.Client supabase, ILogger logger)
     catch (Exception ex)
     {
         logger.LogError($"An error occurred while fetching the email: {ex.Message}");
+    }
+}
+
+async Task InsertRenter(Supabase.Client supabase, ILogger logger)
+{
+    try
+    {
+        Guid applicantId = new Guid("c43c866d-7fd6-4bc5-90cb-c6dc5cd8086b"); 
+        // Create a new renter object
+        var newRenter = new Renter
+        {
+            RenterId = Guid.NewGuid(), // Assuming RenterId is a GUID primary key
+            ApplicantId = applicantId, // Example ApplicantId, adjust accordingly
+            EmergencyContacts = "Emergency contact information", // Example emergency contacts
+            FamilyDoctor = "Dr. Smith", // Example family doctor
+            Status = "Active" // Example status
+        };
+
+        // Perform the insert operation
+        var response = await supabase.From<Renter>().Insert(newRenter);
+
+        logger.LogInformation("New renter inserted successfully.");
+    }
+    catch (Exception ex)
+    {
+        logger.LogError($"An exception occurred while inserting the renter: {ex.Message}");
+    }
+}
+
+async Task InsertMaintenanceRequest(Supabase.Client supabase, ILogger logger)
+{
+    try
+    {
+        var newMaintenanceRequest = new MaintenanceRequest
+        {
+            MaintenanceRequestId = Guid.NewGuid(), 
+            AssetId = new Guid("c8a5ca4d-8bce-4d0c-b169-d15724120f09"), // Example AssetId
+            RenterId = new Guid("6b161358-25c1-4bb5-b29f-5bf7d1117d47"), // Example RenterId
+            Description = "Fridge needs to be repaired",
+            Status = "Pending", 
+            DueDate = DateTime.UtcNow.AddDays(7) 
+        };
+
+        var response = await supabase.From<MaintenanceRequest>().Insert(newMaintenanceRequest);
+
+        logger.LogInformation("New maintenance request inserted successfully.");
+    }
+    catch (Exception ex)
+    {
+        logger.LogError($"An exception occurred while inserting the maintenance request: {ex.Message}");
     }
 }
 
