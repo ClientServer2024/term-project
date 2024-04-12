@@ -9,111 +9,131 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = term_project
 build_property.RootNamespace = term_project
-build_property.ProjectDir = /Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/
+build_property.ProjectDir = C:\Users\gurte\OneDrive\Documents\COMP 4945\3\term-project\term-project\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = /Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project
+build_property.MSBuildProjectDirectory = C:\Users\gurte\OneDrive\Documents\COMP 4945\3\term-project\term-project
 build_property._RazorSourceGeneratorDebug = 
 
-[/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/Views/CareView/CareLanding.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQ2FyZVZpZXcvQ2FyZUxhbmRpbmcuY3NodG1s
+[C:/Users/gurte/OneDrive/Documents/COMP 4945/3/term-project/term-project/Views/CareView/CareLanding.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FyZVZpZXdcQ2FyZUxhbmRpbmcuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/Views/CRMView/CRMLanding.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQ1JNVmlldy9DUk1MYW5kaW5nLmNzaHRtbA==
+[C:/Users/gurte/OneDrive/Documents/COMP 4945/3/term-project/term-project/Views/CRMView/CRMLanding.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ1JNVmlld1xDUk1MYW5kaW5nLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/Views/Home/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9JbmRleC5jc2h0bWw=
+[C:/Users/gurte/OneDrive/Documents/COMP 4945/3/term-project/term-project/Views/Home/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/Views/Home/Privacy.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9Qcml2YWN5LmNzaHRtbA==
+[C:/Users/gurte/OneDrive/Documents/COMP 4945/3/term-project/term-project/Views/Home/Privacy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/Views/HRView/HRCreateEmployee.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSFJWaWV3L0hSQ3JlYXRlRW1wbG95ZWUuY3NodG1s
+[C:/Users/gurte/OneDrive/Documents/COMP 4945/3/term-project/term-project/Views/HRView/HRCreateEmployee.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSFJWaWV3XEhSQ3JlYXRlRW1wbG95ZWUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/Views/HRView/HRDeleteEmployee.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSFJWaWV3L0hSRGVsZXRlRW1wbG95ZWUuY3NodG1s
+[C:/Users/gurte/OneDrive/Documents/COMP 4945/3/term-project/term-project/Views/HRView/HRCreateShift.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSFJWaWV3XEhSQ3JlYXRlU2hpZnQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/Views/HRView/HREditAttendance.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSFJWaWV3L0hSRWRpdEF0dGVuZGFuY2UuY3NodG1s
+[C:/Users/gurte/OneDrive/Documents/COMP 4945/3/term-project/term-project/Views/HRView/HRDeleteEmployee.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSFJWaWV3XEhSRGVsZXRlRW1wbG95ZWUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/Views/HRView/HREditEmployee.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSFJWaWV3L0hSRWRpdEVtcGxveWVlLmNzaHRtbA==
+[C:/Users/gurte/OneDrive/Documents/COMP 4945/3/term-project/term-project/Views/HRView/HRDeleteShift.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSFJWaWV3XEhSRGVsZXRlU2hpZnQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/Views/HRView/HREmployeeAttendance.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSFJWaWV3L0hSRW1wbG95ZWVBdHRlbmRhbmNlLmNzaHRtbA==
+[C:/Users/gurte/OneDrive/Documents/COMP 4945/3/term-project/term-project/Views/HRView/HREditAttendance.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSFJWaWV3XEhSRWRpdEF0dGVuZGFuY2UuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/Views/HRView/HRLanding.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSFJWaWV3L0hSTGFuZGluZy5jc2h0bWw=
+[C:/Users/gurte/OneDrive/Documents/COMP 4945/3/term-project/term-project/Views/HRView/HREditEmployee.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSFJWaWV3XEhSRWRpdEVtcGxveWVlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/Views/HRView/HRManageAttendance.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSFJWaWV3L0hSTWFuYWdlQXR0ZW5kYW5jZS5jc2h0bWw=
+[C:/Users/gurte/OneDrive/Documents/COMP 4945/3/term-project/term-project/Views/HRView/HREditShift.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSFJWaWV3XEhSRWRpdFNoaWZ0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/Views/HRView/HRManageEmployees.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSFJWaWV3L0hSTWFuYWdlRW1wbG95ZWVzLmNzaHRtbA==
+[C:/Users/gurte/OneDrive/Documents/COMP 4945/3/term-project/term-project/Views/HRView/HREmployeeAttendance.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSFJWaWV3XEhSRW1wbG95ZWVBdHRlbmRhbmNlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/Views/HRView/HRPayHistory.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSFJWaWV3L0hSUGF5SGlzdG9yeS5jc2h0bWw=
+[C:/Users/gurte/OneDrive/Documents/COMP 4945/3/term-project/term-project/Views/HRView/HRLanding.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSFJWaWV3XEhSTGFuZGluZy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/Views/HRView/HRPayroll_Employees.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSFJWaWV3L0hSUGF5cm9sbF9FbXBsb3llZXMuY3NodG1s
+[C:/Users/gurte/OneDrive/Documents/COMP 4945/3/term-project/term-project/Views/HRView/HRManageAttendance.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSFJWaWV3XEhSTWFuYWdlQXR0ZW5kYW5jZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/Views/HRView/HRPayroll_GeneratePayroll.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSFJWaWV3L0hSUGF5cm9sbF9HZW5lcmF0ZVBheXJvbGwuY3NodG1s
+[C:/Users/gurte/OneDrive/Documents/COMP 4945/3/term-project/term-project/Views/HRView/HRManageEmployees.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSFJWaWV3XEhSTWFuYWdlRW1wbG95ZWVzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/Views/HRView/HRPayroll_Landing.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSFJWaWV3L0hSUGF5cm9sbF9MYW5kaW5nLmNzaHRtbA==
+[C:/Users/gurte/OneDrive/Documents/COMP 4945/3/term-project/term-project/Views/HRView/HRManageShifts.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSFJWaWV3XEhSTWFuYWdlU2hpZnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/Views/HRView/HRPayroll_Partial_GeneratePayroll_Info.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSFJWaWV3L0hSUGF5cm9sbF9QYXJ0aWFsX0dlbmVyYXRlUGF5cm9sbF9JbmZvLmNzaHRtbA==
+[C:/Users/gurte/OneDrive/Documents/COMP 4945/3/term-project/term-project/Views/HRView/HRPayHistory.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSFJWaWV3XEhSUGF5SGlzdG9yeS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/Views/HRView/HRPayroll_PayrollInfo.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSFJWaWV3L0hSUGF5cm9sbF9QYXlyb2xsSW5mby5jc2h0bWw=
+[C:/Users/gurte/OneDrive/Documents/COMP 4945/3/term-project/term-project/Views/HRView/HRPayroll_Employees.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSFJWaWV3XEhSUGF5cm9sbF9FbXBsb3llZXMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/Views/HRView/HRPayroll_Payrolls.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSFJWaWV3L0hSUGF5cm9sbF9QYXlyb2xscy5jc2h0bWw=
+[C:/Users/gurte/OneDrive/Documents/COMP 4945/3/term-project/term-project/Views/HRView/HRPayroll_GeneratePayroll.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSFJWaWV3XEhSUGF5cm9sbF9HZW5lcmF0ZVBheXJvbGwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/Views/HRView/HRViewEmployee.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSFJWaWV3L0hSVmlld0VtcGxveWVlLmNzaHRtbA==
+[C:/Users/gurte/OneDrive/Documents/COMP 4945/3/term-project/term-project/Views/HRView/HRPayroll_Landing.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSFJWaWV3XEhSUGF5cm9sbF9MYW5kaW5nLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/Views/Shared/Error.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL0Vycm9yLmNzaHRtbA==
+[C:/Users/gurte/OneDrive/Documents/COMP 4945/3/term-project/term-project/Views/HRView/HRPayroll_Partial_GeneratePayroll_Info.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSFJWaWV3XEhSUGF5cm9sbF9QYXJ0aWFsX0dlbmVyYXRlUGF5cm9sbF9JbmZvLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/Views/Shared/_ValidationScriptsPartial.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+[C:/Users/gurte/OneDrive/Documents/COMP 4945/3/term-project/term-project/Views/HRView/HRPayroll_PayrollInfo.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSFJWaWV3XEhSUGF5cm9sbF9QYXlyb2xsSW5mby5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/Views/_ViewImports.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+[C:/Users/gurte/OneDrive/Documents/COMP 4945/3/term-project/term-project/Views/HRView/HRPayroll_Payrolls.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSFJWaWV3XEhSUGF5cm9sbF9QYXlyb2xscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/Views/_ViewStart.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvX1ZpZXdTdGFydC5jc2h0bWw=
+[C:/Users/gurte/OneDrive/Documents/COMP 4945/3/term-project/term-project/Views/HRView/HRShiftModification.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSFJWaWV3XEhSU2hpZnRNb2RpZmljYXRpb24uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/davidnam/Documents/BCIT/COMP 4945/Project/term-project/term-project/Views/Shared/_Layout.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19MYXlvdXQuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = b-lwtxrt1nuj
+[C:/Users/gurte/OneDrive/Documents/COMP 4945/3/term-project/term-project/Views/HRView/HRViewEmployee.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSFJWaWV3XEhSVmlld0VtcGxveWVlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/gurte/OneDrive/Documents/COMP 4945/3/term-project/term-project/Views/Shared/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/gurte/OneDrive/Documents/COMP 4945/3/term-project/term-project/Views/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/gurte/OneDrive/Documents/COMP 4945/3/term-project/term-project/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/gurte/OneDrive/Documents/COMP 4945/3/term-project/term-project/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/gurte/OneDrive/Documents/COMP 4945/3/term-project/term-project/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = b-78aq479fxd
