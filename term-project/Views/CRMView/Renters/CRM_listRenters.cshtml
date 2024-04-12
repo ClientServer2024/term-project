@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>@ViewData["Title"]</title>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+  <div class="text-center">
+    <h1 class="display-4">CRM List of Renters Page</h1>
+    <h2>Renters:</h2>
+    <div id="renterListContainer" style="overflow-x: auto; white-space: nowrap;">
+      <ul id="applicantList" style="list-style-type: none; padding-left: 0;">
+        <!-- List of applicants will be populated here -->
+      </ul>
+    </div>
+  </div>
+
+  @section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        // Make AJAX call to fetch approved applicant data on page load
+        $.get('/CRM/GetApprovedApplicantsNames', function (data) {
+          populateApplicants(data);
+        });
+      });
+
+      function populateApplicants(data) {
+        var applicantList = $('#applicantList');
+        applicantList.empty();
+
+        // Check if data is undefined or does not have the expected structure
+        if (!data || !Array.isArray(data.firstNames) || !Array.isArray(data.lastNames) || data.firstNames.length !== data.lastNames.length) {
+          console.error("Invalid data received:", data);
+          return;
+        }
+
+        // Append each applicant's first and last names to the list
+        for (var i = 0; i < data.firstNames.length; i++) {
+          var listItem = $('<li style="margin-bottom: 20px;">');
+          listItem.append('<strong>First Name: </strong>' + data.firstNames[i] + '<br>');
+          listItem.append('<strong>Last Name: </strong>' + data.lastNames[i] + '<br>');
+
+          applicantList.append(listItem);
+        }
+      }
+
+    </script>
+  }
+
+</body>
+</html>
