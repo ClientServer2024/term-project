@@ -59,6 +59,14 @@
     <dd class="col-sm-10" id="Email">
 
     </dd>
+    <dt class="col-sm-2">
+        Qualifications
+    </dt>
+    <dd class="col-sm-10" id="Qualifications">
+        <ul>
+
+        </ul>
+    </dd>
 </div>
 
 @section scripts {
@@ -80,6 +88,24 @@
                         $('#Employment').text(data.employeeEmploymentType);
                         $('#Salary').text(data.employeeSalaryRate);
                         $('#Email').text(data.employeeEmail);
+
+                        console.log(data.employeeQualifications);
+
+                        // Add qualifications
+                        var qualificationsList = $('#Qualifications ul');
+                        qualificationsList.empty(); // Clear existing list items
+
+                        // Check if employee qualifications data exists and has length greater than 0
+                        if (data.employeeQualifications && data.employeeQualifications.length > 0) {
+                            // Iterate over each qualification and append it to the list
+                            data.employeeQualifications.forEach(function (qualification) {
+                                qualificationsList.append('<li>' + qualification + '</li>');
+                            });
+                        } else {
+                            // Handle the case where employee qualifications data is empty
+                            qualificationsList.append('<li>None</li>');
+                        }
+
                     },
                     error: function (xhr, status, error) {
                         console.log(xhr.responseText);

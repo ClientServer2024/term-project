@@ -79,12 +79,41 @@ namespace term_project.Controllers
                 employeeJobTitles.Add(employee.JobTitle);
             }
 
+            //var employeeQualifications= new List<List<String>>();
+            //foreach (var employee in employeeList)
+            //{
+                
+            //    var employeeQualificationResponse = await _supabase
+            //        .From<EmployeeQualification>()
+            //        .Select("*")
+            //        .Where(q => q.EmployeeId == employee.EmployeeId)
+            //        .Get();
+
+            //    var qualificationList = employeeQualificationResponse.Models;
+            //    var qualificationDescriptions = new List<String>();
+            //    foreach (var qualification in qualificationList)
+            //    {
+            //        var qualificationResponse = await _supabase
+            //            .From<Qualification>()
+            //            .Select("*")
+            //            .Where(q => q.QualificationId == qualification.QualificationId)
+            //            .Get();
+            //        var qualificationDescriptionList = qualificationResponse.Models;
+            //        foreach (var qualificationDescription in qualificationDescriptionList)
+            //        {
+            //            qualificationDescriptionList.Add(qualificationDescription);
+            //        }
+            //    }
+
+            //    employeeQualifications.Add(qualificationDescriptions);
+            //}
+
             var JsonData = new
             {
                 employeeIDs = employeeIDs,
                 employeeFirstNames = employeeFirstNames,
                 employeeLastNames = employeeLastNames,
-                employeeJobTitles = employeeJobTitles
+                employeeJobTitles = employeeJobTitles,
             };
 
             return Json(JsonData);
@@ -110,6 +139,25 @@ namespace term_project.Controllers
                 return Json(new { error = "Employee not found" });
             }
 
+            var employeeQualifications = new List<String>();
+            var employeeQualificationResponse = await _supabase
+                .From<EmployeeQualification>()
+                .Select("*")
+                .Where(q => q.EmployeeId == employeeResponse.EmployeeId)
+                .Get();
+
+            var employeeQualificationModel = employeeQualificationResponse.Models;
+            foreach (var qualification in employeeQualificationModel)
+            {
+                var qualificationResponse = await _supabase
+                    .From<Qualification>()
+                    .Select("*")
+                    .Where(q => q.QualificationId == qualification.QualificationId)
+                    .Single();
+
+                employeeQualifications.Add(qualificationResponse.QualificationName);
+            }
+
             var employeeData = new
             {
                 employeeFirstName = employeeResponse.FirstName,
@@ -119,7 +167,8 @@ namespace term_project.Controllers
                 employeeJobTitle = employeeResponse.JobTitle,
                 employeeEmploymentType = employeeResponse.EmploymentType,
                 employeeSalaryRate = employeeResponse.SalaryRate,
-                employeeEmail = employeeResponse.Email
+                employeeEmail = employeeResponse.Email,
+                employeeQualifications = employeeQualifications
             };
 
             return Json(employeeData);
