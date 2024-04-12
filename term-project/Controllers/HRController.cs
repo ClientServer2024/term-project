@@ -435,7 +435,7 @@ namespace term_project.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateShift(Guid shiftId)
         {
-            Console.WriteLine("Updating shift...");
+            Console.WriteLine("Updating shift table...");
 
             try
             {
@@ -444,10 +444,10 @@ namespace term_project.Controllers
                 {
                     requestBody = await reader.ReadToEndAsync();
                 }
-
+                
+        
                 JObject jsonData = JObject.Parse(requestBody);
-                Console.WriteLine(jsonData.ToString());
-
+                
                 string shiftType = (string)jsonData["shiftType"];
                 DateTime shiftDate = (DateTime)jsonData["shiftDate"];
                 TimeSpan startTime = (TimeSpan)jsonData["startTime"];
@@ -455,6 +455,7 @@ namespace term_project.Controllers
                 string assignedEmployeesStr = (string)jsonData["assignedEmployees"];
                 string additionalEmployeesStr = (string)jsonData["additionalEmployees"];
 
+                
                 // Parse string values into arrays of GUIDs
                 List<Guid> assignedEmployees = ParseGuidArray(assignedEmployeesStr);
                 List<Guid> additionalEmployees = ParseGuidArray(additionalEmployeesStr);
@@ -463,25 +464,42 @@ namespace term_project.Controllers
                 List<Guid> allEmployees = new List<Guid>();
                 allEmployees.AddRange(assignedEmployees);
                 allEmployees.AddRange(additionalEmployees);
+                Console.WriteLine("AllEmployees: " + allEmployees);
 
-                var update = await _supabase
+                var updateShift = await _supabase
                     .From<Shift>()
                     .Where(s => s.ShiftId == shiftId)
                     .Set(s => s.ShiftType, shiftType)
+                    .Set(s => s.ShiftDate, shiftDate)
                     .Set(s => s.StartTime, startTime)
                     .Set(s => s.EndTime, endTime)
                     .Update();
 
-                /*
-                foreach (var employee in allEmployees)
-                {
-                    var update_employee_shift = await _supabase
-                        .From<EmployeeShift>()
-                        .Where(es => es.ShiftId == shiftId)
-                        .Set(es => es.EmployeeId ==);
-                }
-                */
+                Console.WriteLine("Shift Table updated successfully!");
+                Console.WriteLine("Updating EmployeeShift Table...");
+                
+                     await _supabase
+                    .From<EmployeeShift>()
+                    .Where(es => es.ShiftId == shiftId)
+                    .Delete();
+                     
+                     Console.WriteLine("EmployeeShift Table records deleted successfully!");
+                     foreach (var emp_id in allEmployees)
+                     {
+                         var employeeShift_Insert = await _supabase
+                             .From<EmployeeShift>()
+                             .Insert(new EmployeeShift
+                             {
+                                 ShiftId = shiftId,
+                                 EmployeeId = emp_id
+                             });
+                     }
+                     
+                     Console.WriteLine("EmployeeShift Table records updated successfully!");
                     
+
+
+                
                 return Json(new { redirect = Url.Action("HRManageShifts", "HR") });
             }
             catch (Exception e)
