@@ -3,9 +3,13 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">CRM Renters Page</h1>
+    <h1 class="display-4">CRM Applicants Page</h1>
     <!-- Add your content for the CRM Renters page here -->
 
-    <a href="@Url.Action("CRM_listRenters", "CRM")">View list of all Renters</a>
+    <h2>Renters:</h2>
+    <button id="viewAllRentersBtn" type="button" class="btn btn-primary" onclick="window.location.href='@Url.Action("CRM_listRenters", "CRM")'">View all Renter info</button>
 
+    <h2>Applicants:</h2>
+    <button id="viewAllApplicantsBtn" type="button" class="btn btn-primary" onclick="window.location.href='@Url.Action("CRM_listapplicants", "CRM")'">View all Applicant info</button>
 </div>
+

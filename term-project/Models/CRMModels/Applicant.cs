@@ -29,5 +29,8 @@ namespace term_project.Models.CRMModels
 
         [Column("status")]
         public string Status { get; set; }
+
+        [Column("email")]
+        public string Email { get; set; }
     }
 }

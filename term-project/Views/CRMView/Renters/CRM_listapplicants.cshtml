@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="text-center">
+    <h1 class="display-4">CRM Applicants Page</h1>
+
+    <h2>Filters:</h2>
+    <div class="form-group row">
+        <label for="statusFilter" class="col-sm-2 col-form-label">Status:</label>
+        <div class="col-sm-4">
+            <select class="form-control" id="statusFilter">
+                <option value="">All</option>
+                <option value="Unknown">Unknown</option>
+                <option value="Pending">Pending</option>
+                <option value="Approved">Approved</option>
+                <option value="Rejected">Rejected</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="incomeFilter" class="col-sm-2 col-form-label">Income (min):</label>
+        <div class="col-sm-4">
+            <input type="number" class="form-control" id="incomeFilter">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="nameSearch" class="col-sm-2 col-form-label">Search Name:</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control" id="nameSearch">
+        </div>
+    </div>
+
+    <button id="applyFiltersBtn" type="button" class="btn btn-primary">Apply Filters</button>
+    <button id="clearFiltersBtn" type="button" class="btn btn-secondary ml-3">Clear Filters</button>
+
+    <h2>Applicants:</h2>
+
+    <div id="applicantListContainer" style="overflow-x: auto; white-space: nowrap; max-width: 100%; border: 1px solid #ccc; padding: 10px;">
+        <!-- Populated dynamically based on the available applicants -->
+        <ul id="applicantList" style="list-style-type: none; padding: 0; margin: 0; display: flex;"></ul>
+    </div>
+
+    <button id="addNewApplicantBtn" type="button" class="btn btn-primary mt-3">Add New Applicant</button>
+
+    <button id="generateRenterBtn" class="btn btn-primary mt-3">Generate Renter</button>
+
+    <form id="addApplicantForm" method="post" action="@Url.Action("AddApplicant", "CRM")" style="display: none;">
+        <!-- Form fields for adding a new applicant -->
+        <div class="form-group">
+            <label for="firstName">First Name:</label>
+            <input type="text" class="form-control" id="firstName" name="firstName" required>
+        </div>
+        <div class="form-group">
+            <label for="lastName">Last Name:</label>
+            <input type="text" class="form-control" id="lastName" name="lastName" required>
+        </div>
+        <div class="form-group">
+            <label for="currentEmployer">Current Employer:</label>
+            <input type="text" class="form-control" id="currentEmployer" name="currentEmployer">
+        </div>
+        <div class="form-group">
+            <label for="income">Income:</label>
+            <input type="number" class="form-control" id="income" name="income">
+        </div>
+        <div class="form-group">
+            <label for="referenceInfo">Reference Info:</label>
+            <textarea class="form-control" id="referenceInfo" name="referenceInfo"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="sharingPeopleInfo">Sharing People Info:</label>
+            <textarea class="form-control" id="sharingPeopleInfo" name="sharingPeopleInfo"></textarea>
+        </div>
+        <div class="form-group" style="display: none;">
+            <label for="status">Status:</label>
+            <input type="text" class="form-control" id="status" name="status" value="Pending">
+        </div>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" class="form-control" id="email" name="email">
+        </div>
+        <div class="form-group">
+            <label for="assetType">Asset Type:</label>
+            <select class="form-control" id="assetType" name="assetType">
+                <option value="suite">Suite</option>
+                <option value="parking_spot">Parking Spot</option>
+                <option value="locker">Locker</option>
+                <option value="house">House</option>
+                <option value="apartment">Apartment</option>
+            </select>
+        </div>
+        <div class="form-group" id="rentPriceContainer" style="display: none;">
+            <label for="rentPrice">Rent Price:</label>
+            <input type="text" class="form-control" id="rentPrice" name="rentPrice" readonly>
+        </div>
+        <button type="submit" class="btn btn-primary">Add Applicant</button>
+    </form>
+</div>
+
+<!-- Include jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Your JavaScript code -->
+<script>
+    $(function () {
+        console.log("Document ready. JavaScript function is executing.");
+
+        $("#applyFiltersBtn").click(function () {
+            var statusFilter = $("#statusFilter").val();
+            var incomeFilter = $("#incomeFilter").val();
+            var nameSearch = $("#nameSearch").val().toLowerCase();
+
+            $.ajax({
+                url: '/CRM/GetAllApplicantsWithIds',
+                type: 'GET',
+                data: {
+                    status: statusFilter,
+                    income: incomeFilter,
+                    name: nameSearch
+                },
+                success: function (data) {
+                    populateApplicants(data);
+                },
+                error: function (xhr, status, error) {
+                    console.log(xhr.responseText);
+                }
+            });
+        });
+
+        $("#clearFiltersBtn").click(function () {
+            $("#statusFilter").val("");
+            $("#incomeFilter").val("");
+            $("#nameSearch").val("");
+            $("#applyFiltersBtn").click(); // Trigger applying filters to reset the list
+        });
+
+        $("#addNewApplicantBtn").click(function () {
+            $("#addApplicantForm").toggle();
+        });
+
+        $(document).on("click", ".approveBtn", function () {
+            var applicantId = $(this).data("applicant-id");
+            console.log("applicantId: " + applicantId);
+            // Send an AJAX request to update the status to "Approved"
+            $.ajax({
+                url: '/CRM/GenerateRenter',
+                type: 'POST',
+                data: { id: applicantId },
+                success: function () {
+                    // Refresh the applicant list after status is updated
+                    $("#applyFiltersBtn").click();
+                },
+                error: function (xhr, status, error) {
+                    console.log(xhr.responseText);
+                }
+            });
+        });
+
+        $(document).on("click", ".deleteBtn", function () {
+            var applicantId = $(this).data("applicant-id");
+
+            // Send an AJAX request to delete the applicant
+            $.ajax({
+                url: '/CRM/DeleteApplicant',
+                type: 'POST',
+                data: { id: applicantId },
+                success: function () {
+                    // Refresh the applicant list after deletion
+                    $("#applyFiltersBtn").click();
+                },
+                error: function (xhr, status, error) {
+                    console.log(xhr.responseText);
+                }
+            });
+        });
+
+        function populateApplicants(data) {
+            var applicantList = $('#applicantList');
+            applicantList.empty();
+
+            // Check if data is undefined or does not have the expected structure
+            if (!data || !Array.isArray(data.applicantIds)) {
+                console.error("Invalid data received:", data);
+                return;
+            }
+
+            // Append each applicant info to the list
+            for (var i = 0; i < data.applicantIds.length; i++) {
+                var row = $('<li style="margin-right: 20px;">' +
+                    '<strong>First Name: </strong>' + data.firstNames[i] + '<br>' +
+                    '<strong>Last Name: </strong>' + data.lastNames[i] + '<br>' +
+                    '<strong>Current Employer: </strong>' + data.currentEmployers[i] + '<br>' +
+                    '<strong>Income: </strong>' + data.incomes[i] + '<br>' +
+                    '<strong>Reference Info: </strong>' + data.referenceInfos[i] + '<br>' +
+                    '<strong>Sharing People Info: </strong>' + data.sharingPeopleInfos[i] + '<br>' +
+                    '<strong>Status: </strong>' + data.statuses[i] + '<br>' +
+                    '<strong>Email: </strong>' + data.emails[i] + '<br>' +
+                    '<button class="btn btn-success approveBtn" data-applicant-id="' + data.applicantIds[i] + '">Approve</button>' +
+                    '<button class="btn btn-danger deleteBtn" data-applicant-id="' + data.applicantIds[i] + '">Delete</button>' +
+                    '</li>');
+
+                // Attach click event handler to the "Approve" button
+                row.find('.approveBtn').click(function () {
+                    var applicantId = $(this).data('applicant-id');
+
+                    // Update applicant status to "Approved" via AJAX
+                    $.ajax({
+                        type: 'POST',
+                        url: '/CRM/UpdateApplicantStatus',
+                        data: { applicantId: applicantId, newStatus: 'Approved' },
+                        success: function (response) {
+                            // After successful status update, create a new Renter record
+                            $.ajax({
+                                type: 'POST',
+                                url: '/CRM/CreateRenter',
+                                data: { applicantId: applicantId },
+                                success: function (renterResponse) {
+                                    // Optionally handle success response
+                                    console.log('Renter created successfully:', renterResponse);
+                                },
+                                error: function (error) {
+                                    console.error('Error creating renter:', error);
+                                }
+                            });
+                        },
+                        error: function (error) {
+                            console.error('Error updating applicant status:', error);
+                        }
+                    });
+                });
+
+                applicantList.append(row);
+            }
+        }
+    });
+</script>
+
+</body>
+</html>

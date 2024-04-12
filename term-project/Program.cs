@@ -1,6 +1,6 @@
 // Ensure you have the correct using directives for your Supabase client library
 using term_project.Models.CareModels;
-
+using term_project.Models.CRMModels;
 using dotenv.net;
 using term_project.Models.CRMModels;
 
@@ -38,7 +38,7 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-// Adjust this part according to how you instantiate your Supabase client
+
 if (supabaseUrl != null && supabaseKey != null)
 {
     await InitializeSupabase(supabaseUrl, supabaseKey);
@@ -59,12 +59,12 @@ async Task InitializeSupabase(string url, string key)
     var logger = app.Services.GetRequiredService<ILogger<Program>>();
     logger.LogInformation("Reached!");
 
-    await InsertEmployee(supabase, logger);
+    // await InsertEmployee(supabase, logger);
 
-    await GetFirstUserEmail(supabase, logger);  
+    // await GetFirstUserEmail(supabase, logger);  
 
-    await InsertRenter(supabase, logger);
-    System.Console.WriteLine("renter addded");
+    // await PrintAllApplicantIds(supabase, logger);
+
 
 }
 
@@ -122,30 +122,5 @@ async Task GetFirstUserEmail(Supabase.Client supabase, ILogger logger)
     catch (Exception ex)
     {
         logger.LogError($"An error occurred while fetching the email: {ex.Message}");
-    }
-}
-
-async Task InsertRenter(Supabase.Client supabase, ILogger logger)
-{
-    try
-    {
-        // Create a new renter object
-        var newRenter = new Renter
-        {
-            RenterId = Guid.NewGuid(), // Assuming RenterId is a GUID primary key
-            ApplicantId = Guid.NewGuid(), // Example ApplicantId, adjust accordingly
-            EmergencyContacts = "Emergency contact information", // Example emergency contacts
-            FamilyDoctor = "Dr. Smith", // Example family doctor
-            Status = "Active" // Example status
-        };
-
-        // Perform the insert operation
-        var response = await supabase.From<Renter>().Insert(newRenter);
-
-        logger.LogInformation("New renter inserted successfully.");
-    }
-    catch (Exception ex)
-    {
-        logger.LogError($"An exception occurred while inserting the renter: {ex.Message}");
     }
 }

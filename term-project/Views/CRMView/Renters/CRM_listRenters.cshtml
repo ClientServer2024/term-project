@@ -1,43 +1,78 @@
 @{
-    ViewData["Title"] = "CRM list of Renters";
+    ViewData["Title"] = "CRM Renters";
 }
 
 <div class="text-center">
-    <h1 class="display-4">CRM list of Renters Page</h1>
- <h2>Applicants:</h2>
-<ul id="applicantList">
-    <!-- Populated dynamically based on the available applicants -->
-</ul>
-
-<button id="viewApplicantsBtn" type="button">View Applicants</button>
+    <h1 class="display-4">CRM List of Renters Page</h1>
+    <h2>Renters:</h2>
+    <div id="renterListContainer" style="overflow-x: auto; white-space: nowrap;">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Renter ID</th>
+                    <th>Applicant ID</th>
+                    <th>Emergency Contacts</th>
+                    <th>Family Doctor</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody id="renterListBody">
+                <!-- Populated dynamically based on the available renters -->
+            </tbody>
+        </table>
+    </div>
+    <button id="viewRentersBtn" type="button" class="btn btn-primary">View Renters</button>
+</div>
 
 @section scripts {
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
         $(function () {
-            console.log("Document ready. JavaScript function is executing."); // Log message
-            
-            // Fetch applicant names and populate the applicant list
-            $.ajax({
-                url: '/CRM/GetAllApplicants',
-                type: 'GET',
-                success: function (data) {
-                    var applicantList = $('#applicantList');
-                    applicantList.empty();
-                    // Append each applicant name to the list
-                    $.each(data.applicantNames, function (i, name) {
-                        // Append each applicant name to the list as a list item
-                        applicantList.append($('<li></li>').text(name));
-                    });
-                },
-                error: function (xhr, status, error) {
-                    console.log(xhr.responseText);
-                }
+            // Fetch all renters and populate the renter list
+            $("#viewRentersBtn").click(function () {
+                $.ajax({
+                    url: '/CRM/GetAllRenters',
+                    type: 'GET',
+                    success: function (data) {
+                        populateRenters(data);
+                    },
+                    error: function (xhr, status, error) {
+                        console.log(xhr.responseText);
+                    }
+                });
             });
-            
-            $('#viewApplicantsBtn').click(function () {
-                window.location.href = '/Care/RegisteredServicesView';
-            });
+
+           function populateRenters(data) {
+    var renterListBody = $('#renterListBody');
+    renterListBody.empty();
+
+    // Check if data is undefined or does not have the expected structure
+    if (!data || !Array.isArray(data.RenterIds)) {
+        console.error("Invalid data received:", data);
+        return;
+    }
+
+    // Append each renter info to the list
+    for (var i = 0; i < data.RenterIds.length; i++) {
+        // Check if any of the properties are null before accessing them
+        var renterId = data.RenterIds[i] || '';
+        var applicantId = data.ApplicantIds[i] || '';
+        var emergencyContacts = data.EmergencyContacts[i] || '';
+        var familyDoctor = data.FamilyDoctors[i] || '';
+        var status = data.Statuses[i] || '';
+
+        var row = '<tr>' +
+            '<td>' + renterId + '</td>' +
+            '<td>' + applicantId + '</td>' +
+            '<td>' + emergencyContacts + '</td>' +
+            '<td>' + familyDoctor + '</td>' +
+            '<td>' + status + '</td>' +
+            '</tr>';
+        renterListBody.append(row);
+    }
+}
+
+
         });
     </script>
 }
-</div>
