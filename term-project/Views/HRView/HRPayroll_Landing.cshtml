@@ -1,0 +1,29 @@
+﻿@{
+    ViewData["Title"] = "HR-Payrolls";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Payrolls</h1>
+</div>
+
+@using (Html.BeginForm("HrPayroll_Employees", "HR", FormMethod.Get))
+{
+    <div>
+        <label>First Name: </label>
+        @Html.TextBox("firstName", value:"Bardia")
+    </div>
+    <div>
+        <label>Last Name: </label>
+        @Html.TextBox("lastName", value:"Timouri")
+    </div>
+    <div>
+        <input type="submit" value="Find"/>
+    </div>
+}
+
+<div>
+    @if (TempData["EmployeeNotFound"] != null)
+    {
+        <p style="color: darkred; font-weight: bold">Error: Employee with the name [@TempData["EmployeeName"]] was not found.</p>
+    }
+</div>

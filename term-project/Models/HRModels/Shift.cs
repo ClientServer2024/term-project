@@ -13,9 +13,12 @@ namespace term_project.Models.CareModels
         public string ShiftType { get; set; }
 
         [Column("start_time")]
-        public DateTime StartTime { get; set; }
+        public TimeSpan StartTime { get; set; }
 
         [Column("end_time")]
-        public DateTime EndTime { get; set; }
+        public TimeSpan EndTime { get; set; }
+        
+        [Column("date")]
+        public DateTime ShiftDate { get; set; }
     }
 }

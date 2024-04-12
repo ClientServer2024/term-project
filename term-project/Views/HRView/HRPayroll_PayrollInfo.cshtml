@@ -1,0 +1,40 @@
+﻿@{
+    ViewData["Title"] = "HR-Payrolls";
+}
+
+@using term_project.Models.CareModels
+@model IEnumerable<term_project.Models.CareModels.Payroll>
+
+<div class="text-center">
+    <h1 class="display-6">Payroll ID</h1>
+    <h1 class="display-6">[@ViewData["PayrollId"]]</h1>
+</div>
+
+<div class="justify-content-center">
+    <table class="table">
+        <tr>
+            <td>Pay Period Start: </td>
+            <td>@(ViewData["PayPeriodStart"])</td>
+        </tr>
+        <tr>
+            <td>Pay Period End: </td>
+            <td>@(ViewData["PayPeriodEnd"])</td>
+        </tr>
+        <tr>
+            <td>Gross Pay: </td>
+            <td style="text-align: right">$ @(TempData.Get<Payroll>("Payroll").GrossPay)</td>
+        </tr>
+        <tr>
+            <td>Deductions: </td>
+            <td style="text-align: right">$ @(TempData.Get<Payroll>("Payroll").Deductions)</td>
+        </tr>
+        <tr>
+            <td>Tax Rate: </td>
+            <td style="text-align: right">@(TempData.Get<Payroll>("Payroll").TaxRate)%</td>
+        </tr>
+        <tr>
+            <td>Net Pay: </td>
+            <td style="text-align: right">$ @(TempData.Get<Payroll>("Payroll").NetPay)</td>
+        </tr>
+    </table>
+</div>
