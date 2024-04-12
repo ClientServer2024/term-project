@@ -13,7 +13,6 @@ using System.Diagnostics;
 using term_project.Models;
 using static Postgrest.QueryOptions;
 
-
 namespace term_project.Controllers
 {
     public class CRMController : Controller
@@ -440,4 +439,51 @@ namespace term_project.Controllers
     }
 
 
+}
+        public async Task<IActionResult> ManageAssets()
+        {
+            try
+            {
+                // Fetch assets with specific fields: id, type, status, and rate
+                var response = await _supabase.From<Asset>()
+                                              .Select("asset_id, type, status, rate")
+                                              .Get();
+                var assets = response.Models;
+
+                // Specify the correct path to the ManageAssets view
+                return View("~/Views/CRMView/ManageAssets.cshtml", assets);
+            }
+            catch (Exception ex)
+            {
+                return View("Error", new { ErrorMessage = ex.Message });
+            }
+        }
+
+        public async Task<IActionResult> AvailableAssets()
+        {
+            try
+            {
+                // Fetch only assets that are marked as available
+                var availableAssetsResponse = await _supabase
+                    .From<Asset>()
+                    .Select("*")
+                    .Where(asset => asset.Status == "Available")
+                    .Get();
+
+                var availableAssets = availableAssetsResponse.Models;
+
+                // Check if the view for available assets exists and return the model to that view
+                return View("~/Views/CRMView/AvailableAssets.cshtml", availableAssets);
+            }
+            catch (Exception ex)
+            {
+                // Log the error message and return the Error view
+                return View("Error", new { ErrorMessage = ex.Message });
+            }
+        }
+
+
+
+
+    }
 }

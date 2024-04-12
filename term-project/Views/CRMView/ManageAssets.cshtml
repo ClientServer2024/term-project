@@ -1,0 +1,40 @@
+﻿@model IEnumerable<term_project.Models.CRMModels.Asset>
+
+@{
+    ViewData["Title"] = "Manage Assets";
+}
+
+<h2>Assets</h2>
+
+@if (!Model.Any())
+{
+    <p>No assets to display.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Asset ID</th>
+                <th>Type</th>
+                <th>Status</th>
+                <th>Rate</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var asset in Model)
+            {
+                <tr>
+                    <td>@asset.AssetId</td>
+                    <td>@asset.Type</td>
+                    <td>@asset.Status</td>
+                    <td>@String.Format("{0:C}", asset.Rate)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<div>
+    <a href="@Url.Action("CRMLanding", "CRM")" class="btn btn-primary">Back to CRM Landing</a>
+</div>
