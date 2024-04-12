@@ -655,28 +655,28 @@ namespace term_project.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> UpdateAttendanceRecord(Guid employeeId, DateTime? clockInTime, DateTime? clockOutTime, DateTime date, string status, DateTime? overTimeStart, DateTime? overTimeEnd)
-        {
-            try
-            {
-                await _supabase
-                    .From<Attendance>()
-                    .Where(a => a.EmployeeId == employeeId)
-                    .Set(a => a.ClockInTime, clockInTime)
-                    .Set(a => a.ClockOutTime, clockOutTime)
-                    .Set(a => a.Date, date)
-                    .Set(a => a.Status, status)
-                    .Set(a => a.OverTimeStart, overTimeStart)
-                    .Set(a => a.OverTimeEnd, overTimeEnd)
-                    .Update();
+public async Task<IActionResult> UpdateAttendanceRecord(Guid attendanceId, Guid employeeId, DateTime? clockInTime, DateTime? clockOutTime, DateTime date, string status, DateTime? overTimeStart, DateTime? overTimeEnd)
+{
+    try
+    {
+        await _supabase
+            .From<Attendance>()
+            .Where(a => a.AttendanceId == attendanceId && a.EmployeeId == employeeId)
+            .Set(a => a.ClockInTime, clockInTime)
+            .Set(a => a.ClockOutTime, clockOutTime)
+            .Set(a => a.Date, date)
+            .Set(a => a.Status, status)
+            .Set(a => a.OverTimeStart, overTimeStart)
+            .Set(a => a.OverTimeEnd, overTimeEnd)
+            .Update();
 
-                return Json(new { redirect = Url.Action("HRManageAttendance", "HR") });
-            }
-            catch (Exception ex)
-            {
-                return Json(new { error = "An error occurred while updating the attendance record: " + ex.Message });
-            }
-        }
+        return Json(new { redirect = Url.Action("HRManageAttendance", "HR") });
+    }
+    catch (Exception ex)
+    {
+        return Json(new { error = "An error occurred while updating the attendance record: " + ex.Message });
+    }
+}
 
         // GET: HR/HrPayroll_Landing
         public IActionResult HrPayroll_Landing()
@@ -833,7 +833,7 @@ namespace term_project.Controllers
                 foreach (var attendance in attendances)
                 {
                     grossPay += (attendance.ClockOutTime!.Value - attendance.ClockInTime!.Value).Hours * salaryRate;
-                    if (attendance.OverTimeStart != null || attendance.OverTimeEnd != null)
+                    if (attendance.OverTimeStart != null && attendance.OverTimeEnd != null)
                     {
                         grossPay += (attendance.OverTimeEnd!.Value - attendance.OverTimeStart!.Value).Hours * 0.5f;
                     }
@@ -899,7 +899,7 @@ namespace term_project.Controllers
 
         private async Task<Employee> HrPayroll_FetchEmployee(Guid employeeId)
         {
-            const string methodName = "HrPayroll_GeneratePayroll_PostPayroll";
+            const string methodName = "HrPayroll_FetchEmployee";
             Console.WriteLine(
                 $"{methodName}: Fetching employee with id [{employeeId}]...");
 
