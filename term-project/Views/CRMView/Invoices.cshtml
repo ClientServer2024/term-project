@@ -1,0 +1,70 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Generated Invoices";
+}
+
+<h2>Generated Invoices</h2>
+
+<div class="text-center">
+    <a class="btn btn-primary" asp-controller="CRM" asp-action="CRMLanding">Go to CRM Landing</a>
+</div>
+
+<div id="invoicesContainer">
+    <table id="invoicesTable" class="table">
+        <thead>
+            <tr>
+                <th>Asset ID</th>
+                <th>Renter Name</th>
+                <th>Asset Type</th>
+                <th>Monthly Rate</th>
+                <th>Invoice Message</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Invoice data will be dynamically loaded here -->
+        </tbody>
+    </table>
+</div>
+
+<div class="text-center">
+    <button class="btn btn-primary" onclick="fetchInvoices()">Refresh Invoices</button>
+</div>
+
+@section Scripts {
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script>
+        function fetchInvoices() {
+            $.ajax({
+                url: '@Url.Action("GenerateInvoices", "CRM")',  // Adjust the controller and action names as needed
+                method: 'GET',
+                success: function (response) {
+                    var table = $('#invoicesTable tbody');
+                    table.empty(); // Clear the table first
+                    if (response.success && response.data && response.data.length > 0) {
+                        response.data.forEach(function (invoice) {
+                            var row = `
+                                                <tr>
+                                                    <td>${invoice.AssetId}</td>
+                                                    <td>${invoice.RenterName}</td>
+                                                    <td>${invoice.AssetType}</td>
+                                                    <td>$${invoice.MonthlyRate.toFixed(2)}</td>
+                                                    <td>${invoice.InvoiceMessage}</td>
+                                                </tr>
+                                            `;
+                            table.append(row);  // Append each row to the table
+                        });
+                    } else {
+                        table.append('<tr><td colspan="5" class="text-center">No invoices available or error in data fetching.</td></tr>');
+                    }
+                },
+                error: function (xhr) {
+                    $('#invoicesContainer').html(`<p>Error fetching invoices: ${xhr.statusText}</p>`);
+                }
+            });
+        }
+
+        $(document).ready(function () {
+            fetchInvoices();  // Load invoices when the document is ready
+        });
+    </script>
+}

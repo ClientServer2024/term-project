@@ -1,40 +1,69 @@
-﻿@model IEnumerable<term_project.Models.CRMModels.Asset>
-
-@{
+﻿@{
     ViewData["Title"] = "Manage Assets";
 }
 
-<h2>Assets</h2>
+<div class="text-center">
+    <h1 class="display-4">Assets</h1>
+</div>
 
-@if (!Model.Any())
-{
-    <p>No assets to display.</p>
-}
-else
-{
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Asset ID</th>
-                <th>Type</th>
-                <th>Status</th>
-                <th>Rate</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var asset in Model)
-            {
-                <tr>
-                    <td>@asset.AssetId</td>
-                    <td>@asset.Type</td>
-                    <td>@asset.Status</td>
-                    <td>@String.Format("{0:C}", asset.Rate)</td>
-                </tr>
-            }
-        </tbody>
-    </table>
-}
+<table id="assetsTable" class="table">
+    <thead>
+        <tr>
+            <th>Asset ID</th>
+            <th>Type</th>
+            <th>Status</th>
+            <th>Rate</th>
+            <th>Details</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Assets will be loaded by AJAX -->
+    </tbody>
+</table>
 
 <div>
     <a href="@Url.Action("CRMLanding", "CRM")" class="btn btn-primary">Back to CRM Landing</a>
 </div>
+
+@section scripts {
+    <script>
+        $(function () {
+            function fetchAllAssets() {
+                $.ajax({
+                    url: '/CRM/GetAllAssets',
+                    method: 'GET',
+                    success: function (response) {
+                        var table = $('#assetsTable tbody');
+                        table.empty();
+                        if (response.success && response.data && response.data.length > 0) {
+                            response.data.forEach(function (asset) {
+                                var row = '<tr>';
+                                row += '<td>' + asset.assetId + '</td>';
+                                row += '<td>' + asset.type + '</td>';
+                                row += '<td>' + asset.status + '</td>';
+                                row += '<td>' + formatCurrency(asset.rate) + '</td>';
+                                row += '<td><a href="/CRM/AssetDetails/' + asset.assetId + '" class="btn btn-info">View Appliances</a></td>';
+                                row += '</tr>';
+                                table.append(row);
+                            });
+                        } else {
+                            table.append('<tr><td colspan="5" class="text-center">No assets found.</td></tr>');
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Error fetching assets:", xhr.responseText);
+                        var table = $('#assetsTable tbody');
+                        table.empty();
+                        table.append('<tr><td colspan="5" class="text-center">Error fetching assets. Please try again.</td></tr>');
+                    }
+                });
+            }
+
+            function formatCurrency(value) {
+                return '$' + parseFloat(value).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+            }
+
+            fetchAllAssets();
+        });
+    </script>
+}
