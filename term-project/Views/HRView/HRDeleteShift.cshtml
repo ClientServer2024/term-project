@@ -1,0 +1,116 @@
+@{
+    Layout = "_Layout";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div>
+        <form id="deleteShiftForm" method="post">
+            <div class="form-group mb-3">
+                <label for="shiftType">Type:</label>
+                <select class="form-control" id="shiftType" name="shiftType" required readonly>
+                    <option value="" disabled selected>Select type...</option>
+                    <option value="recurring">Recurring</option>
+                    <option value="on-call">On-call</option>
+                </select>
+            </div>
+            <div class="form-group mb-3">
+                <label for="shiftDate">Date:</label>
+                <input type="date" class="form-control" id="shiftDate" name="shiftDate" required readonly>
+            </div>
+            <div class="form-group mb-3">
+                <label for="startTime">Start Time:</label>
+                <input type="time" class="form-control" id="startTime" name="startTime" required readonly>
+            </div>
+            <div class="form-group mb-3">
+                <label for="endTime">End Time:</label>
+                <input type="time" class="form-control" id="endTime" name="endTime" required readonly>
+            </div>
+            <div class="form-group mb-3">
+                    <label for="assignedEmployees">Assigned Employees:</label>
+                    <input type="text" class="form-control" id="assignedEmployees" name="assignedEmployees"  readonly>
+                </div>
+            <button type="submit" class="btn btn-primary btn-block" id="deleteShift">Delete Shift</button>
+        </form>
+    </div>
+
+    <script>
+    $(document).ready(function() {
+        async function fillShiftDetails() {
+            $.ajax({
+                url: '/HR/GetShift/?shiftId=' + '@ViewData["ShiftID"]', 
+                method: 'GET',
+                success: function (data) {
+                    console.log("Data received:", data);
+                    if (data && data.length > 0) {
+                        let shift = data[0]; 
+                        let shiftDate = new Date(shift.shiftDate);
+                        let formattedDate = shiftDate.toISOString().split('T')[0];
+                        let startTime = shift.startTime.substring(0, 5);
+                        let endTime = shift.endTime.substring(0, 5);
+                        let assignedEmployees = shift.employees.join(', ');
+                        $('#shiftType').val(shift.shiftType);
+                        $('#shiftDate').val(formattedDate);
+                        $('#startTime').val(startTime);
+                        $('#endTime').val(endTime);
+                        $('#assignedEmployees').val(assignedEmployees);
+                    } else {
+                        console.log("No data received or invalid data format.");
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error fetching shift details:", error);
+                }
+            });
+        }
+        fillShiftDetails();
+        
+        $('#deleteShiftForm').on('submit', function(e) {
+            e.preventDefault();
+        
+            // Serialize form data
+            let formData = $('#deleteShiftForm').serialize();
+        
+            // Convert serialized form data to object
+            let formDataObject = {};
+            formData.split('&').forEach(function (pair) {
+                pair = pair.split('=');
+                formDataObject[pair[0]] = decodeURIComponent(pair[1] || '');
+            });
+        
+            // Create data object to send via AJAX
+            let newData = {
+                shiftType: formDataObject['shiftType'],
+                shiftDate: formDataObject['shiftDate'],
+                startTime: formDataObject['startTime'],
+                endTime: formDataObject['endTime'],
+                assignedEmployees: formDataObject['assignedEmployees']
+            };
+            
+            $.ajax({
+                url: '/HR/DeleteShift/?shiftId=' + '@ViewData["ShiftID"]',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(newData),
+                success: function(response) {
+                    alert("Shift deleted successfully!")
+                    console.log('Shift deleted successfully');
+                    window.location.href = response.redirect;
+                },
+                error: function(xhr, status, error) {
+                    alert("Delete failed.")
+                    console.error('Error deleting shift:', error);
+                }
+            });
+        });
+
+    });
+    </script>
+
+</body>
+</html>
