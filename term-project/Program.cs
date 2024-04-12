@@ -79,7 +79,7 @@ async Task InsertEmployee(Supabase.Client supabase, ILogger logger)
             JobTitle = "Developer",
             EmploymentType = "full-time",
             SalaryRate = 60000, // Example salary
-            ManagerId = 1 // Example manager ID, adjust accordingly
+            //ManagerId = 1 // Example manager ID, adjust accordingly
         };
 
         // Perform the insert operation
