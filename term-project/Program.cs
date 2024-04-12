@@ -81,6 +81,18 @@ async Task InsertAsset(Supabase.Client supabase, ILogger logger)
         // Create a new asset object
         var newAsset = new Asset
         {
+
+            EmployeeId = Guid.NewGuid(), // Generate a new GUID if your primary key is a GUID and not auto-generated
+            Email = "newemployee@example.com",
+            Password = "securepassword", // Make sure to never store plain text passwords in production
+            FirstName = "New",
+            LastName = "Employee",
+            Address = "123 New Street",
+            EmergencyContact = "9876543210",
+            JobTitle = "Developer",
+            EmploymentType = "full-time",
+            SalaryRate = 60000, // Example salary
+            //ManagerId = 1 // Example manager ID, adjust accordingly
             AssetId = Guid.NewGuid(), // Generate a new GUID
             Type = "House", // Set the type of asset
             Status = "Unavailable", // Set the status of the asset

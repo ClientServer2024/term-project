@@ -14,9 +14,5 @@ namespace term_project.Models.CareModels
 
         [Column("shift_id")]
         public Guid ShiftId { get; set; }
-
-        [Column("date")]
-        public DateTime Date { get; set; }
-
     }
 }

@@ -1,0 +1,43 @@
+﻿@{
+    ViewData["Title"] = "HR-Payrolls";
+}
+
+@using term_project.Models.CareModels
+@model IEnumerable<term_project.Models.CareModels.Employee>
+
+<div class="text-center">
+    <h1 class="display-6">Search results for</h1>
+    <h1 class="display-4">@ViewData["FirstName"] @ViewData["LastName"]</h1>
+</div>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>
+            View
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EmployeeId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var employee in TempData.Get<IList<Employee>>("Employees"))
+    {
+        <tr>
+            <td>
+                <a asp-area="" asp-controller="HR" asp-action="HrPayroll_Payrolls" asp-route-employeeId="@employee.EmployeeId">View</a>
+            </td>
+            <td>
+                @employee.EmployeeId
+            </td>
+            <td>
+                @employee.Email
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
