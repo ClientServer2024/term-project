@@ -56,35 +56,41 @@
                         // Clear existing table rows
                         $('#attendanceRecords tbody').empty();
 
-                        $('#attendanceRecords thead').append(
-                            '<tr>' +
-                            '<th>ClockIn Time</th>' +
-                            '<th>ClockOut Time</th>' +
-                            '<th>Date</th>' +
-                            '<th>Status</th>' +
-                            '<th>OT Start</th>' +
-                            '<th>OT End</th>' +
-                            '</tr>'
-                        );
-
-                        // Process the retrieved JSON data
-                        $.each(data, function (index, entry) {
-                            // Append data to a table row with proper spacing
-                            $('#attendanceRecords tbody').append(
+                        if (data.error) {
+                            alert(data.error); // Display the error message
+                        } else {
+                            // Append table headers
+                            $('#attendanceRecords thead').empty().append(
                                 '<tr>' +
-                                '<td>' + new Date(entry.ClockInTime).toLocaleString() + '</td>' +
-                                '<td>' + new Date(entry.ClockOutTime).toLocaleString() + '</td>' +
-                                '<td>' + new Date(entry.Date).toLocaleDateString() + '</td>' +
-                                '<td>' + entry.Status + '</td>' +
-                                '<td>' + (entry.OverTimeStart ? new Date(entry.OverTimeStart).toLocaleString() : '') + '</td>' +
-                                '<td>' + (entry.OverTimeEnd ? new Date(entry.OverTimeEnd).toLocaleString() : '') + '</td>' +
+                                '<th>ClockIn Time</th>' +
+                                '<th>ClockOut Time</th>' +
+                                '<th>Date</th>' +
+                                '<th>Status</th>' +
+                                '<th>OT Start</th>' +
+                                '<th>OT End</th>' +
                                 '</tr>'
                             );
-                        });
+
+                            // Process the retrieved JSON data
+                            $.each(data, function (index, entry) {
+                                // Append data to a table row with proper spacing
+                                $('#attendanceRecords tbody').append(
+                                    '<tr>' +
+                                    '<td>' + new Date(entry.ClockInTime).toLocaleString() + '</td>' +
+                                    '<td>' + new Date(entry.ClockOutTime).toLocaleString() + '</td>' +
+                                    '<td>' + new Date(entry.Date).toLocaleDateString() + '</td>' +
+                                    '<td>' + entry.Status + '</td>' +
+                                    '<td>' + (entry.OverTimeStart ? new Date(entry.OverTimeStart).toLocaleString() : '') + '</td>' +
+                                    '<td>' + (entry.OverTimeEnd ? new Date(entry.OverTimeEnd).toLocaleString() : '') + '</td>' +
+                                    '</tr>'
+                                );
+                            });
+                        }
                     },
                     error: function (xhr, status, error) {
-                        alert('Error: ' + error);
+                        alert('Error: ' + error); // Display the AJAX error message
                     }
+
                 });
             });
         });
