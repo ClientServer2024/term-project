@@ -1,0 +1,46 @@
+﻿@{
+    ViewData["Title"] = "Appliance Details";
+    var appliances = ViewBag.Appliances as List<term_project.Models.CRMModels.Appliance>;
+}
+
+<h2>Appliance Details for Asset</h2>
+
+@if (appliances != null && appliances.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Appliance ID</th>
+                <th>Asset ID</th>
+                <th>Make</th>
+                <th>Model</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var appliance in appliances)
+            {
+                <tr>
+                    <td>@appliance.ApplianceId</td>
+                    <td>@appliance.AssetId</td>
+                    <td>@appliance.Make</td>
+                    <td>@appliance.Model</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No appliances found for this asset.</p>
+}
+
+@if (!string.IsNullOrEmpty(ViewBag.Error))
+{
+    <div class="alert alert-danger" role="alert">
+        @ViewBag.Error
+    </div>
+}
+
+<div>
+    <a href="@Url.Action("ManageAssets", "CRM")" class="btn btn-primary">Back to Manage Assets</a>
+</div>
